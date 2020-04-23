@@ -1,12 +1,10 @@
 import 'package:ecommerce_app/db/product_db.dart';
 import 'package:ecommerce_app/model/product.dart';
-import 'package:ecommerce_app/model/product2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/pages/product_details.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../db/product_services.dart';
-import 'package:provider/provider.dart';
 
 class Products extends StatefulWidget {
   @override
@@ -58,8 +56,6 @@ class _ProductsState extends State<Products> {
   ];
   @override
   Widget build(BuildContext context) {
-    List featuredProds = Provider.of<List<Products2>>(context);
-    List proImages = [];
     return StreamBuilder<QuerySnapshot>(
       stream: _firestore.collection(collection).snapshots(),
       builder: (context, snapshot) {
@@ -105,18 +101,13 @@ class _ProductsState extends State<Products> {
           allProducts.add(singleProduct);
         }
 
-        //==============================================
-        for (var featuredProd in featuredProds) {
-          proImages = featuredProd.images;
-        }
-
         return GridView.builder(
           itemCount: allProducts.length,
           gridDelegate:
               SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
           itemBuilder: (context, int index) => SingleProduct(
             name: allProducts[index].name,
-            images: proImages[0],
+            images: allProducts[index].images[0],
             oldPrice: allProducts[index].oldPrice,
             price: allProducts[index].price,
             favorite: allProducts[index].favorite,
