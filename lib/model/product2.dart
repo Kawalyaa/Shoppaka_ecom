@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class Products2 {
   static const ID = 'id';
   static const NAME = 'name';
@@ -9,7 +7,7 @@ class Products2 {
   static const CATEGORY = 'category';
   static const OLD_PRICE = 'oldPrice';
   static const COLORS = 'colors';
-  static const SIZES = 'sizes';
+  static const SIZES = 'size';
   static const QUANTITY = 'quantity';
   static const FAVORITE = 'favorite';
   static const FEATURED = 'featured';
@@ -24,7 +22,7 @@ class Products2 {
   final int quantity;
   final List colors;
   final List sizes;
-  final bool favorite;
+  bool favorite;
   final bool featured;
 
   Products2({

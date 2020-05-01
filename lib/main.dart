@@ -13,6 +13,7 @@ import 'package:ecommerce_app/provider/user_provider.dart';
 import 'componants/screen_controller.dart';
 import 'db/databse_services.dart';
 import 'model/product2.dart';
+import 'package:ecommerce_app/provider/product_provider2.dart';
 
 main() => runApp(MyApp());
 
@@ -24,7 +25,10 @@ class MyApp extends StatelessWidget {
             create: (_) => UserProvider.initialize(),
           ),
           StreamProvider<List<Products2>>(
-              create: (_) => DatabaseServices().getAllFireStoreProduct())
+              create: (_) => DatabaseServices().getAllFireStoreProduct()),
+          ChangeNotifierProvider<ProductProvider2>(
+            create: (_) => ProductProvider2(),
+          )
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

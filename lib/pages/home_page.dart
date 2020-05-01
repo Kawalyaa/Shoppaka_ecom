@@ -42,14 +42,27 @@ class _HomePageState extends State<HomePage> {
             ),
             onPressed: () {},
           ),
-          IconButton(
-            icon: Icon(
-              Icons.shopping_cart,
+          Stack(children: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.shopping_cart,
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, ShoppingCart.id);
+              },
             ),
-            onPressed: () {
-              Navigator.pushNamed(context, ShoppingCart.id);
-            },
-          )
+            Positioned(
+              top: 2,
+              right: 2,
+              child: Container(
+                padding: EdgeInsets.all(3.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50.0),
+                    color: Colors.red),
+                child: Text('10'),
+              ),
+            )
+          ])
         ],
         iconTheme: IconThemeData(color: Colors.black54),
         elevation: 0.0,
@@ -74,7 +87,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(2.0),
             child: aList == null
                 ? CircularProgressIndicator()
-                : Text(aList.length.toString() ?? ''),
+                : Text(aList.length.toString()),
           ),
           //Grid view
           Container(

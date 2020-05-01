@@ -1,6 +1,10 @@
+import 'package:ecommerce_app/model/cart_model.dart';
+import 'package:ecommerce_app/model/product2.dart';
+import 'package:ecommerce_app/provider/product_provider2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/pages/home_page.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetails extends StatefulWidget {
   static const String id = 'productDetails';
@@ -9,6 +13,8 @@ class ProductDetails extends StatefulWidget {
   final productDetailsPrice;
   final productDetailsOldPrice;
   final productBrand;
+  final productSizes;
+  final productColors;
 
   ProductDetails({
     this.productDetailsPicture,
@@ -16,6 +22,8 @@ class ProductDetails extends StatefulWidget {
     this.productDetailsOldPrice,
     this.productDetailsPrice,
     this.productBrand,
+    this.productSizes,
+    this.productColors,
   });
 
   @override
@@ -23,8 +31,21 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
+  String dropDownValue;
+
+  String selectedSize;
+  String selectedColor;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    var addToCart = Provider.of<ProductProvider2>(context);
+    // List dropdownSizes = widget.productSizes;
+
     return Scaffold(
       appBar: AppBar(
         title: InkWell(
@@ -106,128 +127,12 @@ class _ProductDetailsState extends State<ProductDetails> {
               ],
             ),
           ),
-
-          Row(
-            children: <Widget>[
-              //*********Button 1******
-              Expanded(
-                child: MaterialButton(
-                  color: Colors.white,
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Size'),
-                          content: Text('Choose the Size'),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(20.0),
-                            ),
-                          ),
-                          actions: <Widget>[
-                            MaterialButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text('Close'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  elevation: 0.0,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(child: Text('Size')),
-                      Expanded(
-                        child: Icon(Icons.arrow_drop_down),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-
-              //*********Button 2******
-              Expanded(
-                child: MaterialButton(
-                  color: Colors.white,
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('Color'),
-                            content: Text('Choose the Color'),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(20.0),
-                              ),
-                            ),
-                            actions: <Widget>[
-                              MaterialButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text('Close'),
-                              ),
-                            ],
-                          );
-                        });
-                  },
-                  elevation: 0.0,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(child: Text('Color')),
-                      Expanded(
-                        child: Icon(Icons.arrow_drop_down),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-
-              //*********Button 3******
-              Expanded(
-                child: MaterialButton(
-                  color: Colors.white,
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('Quantity'),
-                            content: Text('Choose the Quantity'),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(20.0),
-                              ),
-                            ),
-                            actions: <Widget>[
-                              MaterialButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text('Close'),
-                              ),
-                            ],
-                          );
-                        });
-                  },
-                  elevation: 0.0,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(child: Text('Qtn')),
-                      Expanded(
-                        child: Icon(Icons.arrow_drop_down),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+          Container(
+            height: 200.0,
+            child:
+                ListView.builder(itemBuilder: (context, index) => SizeCards()),
           ),
+
           Row(
             children: <Widget>[
               Padding(
@@ -252,7 +157,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                 width: 20.0,
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  addToCart.addProducts(
+                    CartModel(
+                      images: widget.productDetailsPicture,
+                      name: widget.productDetailsName,
+                      brand: widget.productBrand,
+                      price: widget.productDetailsPrice,
+                      selectedSize: dropDownValue,
+                    ),
+                  );
+                },
                 icon: Icon(
                   Icons.add_shopping_cart,
                   color: Colors.red,
@@ -267,6 +182,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               ),
             ],
           ),
+
           Divider(),
           ListTile(
             title: Text('Product Details'),
@@ -492,6 +408,15 @@ class SimilarProductDetails extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class SizeCards extends StatelessWidget {
+  final String colorOption;
+  SizeCards({this.colorOption});
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
 
