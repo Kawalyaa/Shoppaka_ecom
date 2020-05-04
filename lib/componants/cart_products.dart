@@ -49,7 +49,6 @@ class _ShoppingCartProductsState extends State<ShoppingCartProducts> {
 class CartItems extends StatelessWidget {
   final String name;
   final String picture;
-  final String size;
   final double price;
   final String selectedColor;
   final String selectedSize;
@@ -58,7 +57,6 @@ class CartItems extends StatelessWidget {
   CartItems(
       {this.name,
       this.picture,
-      this.size,
       this.selectedColor,
       this.price,
       this.selectedSize,
@@ -97,7 +95,7 @@ class CartItems extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Text(
-                      '$size',
+                      '$selectedSize',
                       style: TextStyle(color: Colors.red),
                     ),
                   ),

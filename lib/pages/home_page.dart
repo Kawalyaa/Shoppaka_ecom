@@ -1,13 +1,10 @@
-import 'package:ecommerce_app/db/product_services.dart';
 import 'package:ecommerce_app/model/product2.dart';
-import 'package:ecommerce_app/provider/product_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/componants/products.dart';
 import 'package:ecommerce_app/componants/horizontal_listview.dart';
 import 'package:ecommerce_app/componants/image_carousel.dart';
 import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
 import 'package:ecommerce_app/componants/navigation_drawer.dart';
-import 'package:ecommerce_app/constants.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {

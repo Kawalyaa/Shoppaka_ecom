@@ -2,7 +2,6 @@ import 'package:ecommerce_app/model/product2.dart';
 import 'package:ecommerce_app/pages/prod_detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerce_app/pages/product_details.dart';
 import 'package:provider/provider.dart';
 
 class Products extends StatefulWidget {

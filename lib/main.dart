@@ -1,10 +1,8 @@
-import 'package:ecommerce_app/pages/splash_screen.dart';
-import 'package:ecommerce_app/provider/product_provider.dart';
+import 'package:ecommerce_app/pages/prod_detail.dart';
 import 'package:flutter/material.dart';
 import './pages/login_options_page.dart';
 import './pages/login.dart';
 import './pages/home_page.dart';
-import './pages/product_details.dart';
 import './pages/shopping_cart_screen.dart';
 import './pages/signup.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +35,7 @@ class MyApp extends StatelessWidget {
             Login.id: (context) => Login(),
             SignUp.id: (context) => SignUp(),
             HomePage.id: (context) => HomePage(),
-            ProductDetails.id: (context) => ProductDetails(),
+            ProdDetails.id: (context) => ProdDetails(),
             ShoppingCart.id: (context) => ShoppingCart(),
             WelcomeLoginOptions.id: (context) => WelcomeLoginOptions(),
           },

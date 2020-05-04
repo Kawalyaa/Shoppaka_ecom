@@ -1,6 +1,6 @@
 import 'package:ecommerce_app/model/product2.dart';
 import 'package:flutter/material.dart';
-import '../pages/product_details.dart';
+import '../pages/prod_detail.dart';
 
 class TechCategory extends StatefulWidget {
   @override
@@ -67,7 +67,7 @@ class ShoesItems extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ProductDetails(
+            builder: (context) => ProdDetails(
               productDetailsName: name,
               productBrand: brand,
               productDetailsPrice: price,

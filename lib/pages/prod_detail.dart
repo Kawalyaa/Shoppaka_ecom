@@ -1,6 +1,5 @@
 import 'package:ecommerce_app/model/cart_model.dart';
 import 'package:ecommerce_app/model/color_model.dart';
-import 'package:ecommerce_app/model/product2.dart';
 import 'package:ecommerce_app/model/size_model.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,15 +18,16 @@ class ProdDetails extends StatefulWidget {
   final List productColors;
   bool isFavorite;
 
-  ProdDetails(
-      {this.productDetailsPicture,
-      this.productDetailsName,
-      this.productDetailsOldPrice,
-      this.productDetailsPrice,
-      this.productBrand,
-      this.productSizes,
-      this.productColors,
-      this.isFavorite});
+  ProdDetails({
+    this.productDetailsPicture,
+    this.productDetailsName,
+    this.productDetailsOldPrice,
+    this.productDetailsPrice,
+    this.productBrand,
+    this.productSizes,
+    this.productColors,
+    this.isFavorite,
+  });
 
   @override
   _ProdDetailsState createState() => _ProdDetailsState();
@@ -36,6 +36,9 @@ class ProdDetails extends StatefulWidget {
 class _ProdDetailsState extends State<ProdDetails> {
   String selectedSize;
   String selectedColor;
+
+  int currentSelectedSizeIndex;
+  int currentSelectedColorIndex;
 
   List<SizeModel> sizeList;
   List<ColorModel> colorList;
@@ -80,7 +83,6 @@ class _ProdDetailsState extends State<ProdDetails> {
   @override
   Widget build(BuildContext context) {
     var addToCart = Provider.of<ProductProvider2>(context);
-
     return Scaffold(
       appBar: AppBar(
         title: InkWell(
@@ -201,7 +203,8 @@ class _ProdDetailsState extends State<ProdDetails> {
                           name: widget.productDetailsName,
                           brand: widget.productBrand,
                           price: widget.productDetailsPrice,
-                          selectedSize: selectedSize),
+                          selectedSize: selectedSize,
+                          selectedColor: selectedColor),
                     );
                   },
                   icon: Icon(
@@ -244,21 +247,24 @@ class _ProdDetailsState extends State<ProdDetails> {
                         TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
                   ),
                 ),
+
+                //index and   int currentSelectedIndex are used to make 1 selection at ago
                 Container(
                   height: 50.0,
                   child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: sizeList.length,
-                    itemBuilder: (context, int index) => _sizeCard(
-                        aSize: sizeList[index].sizeName,
-                        isSelected: sizeList[index].isSelected,
-                        toggleIsSelected: () {
-                          setState(() {
-                            sizeList[index].isSelected =
-                                !sizeList[index].isSelected;
-                          });
-                        }),
-                  ),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: sizeList.length,
+                      itemBuilder: (context, int index) {
+                        return _sizeCard(
+                            aSize: sizeList[index].sizeName,
+                            isSelected: currentSelectedSizeIndex == index,
+                            toggleIsSelected: () {
+                              setState(() {
+                                currentSelectedSizeIndex = index;
+                                selectedSize = sizeList[index].sizeName;
+                              });
+                            });
+                      }),
                 ),
               ],
             ),
@@ -286,11 +292,22 @@ class _ProdDetailsState extends State<ProdDetails> {
                       itemCount: colorList.length,
                       itemBuilder: (context, int index) => _colorCard(
                           color: colorList[index].colorName,
-                          isSelected: colorList[index].isSelected,
+                          isSelected: currentSelectedColorIndex == index,
                           toggleIsSelected: () {
                             setState(() {
-                              colorList[index].isSelected =
-                                  !colorList[index].isSelected;
+                              currentSelectedColorIndex = index;
+                              if (colorList[index].colorName == Colors.red) {
+                                selectedColor = 'red';
+                              }
+                              if (colorList[index].colorName == Colors.black) {
+                                selectedColor = 'black';
+                              }
+                              if (colorList[index].colorName == Colors.white) {
+                                selectedColor = 'white';
+                              }
+                              if (colorList[index].colorName == Colors.brown) {
+                                selectedColor = 'browm';
+                              }
                             });
                           })),
                 ),
@@ -372,7 +389,11 @@ class _ProdDetailsState extends State<ProdDetails> {
     );
   }
 
-  Widget _sizeCard({String aSize, bool isSelected, Function toggleIsSelected}) {
+  Widget _sizeCard({
+    String aSize,
+    bool isSelected,
+    Function toggleIsSelected,
+  }) {
     return InkWell(
       onTap: toggleIsSelected,
       child: Padding(

@@ -32,10 +32,4 @@ class DatabaseServices {
       .toList());
 }
 
-//Stream<Products2> getAllFireStoreProduct() {
-//  List<Products2> streamList = [];
-//  _firestore.collection(collection).snapshots().forEach((snaps){
-//    snaps.documents.forEach((snap)=>streamList.add(Products2.fromSnapShot(snap.data)));
-//  });
-//
-//}
+

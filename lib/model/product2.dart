@@ -41,7 +41,6 @@ class Products2 {
   });
 
   factory Products2.fromSnapShot(Map data) {
-    // Map data = doc.data;
 
     return Products2(
       id: data[ID] ?? '',
