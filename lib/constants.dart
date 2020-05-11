@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+const Color kColorRed = Color(0xFFFF0025);
+
 const kTextFieldDecoration = InputDecoration(
   hintText: 'Enter value',
   contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),

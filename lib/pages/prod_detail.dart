@@ -6,7 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/pages/home_page.dart';
 import 'package:provider/provider.dart';
-import 'package:uuid/uuid.dart';
+
+import '../constants.dart';
 
 class ProdDetails extends StatefulWidget {
   static const String id = 'productDetails';
@@ -67,7 +68,7 @@ class _ProdDetailsState extends State<ProdDetails> {
 
     widget.productColors.map((item) {
       if (item == 'red') {
-        colorList.add(ColorModel(colorName: Colors.red));
+        colorList.add(ColorModel(colorName: kColorRed));
       }
       if (item == 'white') {
         colorList.add(ColorModel(colorName: Colors.white));
@@ -84,9 +85,6 @@ class _ProdDetailsState extends State<ProdDetails> {
   @override
   Widget build(BuildContext context) {
     var addToCart = Provider.of<ProductProvider2>(context);
-
-    var uuid = Uuid();
-    String prodId = uuid.v1();
 
     return Scaffold(
       appBar: AppBar(
@@ -165,7 +163,7 @@ class _ProdDetailsState extends State<ProdDetails> {
                 Text(
                   '\$${widget.productDetailsPrice}',
                   style: TextStyle(
-                      color: Colors.red,
+                      color: kColorRed,
                       fontSize: 25.0,
                       fontWeight: FontWeight.w900),
                 )
@@ -183,12 +181,27 @@ class _ProdDetailsState extends State<ProdDetails> {
                   padding: EdgeInsets.only(left: 5.0),
                   child: Material(
                     elevation: 2.0,
-                    color: Colors.red,
+                    color: kColorRed,
                     borderRadius: BorderRadius.circular(30.0),
                     child: MaterialButton(
                       minWidth: 200.0,
                       height: 42.0,
-                      onPressed: () {},
+                      onPressed: () {
+                        addToCart.addProducts(
+                          CartModel(
+                            images: widget.productDetailsPicture,
+                            name: widget.productDetailsName,
+                            brand: widget.productBrand,
+                            price: widget.productDetailsPrice,
+                            selectedSize: selectedSize == null
+                                ? widget.productSizes[0]
+                                : selectedSize,
+                            selectedColor: selectedColor == null
+                                ? widget.productColors[0]
+                                : selectedColor,
+                          ),
+                        );
+                      },
                       elevation: 0.2,
                       child: Text(
                         'Add To Cart',
@@ -198,33 +211,7 @@ class _ProdDetailsState extends State<ProdDetails> {
                   ),
                 ),
                 SizedBox(
-                  width: 20.0,
-                ),
-                IconButton(
-                  onPressed: () {
-                    addToCart.addProducts(
-                      CartModel(
-                        id: prodId,
-                        images: widget.productDetailsPicture,
-                        name: widget.productDetailsName,
-                        brand: widget.productBrand,
-                        price: widget.productDetailsPrice,
-                        selectedSize: selectedSize == null
-                            ? widget.productSizes[0]
-                            : selectedSize,
-                        selectedColor: selectedColor == null
-                            ? widget.productColors[0]
-                            : selectedColor,
-                      ),
-                    );
-                  },
-                  icon: Icon(
-                    Icons.add_shopping_cart,
-                    color: Colors.red,
-                  ),
-                ),
-                SizedBox(
-                  width: 20.0,
+                  width: 50.0,
                 ),
                 InkWell(
                   onTap: () {
@@ -234,7 +221,8 @@ class _ProdDetailsState extends State<ProdDetails> {
                   },
                   child: Icon(
                     widget.isFavorite ? Icons.favorite : Icons.favorite_border,
-                    color: Colors.red,
+                    color: kColorRed,
+                    size: 30.0,
                   ),
                 ),
               ],
@@ -307,7 +295,7 @@ class _ProdDetailsState extends State<ProdDetails> {
                           toggleIsSelected: () {
                             setState(() {
                               currentSelectedColorIndex = index;
-                              if (colorList[index].colorName == Colors.red) {
+                              if (colorList[index].colorName == kColorRed) {
                                 selectedColor = 'red';
                               }
                               if (colorList[index].colorName == Colors.black) {
@@ -417,7 +405,7 @@ class _ProdDetailsState extends State<ProdDetails> {
               color: Colors.grey,
               style: !isSelected ? BorderStyle.solid : BorderStyle.none,
             ),
-            color: isSelected ? Colors.red : Colors.white,
+            color: isSelected ? kColorRed : Colors.white,
           ),
           child: Center(
             child: Text(

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:ecommerce_app/componants/cart-product-detail.dart';
 import 'package:provider/provider.dart';
 
+import '../constants.dart';
+
 class ShoppingCart extends StatefulWidget {
   static const String id = 'shoppingCart';
 
@@ -109,7 +111,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                   Expanded(
                     child: Material(
                       elevation: 2.0,
-                      color: Colors.red,
+                      color: kColorRed,
                       borderRadius: BorderRadius.circular(30.0),
                       child: MaterialButton(
                         onPressed: () {},
@@ -139,6 +141,9 @@ class _ShoppingCartState extends State<ShoppingCart> {
                 },
                 buttonDown: () {
                   getValue.decreaseQty(index);
+                },
+                deleteItem: () {
+                  getValue.removeProduct(index);
                 },
               ),
             ),

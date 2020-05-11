@@ -26,8 +26,4 @@ class CartModel {
     this.selectedSize,
     this.selectedColor,
   });
-
-  void increment() {
-    qty++;
-  }
 }
