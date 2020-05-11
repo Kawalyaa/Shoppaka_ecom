@@ -12,16 +12,6 @@ class CartModel {
   final String selectedColor;
   int qty;
 
-  void increaseQty() {
-    assert(!(qty < 0));
-    qty++;
-  }
-
-  void deductQty() {
-    assert(!(qty < 0));
-    qty--;
-  }
-
   CartModel({
     this.id,
     this.name,
@@ -36,4 +26,8 @@ class CartModel {
     this.selectedSize,
     this.selectedColor,
   });
+
+  void increment() {
+    qty++;
+  }
 }
