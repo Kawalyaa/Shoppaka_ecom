@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/model/cart_model.dart';
 import 'package:ecommerce_app/model/color_model.dart';
 import 'package:ecommerce_app/model/size_model.dart';
+import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,6 @@ class ProdDetails extends StatefulWidget {
   final List productSizes;
   final List productColors;
   bool isFavorite;
-
   ProdDetails({
     this.productDetailsPicture,
     this.productDetailsName,
@@ -36,6 +36,7 @@ class ProdDetails extends StatefulWidget {
 }
 
 class _ProdDetailsState extends State<ProdDetails> {
+  //bool isFav = false;
   int currentSelectedSizeIndex;
   int currentSelectedColorIndex;
 
@@ -84,7 +85,8 @@ class _ProdDetailsState extends State<ProdDetails> {
 
   @override
   Widget build(BuildContext context) {
-    var addToCart = Provider.of<ProductProvider2>(context);
+    var providerData = Provider.of<ProductProvider2>(context);
+    List<CartModel> cartList = providerData.cartProductList;
 
     return Scaffold(
       appBar: AppBar(
@@ -112,12 +114,39 @@ class _ProdDetailsState extends State<ProdDetails> {
             ),
             onPressed: () {},
           ),
-          IconButton(
-            icon: Icon(
-              Icons.shopping_cart,
-            ),
-            onPressed: () {},
-          )
+          SizedBox(
+            width: 5.0,
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, ShoppingCart.id);
+            },
+            child: Stack(children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(right: 6.0),
+                child: Container(
+                  child: Center(
+                    child: Icon(
+                      Icons.shopping_cart,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 4.0,
+                right: 2.0,
+                child: cartList.length > 0
+                    ? Container(
+                        height: 18.0,
+                        width: 18.0,
+                        decoration: BoxDecoration(
+                            color: kColorRed, shape: BoxShape.circle),
+                        child: Center(child: Text('${cartList.length}')),
+                      )
+                    : Container(),
+              )
+            ]),
+          ),
         ],
         iconTheme: IconThemeData(color: Colors.black54),
         elevation: 0.0,
@@ -187,7 +216,7 @@ class _ProdDetailsState extends State<ProdDetails> {
                       minWidth: 200.0,
                       height: 42.0,
                       onPressed: () {
-                        addToCart.addProducts(
+                        providerData.addProducts(
                           CartModel(
                             images: widget.productDetailsPicture,
                             name: widget.productDetailsName,
