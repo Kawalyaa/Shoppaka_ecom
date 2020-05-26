@@ -41,7 +41,6 @@ class Products2 {
   });
 
   factory Products2.fromSnapShot(Map data) {
-
     return Products2(
       id: data[ID] ?? '',
       name: data[NAME] ?? '',
@@ -53,8 +52,8 @@ class Products2 {
       quantity: data[QUANTITY] ?? 0,
       colors: data[COLORS] ?? [],
       sizes: data[SIZES] ?? [],
-      favorite: data[FAVORITE],
-      featured: data[FEATURED],
+      favorite: data[FAVORITE] ?? false,
+      featured: data[FEATURED] ?? false,
     );
   }
 }

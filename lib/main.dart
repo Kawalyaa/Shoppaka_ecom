@@ -1,4 +1,6 @@
+import 'package:ecommerce_app/pages/favorites_page.dart';
 import 'package:ecommerce_app/pages/prod_detail.dart';
+import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:flutter/material.dart';
 import './pages/login_options_page.dart';
 import './pages/login.dart';
@@ -26,6 +28,9 @@ class MyApp extends StatelessWidget {
               create: (_) => DatabaseServices().getAllFireStoreProduct()),
           ChangeNotifierProvider<ProductProvider2>(
             create: (_) => ProductProvider2(),
+          ),
+          ChangeNotifierProvider<FavoriteList>(
+            create: (_) => FavoriteList(),
           )
         ],
         child: MaterialApp(
@@ -38,6 +43,7 @@ class MyApp extends StatelessWidget {
             ProdDetails.id: (context) => ProdDetails(),
             ShoppingCart.id: (context) => ShoppingCart(),
             WelcomeLoginOptions.id: (context) => WelcomeLoginOptions(),
+            Favorites.id: (context) => Favorites(),
           },
           theme: ThemeData(primaryColor: Color(0xFFFF0025)),
           home: ScreenController(),

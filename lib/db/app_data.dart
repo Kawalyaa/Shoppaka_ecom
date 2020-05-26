@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/model/categary_options.dart';
+import 'package:ecommerce_app/model/product2.dart';
 
 class AppData {
   static List<CategoryOptions> categoryOptionList = [

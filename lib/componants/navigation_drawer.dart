@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/pages/favorites_page.dart';
 import 'package:ecommerce_app/pages/login_options_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
@@ -65,7 +66,9 @@ class NavigationDrawer extends StatelessWidget {
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, Favorites.id);
+            },
             child: ListTile(
               leading: Icon(Icons.favorite),
               title: Text('Favourites'),
