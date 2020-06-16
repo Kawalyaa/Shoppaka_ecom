@@ -1,6 +1,4 @@
-import 'package:ecommerce_app/componants/similar_prod_detail.dart';
 import 'package:ecommerce_app/componants/single_product.dart';
-import 'package:ecommerce_app/componants/single_similar_product.dart';
 import 'package:ecommerce_app/model/cart_model.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
 import 'package:ecommerce_app/model/color_model.dart';
@@ -16,7 +14,7 @@ import 'package:provider/provider.dart';
 
 import '../constants.dart';
 
-class ProdDetails extends StatefulWidget {
+class SimilarProdDetails extends StatefulWidget {
   static const String id = 'productDetails';
   final productDetailsName;
   final List productDetailsPicture;
@@ -26,25 +24,24 @@ class ProdDetails extends StatefulWidget {
   final List productSizes;
   final List productColors;
   final String category;
-  final List<Products2> similarProd;
   bool isFavorite;
-  ProdDetails(
-      {this.productDetailsPicture,
-      this.productDetailsName,
-      this.productDetailsOldPrice,
-      this.productDetailsPrice,
-      this.productBrand,
-      this.productSizes,
-      this.productColors,
-      this.isFavorite,
-      this.category,
-      this.similarProd});
+  SimilarProdDetails({
+    this.productDetailsPicture,
+    this.productDetailsName,
+    this.productDetailsOldPrice,
+    this.productDetailsPrice,
+    this.productBrand,
+    this.productSizes,
+    this.productColors,
+    this.isFavorite,
+    this.category,
+  });
 
   @override
-  _ProdDetailsState createState() => _ProdDetailsState();
+  _SimilarProdDetailsState createState() => _SimilarProdDetailsState();
 }
 
-class _ProdDetailsState extends State<ProdDetails> {
+class _SimilarProdDetailsState extends State<SimilarProdDetails> {
   //bool isFav = false;
   int currentSelectedSizeIndex;
   int currentSelectedColorIndex;
@@ -54,8 +51,6 @@ class _ProdDetailsState extends State<ProdDetails> {
 
   String selectedSize;
   String selectedColor;
-
-  List<Products2> similarProdList;
 
   @override
   void initState() {
@@ -101,9 +96,9 @@ class _ProdDetailsState extends State<ProdDetails> {
     var favData = Provider.of<FavoriteList>(context);
     List<Products2> allProducts = Provider.of<List<Products2>>(context);
 
-    List<Products2> similarProdList = widget.similarProd;
-
     //========Create a List method that get products depending on the category======
+    List<Products2> similarProdList =
+        CategoryOptions().getCategory(allProducts, widget.category);
 
     return Scaffold(
       appBar: AppBar(
@@ -432,17 +427,19 @@ class _ProdDetailsState extends State<ProdDetails> {
             ],
           ),
           //******SIMILAR PRODUCTS*******
+          //==================*******under testing*****======================
           Divider(),
           Padding(
             padding: EdgeInsets.all(8.0),
             child: Text('Similar Products'),
           ),
           Container(
+            color: Colors.greenAccent,
             height: 180.0,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: similarProdList.length,
-                itemBuilder: (context, int index) => SimilarSingleProduct(
+                itemBuilder: (context, int index) => SingleProduct(
                       name: similarProdList[index].name,
                       images: similarProdList[index].images,
                       price: similarProdList[index].price,
@@ -450,7 +447,6 @@ class _ProdDetailsState extends State<ProdDetails> {
                       brand: similarProdList[index].brand,
                       colors: similarProdList[index].colors,
                       sizes: similarProdList[index].sizes,
-                      similarProduct: similarProdList,
                       isFavorite: similarProdList[index].favorite,
                       toggleFavorite: () {
                         setState(() {

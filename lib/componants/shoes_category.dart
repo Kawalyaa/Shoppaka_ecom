@@ -51,6 +51,7 @@ class _ShoesCategoryState extends State<ShoesCategory> {
               oldPrice: shoesList[index].oldPrice,
               sizes: shoesList[index].sizes,
               colors: shoesList[index].colors,
+              category: shoesList[index].category,
             ));
   }
 }

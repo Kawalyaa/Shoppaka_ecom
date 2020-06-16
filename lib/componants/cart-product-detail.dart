@@ -93,7 +93,7 @@ class CartItems extends StatelessWidget {
               ],
             ),
             SizedBox(
-              width: 5.0,
+              width: 10.0,
             ),
             //*******Icon Button section*****
             Column(
@@ -113,29 +113,25 @@ class CartItems extends StatelessWidget {
               ],
             ),
             SizedBox(
-              width: 8.0,
+              width: 15.0,
             ),
-            Column(
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                InkWell(
-                  onTap: deleteItem,
-                  child: Container(
-                    height: 30.0,
-                    width: 25.0,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFFF0025),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
+            Container(
+              height: 100,
+              //color: Colors.cyan,
+              child: Column(
+                //crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  InkWell(
+                    onTap: deleteItem,
                     child: Icon(
-                      Icons.close,
-                      size: 20,
-                      color: Colors.white,
+                      Icons.delete,
+                      size: 25.0,
+                      color: kColorRed,
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ],
         ),

@@ -1,6 +1,10 @@
 import 'package:ecommerce_app/app_data/app_data.dart';
 import 'package:ecommerce_app/componants/featured_category.dart';
+import 'package:ecommerce_app/componants/jewelries_category.dart';
+import 'package:ecommerce_app/componants/men_category.dart';
 import 'package:ecommerce_app/componants/shoes_category.dart';
+import 'package:ecommerce_app/componants/tech_category.dart';
+import 'package:ecommerce_app/componants/women_category.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
 import 'package:flutter/material.dart';
@@ -200,6 +204,86 @@ class _HomePageState extends State<HomePage> {
             Container(
               height: 320,
               child: ShoesCategory(),
+            ),
+          ],
+        );
+        break;
+      case Options.MEN:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(15.0),
+              child: Text(
+                'Men',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.black54),
+              ),
+            ),
+            //Grid view
+            Container(
+              height: 320,
+              child: MenCategory(),
+            ),
+          ],
+        );
+        break;
+      case Options.WOMEN:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(15.0),
+              child: Text(
+                'Women',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.black54),
+              ),
+            ),
+            //Grid view
+            Container(
+              height: 320,
+              child: WomenCategory(),
+            ),
+          ],
+        );
+        break;
+      case Options.TECH:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(15.0),
+              child: Text(
+                'Tech',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.black54),
+              ),
+            ),
+            //Grid view
+            Container(
+              height: 320,
+              child: TechCategory(),
+            ),
+          ],
+        );
+        break;
+      case Options.JEWELRY:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(15.0),
+              child: Text(
+                'Jewelry',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.black54),
+              ),
+            ),
+            //Grid view
+            Container(
+              height: 320,
+              child: JewelriesCategory(),
             ),
           ],
         );
