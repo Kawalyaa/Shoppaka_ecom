@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/pages/prod_detail.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SingleProduct extends StatelessWidget {
@@ -16,6 +17,7 @@ class SingleProduct extends StatelessWidget {
   final bool isFavorite;
   final bool featured;
   final Function toggleFavorite;
+  final Widget placeholder;
 
   SingleProduct(
       {this.id,
@@ -31,11 +33,12 @@ class SingleProduct extends StatelessWidget {
       this.isFavorite,
       this.featured,
       this.toggleFavorite,
+      this.placeholder,
       this.similarProduct});
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 5.0, right: 5.0, bottom: 5.0),
+      padding: const EdgeInsets.only(left: 6.0, right: 6.0, bottom: 5.0),
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15.0),
@@ -90,10 +93,12 @@ class SingleProduct extends StatelessWidget {
                   height: 100.0,
                   width: 100.0,
                   decoration: BoxDecoration(
-                    color: Colors.grey,
-                    image: DecorationImage(
-                        image: NetworkImage(images[0]), fit: BoxFit.cover),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
+                  child: FadeInImage.assetNetwork(
+                      fit: BoxFit.cover,
+                      placeholder: 'images/loading_gif/Spin-1s-200px.gif',
+                      image: images[0]),
                 ),
               ),
             ),
@@ -135,3 +140,38 @@ class SingleProduct extends StatelessWidget {
     );
   }
 }
+
+//Container(
+//height: 100.0,
+//width: 100.0,
+//decoration: BoxDecoration(
+//color: Colors.grey,
+//image: DecorationImage(
+//image: NetworkImage(images[0]), fit: BoxFit.cover),
+//),
+//),
+
+//AnimatedSwitcher(
+//duration: const Duration(milliseconds: 500),
+//child: frame != null ? child : placeholder,
+//);
+
+//
+//Image.network(
+//images[0],
+//fit: BoxFit.cover,
+//loadingBuilder: (context, child, loadingProgress) {
+//if (loadingProgress == null) {
+//return child;
+//} else {
+//return Center(
+//child: CircularProgressIndicator(
+//value: loadingProgress.expectedTotalBytes != null
+//? loadingProgress.cumulativeBytesLoaded /
+//loadingProgress.expectedTotalBytes
+//    : null,
+//),
+//);
+//}
+//},
+//),

@@ -1,6 +1,8 @@
 import 'package:ecommerce_app/componants/similar_prod_detail.dart';
 import 'package:ecommerce_app/pages/prod_detail.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class SimilarSingleProduct extends StatelessWidget {
   final String id;
@@ -17,6 +19,7 @@ class SimilarSingleProduct extends StatelessWidget {
   final bool featured;
   final Function toggleFavorite;
   final List similarProduct;
+  final placeholder;
 
   SimilarSingleProduct(
       {this.id,
@@ -32,7 +35,8 @@ class SimilarSingleProduct extends StatelessWidget {
       this.isFavorite,
       this.featured,
       this.toggleFavorite,
-      this.similarProduct});
+      this.similarProduct,
+      this.placeholder});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -90,10 +94,12 @@ class SimilarSingleProduct extends StatelessWidget {
                   height: 100.0,
                   width: 100.0,
                   decoration: BoxDecoration(
-                    color: Colors.grey,
-                    image: DecorationImage(
-                        image: NetworkImage(images[0]), fit: BoxFit.cover),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
+                  child: FadeInImage.assetNetwork(
+                      fit: BoxFit.cover,
+                      placeholder: 'images/loading_gif/Spin-1s-200px.gif',
+                      image: images[0]),
                 ),
               ),
             ),
@@ -136,3 +142,18 @@ class SimilarSingleProduct extends StatelessWidget {
     );
   }
 }
+
+//Image.network(
+//images[0],
+//fit: BoxFit.cover,
+//frameBuilder:
+//(context, child, frame, wasSynchronouslyLoaded) {
+//if (wasSynchronouslyLoaded) {
+//return child;
+//}
+//return AnimatedSwitcher(
+//duration: Duration(milliseconds: 500),
+//child: frame != null ? child : placeholder,
+//);
+//},
+//),
