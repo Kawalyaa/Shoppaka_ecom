@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/componants/single_product.dart';
+import 'package:ecommerce_app/model/categary_options.dart';
 import 'package:ecommerce_app/model/product2.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,9 +20,8 @@ class _ProductsState extends State<Products> {
 
     return allProds == null
         ? Center(
-            child: Container(
-              height: 200.0,
-              child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+              backgroundColor: Colors.red,
             ),
           )
         : GridView.builder(
@@ -53,6 +53,8 @@ class _ProductsState extends State<Products> {
                         colors: allProds[index].colors))
                     : favData.removeFavorite(allProds[index].name);
               },
+              similarProduct: CategoryOptions()
+                  .getCategory(allProds, allProds[index].category),
             ),
           );
   }

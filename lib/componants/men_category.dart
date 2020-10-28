@@ -33,6 +33,8 @@ class _MenCategoryState extends State<MenCategory> {
               colors: menCategoryList[index].colors,
               sizes: menCategoryList[index].sizes,
               isFavorite: menCategoryList[index].favorite,
+              similarProduct: CategoryOptions()
+                  .getCategory(allProds, menCategoryList[index].category),
               toggleFavorite: () {
                 setState(() {
                   menCategoryList[index].favorite =

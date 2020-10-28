@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/model/cart_model.dart';
+import 'package:ecommerce_app/pages/checkout_page.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -114,7 +115,9 @@ class _ShoppingCartState extends State<ShoppingCart> {
                       color: kColorRed,
                       borderRadius: BorderRadius.circular(30.0),
                       child: MaterialButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, Checkout.id);
+                        },
                         minWidth: 200.0,
                         height: 35.0,
                         child: Text(

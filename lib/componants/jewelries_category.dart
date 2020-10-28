@@ -33,6 +33,8 @@ class _JewelriesCategoryState extends State<JewelriesCategory> {
               colors: jewelriesCategoryList[index].colors,
               sizes: jewelriesCategoryList[index].sizes,
               isFavorite: jewelriesCategoryList[index].favorite,
+              similarProduct: CategoryOptions()
+                  .getCategory(allProds, jewelriesCategoryList[index].category),
               toggleFavorite: () {
                 setState(() {
                   //===toggle favorite=====
