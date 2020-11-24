@@ -1,5 +1,7 @@
 import 'package:ecommerce_app/pages/favorites_page.dart';
 import 'package:ecommerce_app/pages/login_options_page.dart';
+import 'package:ecommerce_app/provider/app_state_provider.dart';
+import 'package:ecommerce_app/provider/user.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
 import 'package:provider/provider.dart';
@@ -7,19 +9,27 @@ import 'package:ecommerce_app/provider/user_provider.dart';
 import 'package:ecommerce_app/db/users.dart';
 import 'package:ecommerce_app/pages/login.dart';
 
-class NavigationDrawer extends StatelessWidget {
+class NavigationDrawer extends StatefulWidget {
+  @override
+  _NavigationDrawerState createState() => _NavigationDrawerState();
+}
+
+class _NavigationDrawerState extends State<NavigationDrawer> {
+  String _userName;
+  String _userEmail;
+
   @override
   Widget build(BuildContext context) {
-    UserServices _userServices = UserServices();
-    final _user = Provider.of<UserProvider>(context);
+    //UserServices _userServices = UserServices();
+    UserProv authState = Provider.of<UserProv>(context);
 
     return Drawer(
       child: ListView(
         children: <Widget>[
           //Header
           UserAccountsDrawerHeader(
-            accountName: Text('Kawalya Andrew'),
-            accountEmail: Text('andrew58934@gmail.com'),
+            accountName: Text("authState.user.displayName"),
+            accountEmail: Text("authState.user.email"),
             currentAccountPicture: GestureDetector(
               child: CircleAvatar(
                 backgroundColor: Colors.grey,
@@ -94,10 +104,8 @@ class NavigationDrawer extends StatelessWidget {
           ),
           InkWell(
               onTap: () {
-                _user.signOut();
-                Navigator.pushReplacementNamed(context, WelcomeLoginOptions.id);
-                //_userServices.signOut();
-//                Navigator.pushReplacementNamed(context, Login.id);
+                authState.signOut();
+                Navigator.pushReplacementNamed(context, Login.id);
               },
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20.0, 5.0, 10.0, 5.0),

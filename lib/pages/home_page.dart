@@ -24,6 +24,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  //FirebaseFirestore
   TextEditingController _searchController = TextEditingController();
   int selectedIndex;
   List<CategoryOptions> optionsList = AppData.categoryOptionList;
