@@ -21,9 +21,9 @@ import 'db/databse_services.dart';
 import 'model/product2.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
 
-main() {
-  //WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   return runApp(MyApp());
 }
 

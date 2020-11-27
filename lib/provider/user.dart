@@ -40,8 +40,8 @@ class UserProv with ChangeNotifier {
     init();
   }
 
-  Future<void> init() async {
-    await Firebase.initializeApp();
+  init() {
+    //await Firebase.initializeApp();
 
     FirebaseAuth.instance.userChanges().listen((user) {
       if (user != null) {

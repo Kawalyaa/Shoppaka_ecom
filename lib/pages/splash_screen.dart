@@ -15,7 +15,7 @@ class _TheSplashScreenState extends State<TheSplashScreen> {
     return Scaffold(
       //backgroundColor: Colors.white,
       body: SplashScreen(
-        seconds: 1000,
+        seconds: 10,
         title: Text(
           "Shopla",
           style: TextStyle(
