@@ -4,6 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:splashscreen/splashscreen.dart';
 
 class TheSplashScreen extends StatefulWidget {
+  static const String id = "theSplashScreen";
   @override
   _TheSplashScreenState createState() => _TheSplashScreenState();
 }
@@ -14,7 +15,7 @@ class _TheSplashScreenState extends State<TheSplashScreen> {
     return Scaffold(
       //backgroundColor: Colors.white,
       body: SplashScreen(
-        seconds: 10000,
+        seconds: 1000,
         title: Text(
           "Shopla",
           style: TextStyle(

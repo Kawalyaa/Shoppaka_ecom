@@ -35,8 +35,6 @@ class UserProv with ChangeNotifier {
   TextEditingController password = TextEditingController();
   TextEditingController name = TextEditingController();
   TextEditingController phone = TextEditingController();
-  TextEditingController password2 = TextEditingController();
-  TextEditingController email2 = TextEditingController();
 
   UserProv() {
     init();
@@ -60,14 +58,15 @@ class UserProv with ChangeNotifier {
     try {
       _status = Status.Authenticating;
       notifyListeners();
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email.text.trim(), password: password.text.trim());
-      //.then((value) async {
-      //await prefs.setString(ID, value.user.uid);
-      // await prefs.setBool(LOGGED_IN, true);
-      //_userModel = await _userServices.getUserById(value.user.uid);
-      hideProgress();
-      // });
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: email.text.trim(), password: password.text.trim())
+          .then((value) async {
+        //await prefs.setString(ID, value.user.uid);
+        // await prefs.setBool(LOGGED_IN, true);
+        _userModel = await _userServices.getUserById(value.user.uid);
+        hideProgress();
+      });
       return true;
     } catch (e) {
       hideProgress();

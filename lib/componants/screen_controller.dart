@@ -21,7 +21,7 @@ class ScreenController extends StatelessWidget {
         return TheSplashScreen();
       case Status.Unauthenticated:
         return Login();
-      //case Status.Authenticating:
+      case Status.Authenticating:
       case Status.Authenticated:
         return HomePage();
       default:

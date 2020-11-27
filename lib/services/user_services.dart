@@ -1,7 +1,12 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/model/users.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UserServices {
+  Reference storage = FirebaseStorage.instance.ref();
+
   String collections = 'users';
   void createUser(
       {String id,
@@ -37,4 +42,11 @@ class UserServices {
       .collection(collections)
       .doc(userId)
       .update({"token": token});
+
+  Future<String> uploadUserPhoto(File image, String userId) async {
+    Reference ref = storage.child("images/$userId.png");
+    UploadTask task = ref.putFile(image);
+    var downloadUrl = await task.whenComplete(() => ref.getDownloadURL());
+    return downloadUrl.toString();
+  }
 }

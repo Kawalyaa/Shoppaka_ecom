@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/pages/favorites_page.dart';
 import 'package:ecommerce_app/pages/prod_detail.dart';
+import 'package:ecommerce_app/pages/splash_screen.dart';
 import 'package:ecommerce_app/provider/app_state_provider.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:ecommerce_app/provider/user.dart';
@@ -22,7 +23,7 @@ import 'package:ecommerce_app/provider/product_provider2.dart';
 
 main() {
   //WidgetsFlutterBinding.ensureInitialized();
-  //Firebase.initializeApp();
+  Firebase.initializeApp();
   return runApp(MyApp());
 }
 
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
             WelcomeLoginOptions.id: (context) => WelcomeLoginOptions(),
             Favorites.id: (context) => Favorites(),
             Checkout.id: (context) => Checkout(),
+            TheSplashScreen.id: (context) => TheSplashScreen(),
           },
           theme: ThemeData(primaryColor: Color(0xFFFF0025)),
           home: ScreenController(),

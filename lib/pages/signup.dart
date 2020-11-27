@@ -160,6 +160,7 @@ class _SignUpState extends State<SignUp> {
                     } else {
                       hideProgress();
                       authProvider.clearController();
+                      authProvider.reloadUser();
                       Navigator.pushReplacementNamed(context, HomePage.id);
                     }
                   } //validateForm();
