@@ -64,7 +64,7 @@ class UserProv with ChangeNotifier {
           .then((value) async {
         //await prefs.setString(ID, value.user.uid);
         // await prefs.setBool(LOGGED_IN, true);
-        _userModel = await _userServices.getUserById(value.user.uid);
+        //**********_userModel = await _userServices.getUserById(value.user.uid);
         hideProgress();
       });
       return true;
@@ -89,10 +89,12 @@ class UserProv with ChangeNotifier {
         await prefs.setString(ID, result.user.uid);
         await prefs.setBool(LOGGED_IN, true);
         _userServices.createUser(
-            id: result.user.uid,
-            name: name.text.trim(),
-            email: email.text.trim(),
-            phone: phone.text.trim());
+          id: result.user.uid,
+          name: name.text.trim(),
+          email: email.text.trim(),
+          phone: phone.text.trim(),
+        );
+
         _status = Status.Authenticated;
         await prefs.setString(ID, result.user.uid);
         await prefs.setBool(LOGGED_IN, true);
@@ -129,12 +131,12 @@ class UserProv with ChangeNotifier {
   }
 
   Future<void> reloadUser() async {
-    _userModel = await _userServices.getUserById(user.uid);
+    //************ _userModel = await _userServices.getUserById(user.uid);
     notifyListeners();
   }
 
-  updateUserData(Map<String, dynamic> data) async {
-    _userServices.updateUserData(data);
+  updateUserData(Map<String, dynamic> data, String userId) async {
+    _userServices.updateUserData(data, userId);
   }
 
   saveDeviceToken() async {
