@@ -1,29 +1,15 @@
 import 'package:ecommerce_app/db/databse_services.dart';
 import 'package:ecommerce_app/model/users.dart';
 import 'package:ecommerce_app/pages/favorites_page.dart';
-import 'package:ecommerce_app/pages/login_options_page.dart';
-import 'package:ecommerce_app/provider/app_state_provider.dart';
 import 'package:ecommerce_app/provider/user.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:ecommerce_app/provider/user_provider.dart';
-import 'package:ecommerce_app/db/users.dart';
 import 'package:ecommerce_app/pages/login.dart';
-import 'dart:io';
 import 'package:ecommerce_app/services/user_services.dart';
 
 class NavigationDrawer extends StatefulWidget {
-//  final String userName;
-//  final String userEmail;
-//
-//  final String photoLink;
-//
-//  NavigationDrawer({this.userName, this.userEmail, this.photoLink});
-
   @override
   _NavigationDrawerState createState() => _NavigationDrawerState();
 }
@@ -35,8 +21,6 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
   @override
   Widget build(BuildContext context) {
     UserProv authState = Provider.of<UserProv>(context);
-    //var userInfo = authState.userModel;
-    String image;
 
     return StreamBuilder(
       stream: _services.getUserInfo(),
@@ -61,8 +45,19 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                           },
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(50.0),
-                            child: snapshot.data[0].photo == null
-                                ? Text(snapshot.data[0].name[0])
+                            child: snapshot.data[0].photo == ''
+                                ? Container(
+                                    color: Color(0xFF05ACFB),
+                                    child: Center(
+                                      child: Text(
+                                        snapshot.data[0].name[0],
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 25),
+                                      ),
+                                    ),
+                                  )
                                 : FadeInImage.assetNetwork(
                                     fit: BoxFit.cover,
                                     placeholder:
@@ -134,22 +129,15 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                       ),
                     ),
                     InkWell(
-                        onTap: () {
-                          authState.signOut();
-                          Navigator.pushReplacementNamed(context, Login.id);
-                        },
-                        child: Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(20.0, 5.0, 10.0, 5.0),
-                          child: Text(
-                            'Log Out',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ))
+                      onTap: () {
+                        authState.signOut();
+                        Navigator.pushReplacementNamed(context, Login.id);
+                      },
+                      child: ListTile(
+                        leading: Icon(Icons.logout),
+                        title: Text('Log Out'),
+                      ),
+                    )
                   ],
                 ),
               );

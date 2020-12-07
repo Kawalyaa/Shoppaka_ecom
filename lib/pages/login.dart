@@ -157,7 +157,7 @@ class _LoginState extends State<Login> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.pushReplacementNamed(context, SignUp.id);
+                      Navigator.pushNamed(context, SignUp.id);
                     },
                     child: Text(
                       'Register',
