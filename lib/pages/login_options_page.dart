@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/services/user_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,6 @@ import 'login.dart';
 import 'package:ecommerce_app/componants/round_button.dart';
 import 'signup.dart';
 import '../db/auth.dart';
-import '../db/userServices.dart';
 
 class WelcomeLoginOptions extends StatefulWidget {
   static const String id = 'welcomeLoginOptions';
@@ -16,27 +16,10 @@ class WelcomeLoginOptions extends StatefulWidget {
 }
 
 class _WelcomeLoginOptionsState extends State<WelcomeLoginOptions> {
-  //bool loading = false;
   bool isLoggedIn = false;
   FirebaseAuth _auth = FirebaseAuth.instance;
   Auth auth = Auth();
-  UserServices userServices = UserServices();
-
-//  @override
-//  void initState() {
-//    super.initState();
-//    isSignedIn();
-//  }
-//
-//  void isSignedIn() async {
-//
-//    FirebaseUser user = await _auth.currentUser();
-//
-//    if (isLoggedIn || user != null) {
-//      Navigator.pushNamed(context, HomePage.id);
-//    }
-//
-//  }
+  UserServices _userServices = UserServices();
 
   @override
   Widget build(BuildContext context) {
@@ -119,18 +102,13 @@ class _WelcomeLoginOptionsState extends State<WelcomeLoginOptions> {
           User currentUser = _auth.currentUser;
           //create user if does not exit
           if (currentUser == null) {
-            userServices.createUser({
-              'name': user.displayName,
-              'photo': user.photoURL,
-              'email': user.email,
-              'userId': user.uid
-            });
+            _userServices.createUser(
+                name: user.displayName,
+                photo: user.photoURL,
+                email: user.email,
+                id: user.uid);
           }
           Navigator.pushReplacementNamed(context, HomePage.id);
-
-//          signInWithGoogle().whenComplete(() {
-//            Navigator.pushReplacementNamed(context, HomePage.id);
-//          });
         },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),

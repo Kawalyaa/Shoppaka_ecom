@@ -15,12 +15,14 @@ class UserProv with ChangeNotifier {
   static const LOGGED_IN = "loggedIn";
   static const ID = "id";
 
+  int _intiScreen;
   User _user;
   Status _status = Status.Uninitialized;
   UserServices _userServices = UserServices();
   UserModel _userModel;
 
   //Getter
+  int get initScreen => _intiScreen;
   User get user => _user;
   Status get status => _status;
   UserModel get userModel => _userModel;
@@ -41,8 +43,6 @@ class UserProv with ChangeNotifier {
   }
 
   init() {
-    //await Firebase.initializeApp();
-
     FirebaseAuth.instance.userChanges().listen((user) {
       if (user != null) {
         _status = Status.Authenticated;
@@ -54,7 +54,7 @@ class UserProv with ChangeNotifier {
   }
 
   Future<bool> signIn() async {
-    //SharedPreferences prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       _status = Status.Authenticating;
       notifyListeners();
@@ -62,14 +62,13 @@ class UserProv with ChangeNotifier {
           .signInWithEmailAndPassword(
               email: email.text.trim(), password: password.text.trim())
           .then((value) async {
-        //await prefs.setString(ID, value.user.uid);
-        // await prefs.setBool(LOGGED_IN, true);
-        //**********_userModel = await _userServices.getUserById(value.user.uid);
-        hideProgress();
+        _intiScreen = prefs.getInt("initScreen");
+        await prefs.setInt("initScreen", 1);
+        // hideProgress();
       });
       return true;
     } catch (e) {
-      hideProgress();
+      //hideProgress();
       _status = Status.Unauthenticated;
       notifyListeners();
       print(e.toString());
@@ -86,8 +85,8 @@ class UserProv with ChangeNotifier {
               email: email.text.trim(), password: password.text.trim())
           .then((result) async {
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString(ID, result.user.uid);
-        await prefs.setBool(LOGGED_IN, true);
+        _intiScreen = prefs.getInt("initScreen");
+        await prefs.setInt("initScreen", 1);
         _userServices.createUser(
           id: result.user.uid,
           name: name.text.trim(),
@@ -104,10 +103,6 @@ class UserProv with ChangeNotifier {
     } on FirebaseAuthException catch (error) {
 //      hideProgress();
       _status = Status.Unauthenticated;
-//      error.code != 'ERROR_EMAIL_ALREADY_IN_USE'
-//          ? showAlertDialog(context, 'Failed', 'Couldn\'t sign up')
-//          : showAlertDialog(context, 'Failed',
-//              'Email already in use. Please pick another email address');
       notifyListeners();
       print(error.toString());
       return false;
@@ -146,17 +141,4 @@ class UserProv with ChangeNotifier {
       _userServices.addDeviceToken(deviceToken, user.uid);
     }
   }
-//
-//  _initialize() async {
-//    SharedPreferences prefs = await SharedPreferences.getInstance();
-//    bool loggedIn = prefs.getBool(LOGGED_IN) ?? false;
-//    if (!loggedIn) {
-//      _status = Status.Unauthenticated;
-//    } else {
-//      _user = FirebaseAuth.instance.currentUser;
-//      _status = Status.Authenticated;
-//      _userModel = await _userServices.getUserById(_user.uid);
-//    }
-//    notifyListeners();
-//  }
 }
