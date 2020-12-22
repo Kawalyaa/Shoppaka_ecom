@@ -123,8 +123,8 @@ class _LoginState extends State<Login> {
                       return;
                     } else {
                       hideProgress();
-                      authProvider.clearController();
-                      authProvider.reloadUser();
+                      // authProvider.clearController();
+                      //authProvider.reloadUser();
                       Navigator.pushReplacementNamed(context, HomePage.id);
                     }
 

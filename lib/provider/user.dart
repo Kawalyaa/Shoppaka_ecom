@@ -54,21 +54,14 @@ class UserProv with ChangeNotifier {
   }
 
   Future<bool> signIn() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       _status = Status.Authenticating;
       notifyListeners();
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-              email: email.text.trim(), password: password.text.trim())
-          .then((value) async {
-        _intiScreen = prefs.getInt("initScreen");
-        await prefs.setInt("initScreen", 1);
-        // hideProgress();
-      });
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email.text.trim(), password: password.text.trim());
+
       return true;
     } catch (e) {
-      //hideProgress();
       _status = Status.Unauthenticated;
       notifyListeners();
       print(e.toString());
@@ -85,8 +78,7 @@ class UserProv with ChangeNotifier {
               email: email.text.trim(), password: password.text.trim())
           .then((result) async {
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        _intiScreen = prefs.getInt("initScreen");
-        await prefs.setInt("initScreen", 1);
+
         _userServices.createUser(
           id: result.user.uid,
           name: name.text.trim(),
@@ -110,12 +102,8 @@ class UserProv with ChangeNotifier {
   }
 
   Future signOut() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString(ID, null);
-    await prefs.setBool(LOGGED_IN, false);
     FirebaseAuth.instance.signOut();
     notifyListeners();
-    return Future.delayed(Duration.zero);
   }
 
   void clearController() {
