@@ -358,6 +358,13 @@ class _CheckoutState extends State<Checkout>
     );
   }
 
+  //TODO
+  void _paymentInfoList(){
+
+  }
+
+  void _summeryInfoList(){}
+
   ListTile _costsTile({String leadingTxt, trailingTxt, Color textColor}) =>
       ListTile(
         leading: Text(leadingTxt,
