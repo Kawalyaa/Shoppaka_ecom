@@ -80,6 +80,7 @@ flutter:
    - images/category_icons/
    - images/cart/
    - images/loading_gif/
+   - images/mobile_money/
    - images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
