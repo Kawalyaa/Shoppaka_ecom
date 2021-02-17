@@ -13,7 +13,7 @@ class UserModel {
   final String id;
   final String photo;
   final String phone;
-  final List<String> address;
+  final List address;
   final String token;
   UserModel(
       {this.id,

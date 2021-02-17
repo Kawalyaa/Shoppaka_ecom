@@ -1,8 +1,6 @@
 import 'package:ecommerce_app/componants/loading.dart';
 import 'package:ecommerce_app/model/users.dart';
 import 'package:ecommerce_app/services/user_services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,17 +15,12 @@ class AddNewAddress extends StatefulWidget {
 }
 
 class _AddNewAddressState extends State<AddNewAddress> {
-  FirebaseAuth _auth = FirebaseAuth.instance;
-
   final _addressFormKey = GlobalKey<FormState>();
 
   TextEditingController _firstNameController = TextEditingController();
   TextEditingController _lastNameController = TextEditingController();
   TextEditingController _addressController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
-  TextEditingController _contryCodeController = TextEditingController();
-
-  FocusNode _focusNode = FocusNode();
 
   List<String> _countryCodes = ['+256', '+1'];
   List<String> _region = [
@@ -70,7 +63,6 @@ class _AddNewAddressState extends State<AddNewAddress> {
     List userName = _userInfo[0].name.split(" ");
     _firstUserName = userName[0];
     _lastUserName = userName[1];
-    print(_firstUserName);
 
     List<String> _townFilter() {
       switch (_selectedRegion) {
@@ -324,6 +316,8 @@ class _AddNewAddressState extends State<AddNewAddress> {
                             child: TextFormField(
                               controller: _phoneController,
                               keyboardType: TextInputType.number,
+                              onSaved: (input) => _phoneController.text =
+                                  input.replaceFirst(new RegExp(r'^0+'), ''),
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return ('Value Can\'t Be Empty');
@@ -391,31 +385,28 @@ class _AddNewAddressState extends State<AddNewAddress> {
               height: 45.0,
               minWidth: double.infinity,
               color: kColorRed,
-              onPressed: () {
-                User _user = _auth.currentUser;
-
+              onPressed: () async {
                 if (_addressFormKey.currentState.validate() &&
                     _selectedRegion != null &&
                     _selectedTown != null) {
                   showProgress(context, 'Saving...', false);
-
-                  try {
-                    _userServices.updateUserAddress({
-                      'name':
-                          _firstNameController.text + _lastNameController.text,
-                      'address': _addressController.text,
-                      'region': _selectedRegion,
-                      'town': _selectedTown,
-                      'phone': _selectedCountryCode + _phoneController.text,
-                      'default': isChecked
-                    }, _user.uid);
+                  if (!await _userServices.updateAddress({
+                    'name': _firstNameController.text +
+                        ' ' +
+                        _lastNameController.text,
+                    'address': _addressController.text,
+                    'region': _selectedRegion,
+                    'town': _selectedTown,
+                    'phone': _selectedCountryCode +
+                        _phoneController.text
+                            .replaceFirst(new RegExp(r'^0+'), ''),
+                    'default': isChecked
+                  })) {
                     hideProgress();
-                  } catch (e) {
+                    showAlertDialog(context, "Error", "SignUp Failed");
+                  } else {
                     hideProgress();
-                    showAlertDialog(context, "Error", e.toString());
-
-                    print(e);
-                    return e;
+                    Navigator.pop(context);
                   }
                 }
               },
