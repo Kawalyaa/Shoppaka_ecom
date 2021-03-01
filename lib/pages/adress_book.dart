@@ -17,7 +17,7 @@ class AddressBook extends StatelessWidget {
 
     //List firstTwo = addressList.sublist(0, 2);
 
-    //make only one item in a list equals to true
+    ///make only one item in a list equals to true
     addressList[1]['default'] = false;
 
     ///List addressBook = [];

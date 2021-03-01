@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/model/address_details_model.dart';
 import 'package:ecommerce_app/pages/add_new_address.dart';
 import 'package:flutter/material.dart';
 
@@ -55,28 +56,28 @@ class AddressCard extends StatelessWidget {
                     style: TextStyle(color: Colors.black45),
                   ),
                   SizedBox(
-                    height: 2.0,
+                    height: 5.0,
                   ),
                   Text(
                     town,
                     style: TextStyle(color: Colors.black45),
                   ),
                   SizedBox(
-                    height: 2.0,
+                    height: 5.0,
                   ),
                   Text(
                     address,
                     style: TextStyle(color: Colors.black45),
                   ),
                   SizedBox(
-                    height: 2.0,
+                    height: 5.0,
                   ),
                   Text(
                     phone,
                     style: TextStyle(color: Colors.black45),
                   ),
                   SizedBox(
-                    height: 2.0,
+                    height: 5.0,
                   ),
                   Text(
                     defaultAddress,
@@ -96,7 +97,18 @@ class AddressCard extends StatelessWidget {
             ),
             Center(
               child: FlatButton(
-                onPressed: () {},
+                onPressed: () {
+                  //Sending information back on pop
+                  Navigator.pop(context, [
+                    AddressDetailsModel(
+                        name: name,
+                        region: region,
+                        town: town,
+                        address: address,
+                        phone: phone,
+                        defaultAddress: defaultAddress)
+                  ]);
+                },
                 child: Text(
                   'SELECT THIS ADDRESS',
                   style: TextStyle(color: kColorRed),
