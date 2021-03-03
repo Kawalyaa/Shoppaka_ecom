@@ -21,6 +21,7 @@ class _ShoesCategoryState extends State<ShoesCategory> {
     var favData = Provider.of<FavoriteList>(context);
 
     return GridView.builder(
+        physics: NeverScrollableScrollPhysics(),
         itemCount: shoesList.length,
         gridDelegate:
             SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),

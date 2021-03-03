@@ -161,7 +161,7 @@ class _HomePageState extends State<HomePage> {
               },
             ),
           ),
-          _productOptions(),
+          _productOptions()
         ],
       ),
     );
@@ -183,7 +183,7 @@ class _HomePageState extends State<HomePage> {
             ),
             //Grid view
             Container(
-              height: 320,
+              height: 380,
               child: FeaturedCategory(),
             ),
           ],
@@ -204,7 +204,7 @@ class _HomePageState extends State<HomePage> {
             ),
             //Grid view
             Container(
-              height: 320,
+              height: 380,
               child: Products(),
             ),
           ],
@@ -224,7 +224,7 @@ class _HomePageState extends State<HomePage> {
             ),
             //Grid view
             Container(
-              height: 320,
+              height: 550,
               child: ShoesCategory(),
             ),
           ],
@@ -244,7 +244,7 @@ class _HomePageState extends State<HomePage> {
             ),
             //Grid view
             Container(
-              height: 320,
+              height: 380,
               child: MenCategory(),
             ),
           ],
@@ -264,7 +264,7 @@ class _HomePageState extends State<HomePage> {
             ),
             //Grid view
             Container(
-              height: 320,
+              height: 380,
               child: WomenCategory(),
             ),
           ],
@@ -284,7 +284,7 @@ class _HomePageState extends State<HomePage> {
             ),
             //Grid view
             Container(
-              height: 320,
+              height: 380,
               child: TechCategory(),
             ),
           ],
@@ -304,7 +304,7 @@ class _HomePageState extends State<HomePage> {
             ),
             //Grid view
             Container(
-              height: 320,
+              height: 380,
               child: JewelriesCategory(),
             ),
           ],

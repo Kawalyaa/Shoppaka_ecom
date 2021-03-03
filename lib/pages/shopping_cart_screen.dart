@@ -22,6 +22,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
     List<CartModel> cartList = getValue.cartProductList;
     double totalPrice = getValue.getTotalPrice();
+    var _prodDetails = getValue.getProductDetails();
 
     return cartList.length == 0
         ? Scaffold(
@@ -116,7 +117,10 @@ class _ShoppingCartState extends State<ShoppingCart> {
                       borderRadius: BorderRadius.circular(30.0),
                       child: MaterialButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, Checkout.id);
+                          Navigator.pushNamed(context, Checkout.id,
+                              arguments: Checkout(
+                                productPrice: totalPrice.roundToDouble(),
+                              ));
                         },
                         minWidth: 200.0,
                         height: 35.0,
