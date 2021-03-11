@@ -26,10 +26,12 @@ class ProdDetails extends StatefulWidget {
   final List productSizes;
   final List productColors;
   final String category;
+  final String heroTag;
   final List<Products2> similarProd;
   bool isFavorite;
   ProdDetails(
       {this.productDetailsPicture,
+      this.heroTag,
       this.productDetailsName,
       this.productDetailsOldPrice,
       this.productDetailsPrice,
@@ -99,7 +101,6 @@ class _ProdDetailsState extends State<ProdDetails> {
     var providerData = Provider.of<ProductProvider2>(context);
     List<CartModel> cartList = providerData.cartProductList;
     var favData = Provider.of<FavoriteList>(context);
-    List<Products2> allProducts = Provider.of<List<Products2>>(context);
 
     List<Products2> similarProdList = widget.similarProd;
 
@@ -171,14 +172,17 @@ class _ProdDetailsState extends State<ProdDetails> {
       body: ListView(
         children: <Widget>[
           Hero(
-            tag: widget.productDetailsName,
+            tag: widget.heroTag,
             child: Container(
               height: 300.0,
               width: 200.0,
               decoration: BoxDecoration(
                 color: Colors.white,
-                image: DecorationImage(
-                  image: NetworkImage(widget.productDetailsPicture[0]),
+              ),
+              child: Center(
+                child: FadeInImage.assetNetwork(
+                  image: widget.productDetailsPicture[0],
+                  placeholder: 'images/loading_gif/Spin-1s-200px.gif',
                   fit: BoxFit.cover,
                 ),
               ),
