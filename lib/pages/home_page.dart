@@ -1,29 +1,17 @@
-//import 'package:ecommerce_app/app_data/app_data.dart';
-import 'package:ecommerce_app/componants/featured_category.dart';
+import 'package:ecommerce_app/componants/image_carousel_slider.dart';
 import 'package:ecommerce_app/componants/original_product_section.dart';
-import 'package:ecommerce_app/componants/jewelries_category.dart';
-import 'package:ecommerce_app/componants/men_category.dart';
 import 'package:ecommerce_app/componants/featured_section.dart';
-import 'package:ecommerce_app/componants/shoes_category.dart';
-import 'package:ecommerce_app/componants/tech_category.dart';
-import 'package:ecommerce_app/componants/women_category.dart';
 import 'package:ecommerce_app/db/app_data.dart';
-import 'package:ecommerce_app/db/databse_services.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
 import 'package:ecommerce_app/model/users.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
-import 'package:ecommerce_app/services/user_services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerce_app/componants/products.dart';
 import 'package:ecommerce_app/componants/category_option_detail.dart';
 import 'package:ecommerce_app/componants/image_carousel.dart';
 import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
 import 'package:ecommerce_app/componants/navigation_drawer.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_shine/flutter_shine.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
 import '../constants.dart';
@@ -35,7 +23,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  TextEditingController _searchController = TextEditingController();
+  // TextEditingController _searchController = TextEditingController();
   int selectedIndex;
   List<CategoryOptions> optionsList = AppData.categoryOptionsList;
   Options categoryOption = Options.FEATURED;
@@ -120,7 +108,8 @@ class _HomePageState extends State<HomePage> {
             ), //Navigation drawer
       body: ListView(
         children: <Widget>[
-          ImageCarousel(), //Image carousel
+          ImageCarouselSlider(),
+          //ImageCarousel(), //Image carousel
 
           Padding(
             padding: EdgeInsets.only(left: 8.0, top: 20),
