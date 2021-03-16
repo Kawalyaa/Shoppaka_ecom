@@ -5,13 +5,13 @@ enum Options { ALL, SHOES, MEN, WOMEN, TECH, JEWELRY, FEATURED }
 
 class SelectCategory extends StatelessWidget {
   final String imageLocation;
-  final String imageCaption;
+  final String caption;
   final bool isSelected;
   final Function onSelected;
 
   SelectCategory({
     this.imageLocation,
-    this.imageCaption,
+    this.caption,
     this.isSelected,
     this.onSelected,
   });
@@ -36,13 +36,21 @@ class SelectCategory extends StatelessWidget {
               color: Colors.white),
           child: Row(
             children: <Widget>[
-              imageLocation != null ? Image.asset(imageLocation) : SizedBox(),
+              imageLocation != null
+                  ? Container(
+                      height: 80,
+                      width: 45,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage(imageLocation),
+                              fit: BoxFit.cover)))
+                  : SizedBox(),
               SizedBox(
                 width: 3.0,
               ),
               Container(
                 child: Text(
-                  imageCaption,
+                  caption,
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 15.0,

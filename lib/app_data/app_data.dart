@@ -3,27 +3,27 @@ import 'package:ecommerce_app/model/categary_options.dart';
 class AppData {
   static List<CategoryOptions> categoryOptionList = [
     CategoryOptions(
-      imageCaption: 'All',
+      caption: 'All',
     ),
     CategoryOptions(
       imageLocation: 'images/category_icons/shoes.png',
-      imageCaption: 'Shoes',
+      caption: 'Shoes',
     ),
     CategoryOptions(
       imageLocation: 'images/category_icons/jeans.png',
-      imageCaption: 'Men',
+      caption: 'Men',
     ),
     CategoryOptions(
       imageLocation: 'images/category_icons/dress.png',
-      imageCaption: 'Women',
+      caption: 'Women',
     ),
     CategoryOptions(
       imageLocation: 'images/category_icons/iphone.png',
-      imageCaption: 'Tech',
+      caption: 'Tech',
     ),
     CategoryOptions(
       imageLocation: 'images/category_icons/necklace.png',
-      imageCaption: 'Jewelries',
+      caption: 'Jewelries',
     ),
   ];
 }

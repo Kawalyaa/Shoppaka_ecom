@@ -41,6 +41,10 @@ dependencies:
   image_picker: ^0.6.7+14
   bubble_tab_indicator: ^0.1.4
   flutter_staggered_grid_view: any
+  flutter_shine: ^0.0.5
+  animated_text_kit: ^3.1.2
+
+
 
 
 
@@ -82,12 +86,13 @@ flutter:
   assets:
    - images/products/
    - images/carousel/
-   - images/category_icons/
+   - images/categories_icons/
    - images/cart/
    - images/loading_gif/
    - images/mobile_money/
    - images/
    - images/banners/
+   - images/interests/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
