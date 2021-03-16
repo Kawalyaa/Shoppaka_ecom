@@ -11,8 +11,6 @@ class ImageCarouselSlider extends StatefulWidget {
 
 class _ImageCarouselSliderState extends State<ImageCarouselSlider> {
   int _currentIndex = 0;
-  ImageCardModel _cardModel = ImageCardModel();
-  //TODO >>>>>>>>>>>>>>>
   List<ImageCardModel> _cardList = AppData.imageCardList;
   @override
   Widget build(BuildContext context) {
@@ -46,20 +44,19 @@ class _ImageCarouselSliderState extends State<ImageCarouselSlider> {
                 .toList(),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: _cardModel.map<Widget>(
-              _cardList,
-              (index, item) => Container(
-                width: 8.0,
-                height: 8.0,
-                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: _currentIndex == index ? kColorRed : Colors.grey,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                _cardList.length,
+                (index) => Container(
+                  width: 8.0,
+                  height: 8.0,
+                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: _currentIndex == index ? kColorRed : Colors.grey,
+                  ),
                 ),
-              ),
-            ),
-          )
+              ))
         ],
       ),
     );
