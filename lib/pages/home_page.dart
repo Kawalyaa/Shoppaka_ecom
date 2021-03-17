@@ -124,28 +124,40 @@ class _HomePageState extends State<HomePage> {
           ),
 
           //Horizontal list view
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 10),
-            width: MediaQuery.of(context).size.width,
-            height: 80.0,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: optionsList.length,
-              itemBuilder: (context, int index) {
-                return SelectCategory(
-                  caption: optionsList[index].caption,
-                  imageLocation: optionsList[index].imageLocation,
-                  isSelected: selectedIndex == index,
-                  onSelected: () {
-                    setState(() {
-                      selectedIndex = index;
+          Row(
+            children: [
+              IconButton(
+                onPressed: () {},
+                iconSize: 28,
+                icon: Icon(
+                  Icons.home,
+                  color: kColorRed,
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 10),
+                width: MediaQuery.of(context).size.width - 50,
+                height: 80.0,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: optionsList.length,
+                  itemBuilder: (context, int index) {
+                    return SelectCategory(
+                      caption: optionsList[index].caption,
+                      imageLocation: optionsList[index].imageLocation,
+                      isSelected: selectedIndex == index,
+                      onSelected: () {
+                        setState(() {
+                          selectedIndex = index;
 
-                      _selectedOption(optionsList, index);
-                    });
+                          _selectedOption(optionsList, index);
+                        });
+                      },
+                    );
                   },
-                );
-              },
-            ),
+                ),
+              ),
+            ],
           ),
           _swapDeals(),
           _productList1(),
