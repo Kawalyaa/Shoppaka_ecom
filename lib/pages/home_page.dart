@@ -4,20 +4,22 @@ import 'package:ecommerce_app/componants/featured_section.dart';
 import 'package:ecommerce_app/db/app_data.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
 import 'package:ecommerce_app/model/users.dart';
+import 'package:ecommerce_app/pages/category_products_list.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/componants/category_option_detail.dart';
-import 'package:ecommerce_app/componants/image_carousel.dart';
 import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
 import 'package:ecommerce_app/componants/navigation_drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-
 import '../constants.dart';
+
+Options categoryOption = Options.ALL;
 
 class HomePage extends StatefulWidget {
   static const String id = 'homepage';
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -26,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   // TextEditingController _searchController = TextEditingController();
   int selectedIndex;
   List<CategoryOptions> optionsList = AppData.categoryOptionsList;
-  Options categoryOption = Options.FEATURED;
+//  Options categoryOption = Options.ALL;
 
   @override
   Widget build(BuildContext context) {
@@ -124,40 +126,34 @@ class _HomePageState extends State<HomePage> {
           ),
 
           //Horizontal list view
-          Row(
-            children: [
-              IconButton(
-                onPressed: () {},
-                iconSize: 28,
-                icon: Icon(
-                  Icons.home,
-                  color: kColorRed,
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 10),
-                width: MediaQuery.of(context).size.width - 50,
-                height: 80.0,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: optionsList.length,
-                  itemBuilder: (context, int index) {
-                    return SelectCategory(
-                      caption: optionsList[index].caption,
-                      imageLocation: optionsList[index].imageLocation,
-                      isSelected: selectedIndex == index,
-                      onSelected: () {
-                        setState(() {
-                          selectedIndex = index;
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 10),
+            width: MediaQuery.of(context).size.width,
+            height: 80.0,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: optionsList.length,
+              itemBuilder: (context, int index) {
+                return SelectCategory(
+                  caption: optionsList[index].caption,
+                  imageLocation: optionsList[index].imageLocation,
+                  isSelected: selectedIndex == index,
+                  onSelected: () {
+                    Navigator.pushNamed(context, CategoryProductsList.id,
+                        arguments: categoryOption);
 
-                          _selectedOption(optionsList, index);
-                        });
-                      },
-                    );
+                    setState(() {
+                      selectedIndex = index;
+
+                      ///When pressed should Navigate with 'categoryOption'
+                      //TODO USE PROVIDER FOR  'categoryOption'
+
+                      _selectedOption(optionsList, index);
+                    });
                   },
-                ),
-              ),
-            ],
+                );
+              },
+            ),
           ),
           _swapDeals(),
           _productList1(),

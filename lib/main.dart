@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/pages/adress_book.dart';
+import 'package:ecommerce_app/pages/category_products_list.dart';
 import 'package:ecommerce_app/pages/favorites_page.dart';
 import 'package:ecommerce_app/pages/pickup_station.dart';
 import 'package:ecommerce_app/pages/prod_detail.dart';
@@ -71,6 +72,7 @@ class MyApp extends StatelessWidget {
             PickupStation.id: (context) => PickupStation(),
             AddressBook.id: (context) => AddressBook(),
             AddNewAddress.id: (context) => AddNewAddress(),
+            CategoryProductsList.id: (context) => CategoryProductsList()
           },
           theme: ThemeData(primaryColor: Color(0xFFFF0025)),
           home: initScreen == 0 || initScreen == null

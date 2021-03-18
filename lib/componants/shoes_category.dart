@@ -3,6 +3,7 @@ import 'package:ecommerce_app/model/product2.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
 
@@ -20,12 +21,19 @@ class _ShoesCategoryState extends State<ShoesCategory> {
         CategoryOptions().getCategory(allProds, shoesCat);
     var favData = Provider.of<FavoriteList>(context);
 
-    return GridView.builder(
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: shoesList.length,
-        gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-        itemBuilder: (context, int index) => SingleProduct(
+    return StaggeredGridView.countBuilder(
+      // physics: NeverScrollableScrollPhysics(),
+      crossAxisCount: 2,
+      padding: EdgeInsets.all(10),
+      itemCount: shoesList.length,
+      itemBuilder: (context, index) => shoesList.isEmpty
+          ? Container(
+              child: Center(
+                child: Image.asset('images/loading_gif/Spin-1s-200px.gif'),
+              ),
+            )
+          : SingleProduct(
+              heroTag: shoesList[index].name,
               name: shoesList[index].name,
               brand: shoesList[index].brand,
               isFavorite: shoesList[index].favorite,
@@ -55,6 +63,8 @@ class _ShoesCategoryState extends State<ShoesCategory> {
               category: shoesList[index].category,
               similarProduct: CategoryOptions()
                   .getCategory(allProds, shoesList[index].category),
-            ));
+            ),
+      staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+    );
   }
 }
