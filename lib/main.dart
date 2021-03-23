@@ -1,12 +1,15 @@
+import 'package:ecommerce_app/constants.dart';
 import 'package:ecommerce_app/pages/adress_book.dart';
 import 'package:ecommerce_app/pages/category_products_list.dart';
 import 'package:ecommerce_app/pages/favorites_page.dart';
 import 'package:ecommerce_app/pages/pickup_station.dart';
 import 'package:ecommerce_app/pages/prod_detail.dart';
+import 'package:ecommerce_app/pages/search_page.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:ecommerce_app/provider/user.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import './pages/login_options_page.dart';
 import './pages/login.dart';
@@ -27,6 +30,10 @@ import 'pages/add_new_address.dart';
 int initScreen;
 
 Future<void> main() async {
+  //Make app work only vertically
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -72,9 +79,11 @@ class MyApp extends StatelessWidget {
             PickupStation.id: (context) => PickupStation(),
             AddressBook.id: (context) => AddressBook(),
             AddNewAddress.id: (context) => AddNewAddress(),
-            CategoryProductsList.id: (context) => CategoryProductsList()
+            CategoryProductsList.id: (context) => CategoryProductsList(),
+            ProductSearch.id: (context) => ProductSearch()
           },
-          theme: ThemeData(primaryColor: Color(0xFFFF0025)),
+          theme: ThemeData(
+              primaryColor: kColorRed, textSelectionHandleColor: kColorRed),
           home: initScreen == 0 || initScreen == null
               ? WelcomeLoginOptions()
               : ScreenController(),
