@@ -2,7 +2,7 @@ import 'package:ecommerce_app/componants/single_product.dart';
 import 'package:ecommerce_app/model/cart_model.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
 import 'package:ecommerce_app/model/color_model.dart';
-import 'package:ecommerce_app/model/product2.dart';
+import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/model/size_model.dart';
 import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
@@ -94,10 +94,10 @@ class _SimilarProdDetailsState extends State<SimilarProdDetails> {
     var providerData = Provider.of<ProductProvider2>(context);
     List<CartModel> cartList = providerData.cartProductList;
     var favData = Provider.of<FavoriteList>(context);
-    List<Products2> allProducts = Provider.of<List<Products2>>(context);
+    List<ProductsModel> allProducts = Provider.of<List<ProductsModel>>(context);
 
     //========Create a List method that get products depending on the category======
-    List<Products2> similarProdList =
+    List<ProductsModel> similarProdList =
         CategoryOptions().getCategory(allProducts, widget.category);
 
     return Scaffold(
@@ -260,7 +260,7 @@ class _SimilarProdDetailsState extends State<SimilarProdDetails> {
                       widget.isFavorite = !widget.isFavorite;
 
                       widget.isFavorite
-                          ? favData.addToFavorite(Products2(
+                          ? favData.addToFavorite(ProductsModel(
                               name: widget.productDetailsName,
                               images: widget.productDetailsPicture,
                               price: widget.productDetailsPrice,
@@ -456,7 +456,7 @@ class _SimilarProdDetailsState extends State<SimilarProdDetails> {
 
                           //===Add or Remove  Favorite======
                           similarProdList[index].favorite
-                              ? favData.addToFavorite(Products2(
+                              ? favData.addToFavorite(ProductsModel(
                                   name: similarProdList[index].name,
                                   images: similarProdList[index].images,
                                   price: similarProdList[index].price,

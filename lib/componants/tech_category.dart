@@ -1,6 +1,6 @@
 import 'package:ecommerce_app/componants/single_product.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
-import 'package:ecommerce_app/model/product2.dart';
+import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,9 +13,9 @@ class TechCategory extends StatefulWidget {
 class _TechCategoryState extends State<TechCategory> {
   @override
   Widget build(BuildContext context) {
-    List<Products2> allProds = Provider.of<List<Products2>>(context);
+    List<ProductsModel> allProds = Provider.of<List<ProductsModel>>(context);
     String techCategory = 'Tech';
-    List<Products2> techCategoryList =
+    List<ProductsModel> techCategoryList =
         CategoryOptions().getCategory(allProds, techCategory);
 
     var favData = Provider.of<FavoriteList>(context);
@@ -44,7 +44,7 @@ class _TechCategoryState extends State<TechCategory> {
 
                   //===Add or Remove  Favorite======
                   techCategoryList[index].favorite
-                      ? favData.addToFavorite(Products2(
+                      ? favData.addToFavorite(ProductsModel(
                           name: techCategoryList[index].name,
                           images: techCategoryList[index].images,
                           price: techCategoryList[index].price,

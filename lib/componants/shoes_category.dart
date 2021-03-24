@@ -1,5 +1,5 @@
 import 'package:ecommerce_app/componants/single_product.dart';
-import 'package:ecommerce_app/model/product2.dart';
+import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +15,9 @@ class ShoesCategory extends StatefulWidget {
 class _ShoesCategoryState extends State<ShoesCategory> {
   @override
   Widget build(BuildContext context) {
-    List<Products2> allProds = Provider.of<List<Products2>>(context);
+    List<ProductsModel> allProds = Provider.of<List<ProductsModel>>(context);
     String shoesCat = 'Shoes';
-    List<Products2> shoesList =
+    List<ProductsModel> shoesList =
         CategoryOptions().getCategory(allProds, shoesCat);
     var favData = Provider.of<FavoriteList>(context);
 
@@ -43,7 +43,7 @@ class _ShoesCategoryState extends State<ShoesCategory> {
 
                   //===Add or Remove  Favorite======
                   shoesList[index].favorite
-                      ? favData.addToFavorite(Products2(
+                      ? favData.addToFavorite(ProductsModel(
                           name: shoesList[index].name,
                           images: shoesList[index].images,
                           price: shoesList[index].price,

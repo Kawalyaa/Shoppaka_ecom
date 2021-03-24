@@ -4,7 +4,7 @@ import 'package:ecommerce_app/componants/single_similar_product.dart';
 import 'package:ecommerce_app/model/cart_model.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
 import 'package:ecommerce_app/model/color_model.dart';
-import 'package:ecommerce_app/model/product2.dart';
+import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/model/size_model.dart';
 import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
@@ -12,6 +12,7 @@ import 'package:ecommerce_app/provider/product_provider2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/pages/home_page.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
@@ -27,7 +28,7 @@ class ProdDetails extends StatefulWidget {
   final List productColors;
   final String category;
   final String heroTag;
-  final List<Products2> similarProd;
+  final List<ProductsModel> similarProd;
   bool isFavorite;
   ProdDetails(
       {this.productDetailsPicture,
@@ -57,7 +58,7 @@ class _ProdDetailsState extends State<ProdDetails> {
   String selectedSize;
   String selectedColor;
 
-  List<Products2> similarProdList;
+  List<ProductsModel> similarProdList;
 
   @override
   void initState() {
@@ -102,7 +103,7 @@ class _ProdDetailsState extends State<ProdDetails> {
     List<CartModel> cartList = providerData.cartProductList;
     var favData = Provider.of<FavoriteList>(context);
 
-    List<Products2> similarProdList = widget.similarProd;
+    List<ProductsModel> similarProdList = widget.similarProd;
 
     //========Create a List method that get products depending on the category======
 
@@ -114,24 +115,30 @@ class _ProdDetailsState extends State<ProdDetails> {
               MaterialPageRoute(
                 builder: (context) => HomePage(),
               )),
-          child: Text(
-            'Shopla',
-            style: TextStyle(
-                color: Colors.black54,
-                fontWeight: FontWeight.w900,
-                fontFamily: 'Poppins',
-                fontSize: 24.0,
-                fontStyle: FontStyle.italic),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                  height: 50,
+                  width: 40,
+                  child: Image.asset(
+                    'images/logos/shoplaLogo.png',
+                    fit: BoxFit.cover,
+                  )),
+              Text(
+                'Shopla',
+                style: TextStyle(
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w900,
+                    fontFamily: 'Poppins',
+                    fontSize: 24.0,
+                    fontStyle: FontStyle.italic),
+              ),
+            ],
           ),
         ),
         backgroundColor: Colors.white,
         actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.search,
-            ),
-            onPressed: () {},
-          ),
           SizedBox(
             width: 5.0,
           ),
@@ -269,7 +276,7 @@ class _ProdDetailsState extends State<ProdDetails> {
                       widget.isFavorite = !widget.isFavorite;
 
                       widget.isFavorite
-                          ? favData.addToFavorite(Products2(
+                          ? favData.addToFavorite(ProductsModel(
                               name: widget.productDetailsName,
                               images: widget.productDetailsPicture,
                               price: widget.productDetailsPrice,
@@ -464,7 +471,7 @@ class _ProdDetailsState extends State<ProdDetails> {
 
                           //===Add or Remove  Favorite======
                           similarProdList[index].favorite
-                              ? favData.addToFavorite(Products2(
+                              ? favData.addToFavorite(ProductsModel(
                                   name: similarProdList[index].name,
                                   images: similarProdList[index].images,
                                   price: similarProdList[index].price,

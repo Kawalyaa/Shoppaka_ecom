@@ -1,6 +1,6 @@
 import 'package:ecommerce_app/componants/single_product.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
-import 'package:ecommerce_app/model/product2.dart';
+import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ class _ProductsState extends State<Products> {
   bool myFav = false;
   @override
   Widget build(BuildContext context) {
-    List<Products2> allProds = Provider.of<List<Products2>>(context);
+    List<ProductsModel> allProds = Provider.of<List<ProductsModel>>(context);
     var favData = Provider.of<FavoriteList>(context);
 
     return allProds == null
@@ -51,7 +51,7 @@ class _ProductsState extends State<Products> {
 
                       //===Add or Remove  Favorite======
                       allProds[index].favorite
-                          ? favData.addToFavorite(Products2(
+                          ? favData.addToFavorite(ProductsModel(
                               name: allProds[index].name,
                               images: allProds[index].images,
                               price: allProds[index].price,

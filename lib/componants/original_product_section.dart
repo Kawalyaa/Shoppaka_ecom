@@ -1,6 +1,6 @@
 import 'package:ecommerce_app/componants/single_product.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
-import 'package:ecommerce_app/model/product2.dart';
+import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class OriginalProductSection extends StatefulWidget {
+  final Function orignProdCallback;
+  OriginalProductSection({this.orignProdCallback});
   @override
   _OriginalProductSectionState createState() => _OriginalProductSectionState();
 }
@@ -15,9 +17,9 @@ class OriginalProductSection extends StatefulWidget {
 class _OriginalProductSectionState extends State<OriginalProductSection> {
   @override
   Widget build(BuildContext context) {
-    List<Products2> allProds = Provider.of<List<Products2>>(context);
+    List<ProductsModel> allProds = Provider.of<List<ProductsModel>>(context);
     String shoesCat = 'Shoes';
-    List<Products2> shoesList =
+    List<ProductsModel> shoesList =
         CategoryOptions().getCategory(allProds, shoesCat);
     var favData = Provider.of<FavoriteList>(context);
 
@@ -46,7 +48,7 @@ class _OriginalProductSectionState extends State<OriginalProductSection> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: widget.orignProdCallback,
                     child: Container(
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -97,7 +99,7 @@ class _OriginalProductSectionState extends State<OriginalProductSection> {
 
                               //===Add or Remove  Favorite======
                               shoesList[index].favorite
-                                  ? favData.addToFavorite(Products2(
+                                  ? favData.addToFavorite(ProductsModel(
                                       name: shoesList[index].name,
                                       images: shoesList[index].images,
                                       price: shoesList[index].price,

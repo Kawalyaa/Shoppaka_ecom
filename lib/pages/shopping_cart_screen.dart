@@ -67,6 +67,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
             ))
         : Scaffold(
             appBar: AppBar(
+              centerTitle: true,
               title: Text(
                 'My Cart',
                 style: TextStyle(
@@ -77,14 +78,6 @@ class _ShoppingCartState extends State<ShoppingCart> {
                 ),
               ),
               backgroundColor: Colors.white,
-              actions: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () {
-                    // appProvider.myFeatureProduct();
-                  },
-                )
-              ],
               iconTheme: IconThemeData(color: Colors.black54),
               elevation: 0.0,
             ),

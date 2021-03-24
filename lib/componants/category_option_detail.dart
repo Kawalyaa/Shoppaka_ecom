@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants.dart';
 
-enum Options { ALL, SHOES, MEN, WOMEN, TECH, JEWELRY, FEATURED }
+enum Options { ALL, SHOES, MEN, WOMEN, TECH, JEWELRY, FEATURED, SORTED }
 
 class SelectCategory extends StatelessWidget {
   final String imageLocation;
