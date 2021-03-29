@@ -1,10 +1,14 @@
 import 'dart:ui';
+import 'package:ecommerce_app/componants/shipment_details.dart';
+import 'package:ecommerce_app/model/cart_model.dart';
 import 'package:ecommerce_app/model/users.dart';
 import 'package:ecommerce_app/pages/pickup_station.dart';
+import 'package:ecommerce_app/provider/product_provider2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:flutter/painting.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
@@ -117,6 +121,9 @@ class _CheckoutState extends State<Checkout>
     List<UserModel> _userInfo = Provider.of<List<UserModel>>(context);
     List addressList = _userInfo[0].address;
 
+    var cartData = Provider.of<ProductProvider2>(context);
+    List<CartModel> _cartList = cartData.cartProductList;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -149,7 +156,9 @@ class _CheckoutState extends State<Checkout>
               subtotal: args.productPrice, addressList: addressList),
           _paymentInfoList(args.productPrice),
           _summeryInfoTab(
-              subtotal: args.productPrice, addressList: addressList),
+              subtotal: args.productPrice,
+              addressList: addressList,
+              cartList: _cartList),
         ],
       ),
     );
@@ -832,7 +841,8 @@ class _CheckoutState extends State<Checkout>
 
   //################# Summery Information ##############################
 
-  _summeryInfoTab({double subtotal, addressList}) => ListView(
+  _summeryInfoTab({double subtotal, List addressList, List cartList}) =>
+      ListView(
         children: [
           Padding(
             padding: EdgeInsets.only(left: 20.0, top: 25.0, bottom: 10.0),
@@ -909,6 +919,7 @@ class _CheckoutState extends State<Checkout>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    //if no address provided
                     addressList == null
                         ? Center(
                             child: FlatButton(
@@ -924,6 +935,8 @@ class _CheckoutState extends State<Checkout>
                               ),
                             ),
                           )
+
+                        //Automatically provide address if available
                         : addressDetails != null
                             ? Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -959,6 +972,8 @@ class _CheckoutState extends State<Checkout>
                                   )
                                 ],
                               )
+
+                            //If address section is empty manually provide the address
                             : Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -1031,14 +1046,22 @@ class _CheckoutState extends State<Checkout>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Standard Shipping',
+                      selectedButton == Button.BUTTON1
+                          ? 'Standard Shipping'
+                          : selectedButton == Button.BUTTON2
+                              ? 'Express Shipping'
+                              : 'PickupStation',
                       style: TextStyle(color: Colors.black, fontSize: 18),
                     ),
                     SizedBox(
                       height: 10.0,
                     ),
                     _text(
-                      text: 'Delivered between Friday 22 and Tuesday 16 Feb',
+                      text: selectedButton == Button.BUTTON1
+                          ? 'Delivered today ${_returnDate(DateTime.now())} if ordered before 4pm'
+                          : selectedButton == Button.BUTTON3
+                              ? 'Ready for pickup between ${_returnDate(DateTime.now().add(Duration(days: 1)))}  and ${_returnDate(DateTime.now().add(Duration(days: 3)))}'
+                              : 'Delivered between ${_returnDate(DateTime.now().add(Duration(days: 1)))}  and ${_returnDate(DateTime.now().add(Duration(days: 3)))}',
                     ),
                   ],
                 ),
@@ -1063,51 +1086,21 @@ class _CheckoutState extends State<Checkout>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    _text(text: 'PACKAGE 1 OF 2', fontWeight: FontWeight.bold),
-                    SizedBox(
-                      height: 15.0,
+                  //TODO COMPLETE THIS SECTION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                  children: List.generate(
+                    cartList.length,
+                    (index) => ShipmentDetails(
+                      index: index,
+                      packageNumber: cartList.length,
+                      itemNumber: cartList[index].qty,
+                      itemDetails: cartList[index].name,
+                      deliveryDate: selectedButton == Button.BUTTON1
+                          ? 'Delivered today ${_returnDate(DateTime.now())} if ordered before 4pm'
+                          : selectedButton == Button.BUTTON3
+                              ? 'Ready for pickup between ${_returnDate(DateTime.now().add(Duration(days: 1)))}  and ${_returnDate(DateTime.now().add(Duration(days: 3)))}'
+                              : 'Delivered between ${_returnDate(DateTime.now().add(Duration(days: 1)))}  and ${_returnDate(DateTime.now().add(Duration(days: 3)))}',
                     ),
-                    Row(
-                      children: [
-                        _text(text: '1 x', fontWeight: FontWeight.bold),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        _text(text: 'Mini Pillow Speaker-White', fontSize: 16)
-                      ],
-                    ),
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    _text(
-                        text:
-                            'Fulfilled by:Allwinshop88 \nDelivered between 10 Feb and Wednesday 17 Feb'),
-                    SizedBox(
-                      child: Divider(
-                        thickness: 1.0,
-                      ),
-                    ),
-                    _text(text: 'PACKAGE 2 OF 2', fontWeight: FontWeight.bold),
-                    SizedBox(
-                      height: 15.0,
-                    ),
-                    Row(
-                      children: [
-                        _text(text: '1 x', fontWeight: FontWeight.bold),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        _text(text: 'Orange Soda-2 Liters', fontSize: 16)
-                      ],
-                    ),
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    _text(
-                        text:
-                            'Fulfilled by:Shopla \nDelivered between Saturday 23 Jan and Tuesday 26 Jan'),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -1187,7 +1180,53 @@ class _CheckoutState extends State<Checkout>
     result = await Navigator.pushNamed(context, PickupStation.id);
   }
 
+  String _returnDate(DateTime dateTime) => DateFormat.MMMEd().format(dateTime);
+
   _navigateToAddressBook(BuildContext context) async {
     addressDetails = await Navigator.pushNamed(context, AddressBook.id);
   }
 }
+
+//_text(text: 'PACKAGE 1 OF 2', fontWeight: FontWeight.bold),
+//SizedBox(
+//height: 15.0,
+//),
+//Row(
+//children: [
+//_text(text: '1 x', fontWeight: FontWeight.bold),
+//SizedBox(
+//width: 20,
+//),
+//_text(text: 'Mini Pillow Speaker-White', fontSize: 16)
+//],
+//),
+//SizedBox(
+//height: 8.0,
+//),
+//_text(
+//text:
+//'Fulfilled by:Allwinshop88 \nDelivered between 10 Feb and Wednesday 17 Feb'),
+//SizedBox(
+//child: Divider(
+//thickness: 1.0,
+//),
+//),
+//_text(text: 'PACKAGE 2 OF 2', fontWeight: FontWeight.bold),
+//SizedBox(
+//height: 15.0,
+//),
+//Row(
+//children: [
+//_text(text: '1 x', fontWeight: FontWeight.bold),
+//SizedBox(
+//width: 20,
+//),
+//_text(text: 'Orange Soda-2 Liters', fontSize: 16)
+//],
+//),
+//SizedBox(
+//height: 8.0,
+//),
+//_text(
+//text:
+//'Fulfilled by:Shopla \nDelivered between Saturday 23 Jan and Tuesday 26 Jan'),
