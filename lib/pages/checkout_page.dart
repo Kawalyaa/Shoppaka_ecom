@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:ecommerce_app/componants/shipment_details.dart';
+import 'package:ecommerce_app/constants.dart';
 import 'package:ecommerce_app/model/cart_model.dart';
 import 'package:ecommerce_app/model/users.dart';
 import 'package:ecommerce_app/pages/pickup_station.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/painting.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../constants.dart';
 import '../constants.dart';
 import 'adress_book.dart';
 
@@ -206,23 +208,27 @@ class _CheckoutState extends State<Checkout>
           child: Padding(
             padding: const EdgeInsets.only(
                 left: 8.0, right: 8.0, top: 20.0, bottom: 15.0),
-
-            ///Check if user has added address or selected address from address list
-            child: addressList == null
+            child: addressList == null || addressList.isEmpty
                 ? Center(
-                    child: FlatButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, AddressBook.id);
-                      },
-                      child: Text(
-                        'Add Address',
-                        style: TextStyle(
-                            color: kColorRed,
-                            fontSize: 25.0,
-                            fontWeight: FontWeight.bold),
+                    child: Container(
+                      decoration:
+                          BoxDecoration(border: Border.all(color: kColorRed)),
+                      child: FlatButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, AddressBook.id);
+                        },
+                        child: Text(
+                          'Add Address',
+                          style: TextStyle(
+                              color: kColorRed,
+                              fontSize: 25.0,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                   )
+
+                ///Get address manual provided from pop()
                 : addressDetails != null
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -257,6 +263,8 @@ class _CheckoutState extends State<Checkout>
                           )
                         ],
                       )
+
+                    ///Provide address automatically if available
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -928,23 +936,27 @@ class _CheckoutState extends State<Checkout>
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     //if no address provided
-                    addressList == null
+                    addressList == null || addressList.isEmpty
                         ? Center(
-                            child: FlatButton(
-                              onPressed: () {
-                                Navigator.pushNamed(context, AddressBook.id);
-                              },
-                              child: Text(
-                                'Add Address',
-                                style: TextStyle(
-                                    color: kColorRed,
-                                    fontSize: 25.0,
-                                    fontWeight: FontWeight.bold),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: kColorRed)),
+                              child: FlatButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, AddressBook.id);
+                                },
+                                child: Text(
+                                  'Add Address',
+                                  style: TextStyle(
+                                      color: kColorRed,
+                                      fontSize: 25.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ),
                           )
 
-                        //Automatically provide address if available
+                        ///Get address manual provided from pop()
                         : addressDetails != null
                             ? Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -981,7 +993,7 @@ class _CheckoutState extends State<Checkout>
                                 ],
                               )
 
-                            //If address section is empty manually provide the address
+                            ///Get address automatically
                             : Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [

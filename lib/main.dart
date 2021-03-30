@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/constants.dart';
+import 'package:ecommerce_app/pages/add_new_address2.dart';
 import 'package:ecommerce_app/pages/adress_book.dart';
 import 'package:ecommerce_app/pages/category_products_list.dart';
 import 'package:ecommerce_app/pages/favorites_page.dart';
@@ -80,7 +81,8 @@ class MyApp extends StatelessWidget {
             AddressBook.id: (context) => AddressBook(),
             AddNewAddress.id: (context) => AddNewAddress(),
             CategoryProductsList.id: (context) => CategoryProductsList(),
-            ProductSearch.id: (context) => ProductSearch()
+            ProductSearch.id: (context) => ProductSearch(),
+            AddAddress2.id: (context) => AddAddress2()
           },
           theme: ThemeData(
               primaryColor: kColorRed, textSelectionHandleColor: kColorRed),

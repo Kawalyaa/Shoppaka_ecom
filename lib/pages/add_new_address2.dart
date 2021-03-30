@@ -7,14 +7,13 @@ import 'package:provider/provider.dart';
 
 import '../constants.dart';
 
-class AddNewAddress extends StatefulWidget {
-  static const String id = 'AddNewAddress';
-
+class AddAddress2 extends StatefulWidget {
+  static const String id = 'addAddress2';
   @override
-  _AddNewAddressState createState() => _AddNewAddressState();
+  _AddAddress2State createState() => _AddAddress2State();
 }
 
-class _AddNewAddressState extends State<AddNewAddress> {
+class _AddAddress2State extends State<AddAddress2> {
   final _addressFormKey = GlobalKey<FormState>();
 
   TextEditingController _firstNameController = TextEditingController();
@@ -158,7 +157,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.black),
         title: Text(
-          'Add New Address ',
+          'Add New Address2 ',
           style: TextStyle(color: Colors.black),
         ),
       ),
@@ -357,8 +356,6 @@ class _AddNewAddressState extends State<AddNewAddress> {
                           onChanged: (value) {
                             setState(() {
                               isChecked = value;
-                              //TODO Update the address list where default equal to true turn to false
-                              //  if(isChecked==true)
                             });
                           },
                         ),
@@ -387,7 +384,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
                     _selectedRegion != null &&
                     _selectedTown != null) {
                   showProgress(context, 'Saving...', false);
-                  if (!await _userServices.editAddress({
+                  if (!await _userServices.editAddress2({
                     'name': _firstNameController.text +
                         ' ' +
                         _lastNameController.text,
@@ -418,28 +415,3 @@ class _AddNewAddressState extends State<AddNewAddress> {
     );
   }
 }
-
-//Padding(
-//padding: EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),
-//child: Container(
-//// margin: EdgeInsets.only(left: 2, right: 20),
-//child: TextField(
-//decoration: InputDecoration(
-//hintText: 'District/Town/Area',
-//// icon: Icon(Icons.star),
-//suffixIcon: Padding(
-//padding: const EdgeInsets.only(
-//left: 20.0, top: 20.0, bottom: 5.0, right: 2.0),
-//child: Row(
-//children: [
-//Text(
-//'*',
-//style: TextStyle(fontSize: 18),
-//),
-//],
-//),
-//),
-//),
-//),
-//),
-//),
