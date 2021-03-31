@@ -49,6 +49,7 @@ class ProductProvider2 with ChangeNotifier {
   }
 
   void initialState() {
+    updateSharedPreferences();
     syncDataWithProvider();
   }
 
