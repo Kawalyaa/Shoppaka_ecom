@@ -1,4 +1,6 @@
 import 'dart:ui';
+import 'package:ecommerce_app/componants/alart_dialogue.dart';
+import 'package:ecommerce_app/componants/loading.dart';
 import 'package:ecommerce_app/componants/shipment_details.dart';
 import 'package:ecommerce_app/constants.dart';
 import 'package:ecommerce_app/model/cart_model.dart';
@@ -15,6 +17,7 @@ import 'package:provider/provider.dart';
 import '../constants.dart';
 import '../constants.dart';
 import 'adress_book.dart';
+import 'mobile_money_payment.dart';
 
 enum Button { BUTTON1, BUTTON2, BUTTON3 }
 enum Pay { MobileMoney, OnDelivery }
@@ -588,10 +591,17 @@ class _CheckoutState extends State<Checkout>
                       color: Colors.transparent,
                       child: InkWell(
                         onTap: () {
-                          setState(() {
-                            index = 1;
-                          });
-                          _controller.animateTo(1);
+                          if (selectedButton == Button.BUTTON3 &&
+                              result == null) {
+                            showAlertDialog(
+                                context, 'Error', 'No Pickup Station Selected');
+                          } else {
+                            setState(() {
+                              index = 1;
+                            });
+                            _controller.animateTo(1);
+                          }
+                          ;
                         },
                         child: Container(
                           width: double.infinity,
@@ -819,7 +829,10 @@ class _CheckoutState extends State<Checkout>
                             ? 'UGX$shippingFee2'
                             : selectedButton == Button.BUTTON1
                                 ? 'UGX${shippingFee + 1000}'
-                                : 'UGX$shippingFee'),
+                                : 'UGX$shippingFee',
+                        textColor: selectedButton == Button.BUTTON3
+                            ? Colors.green
+                            : null),
                     SizedBox(
                       child: Divider(
                         thickness: 2.0,
@@ -886,7 +899,10 @@ class _CheckoutState extends State<Checkout>
                             ? 'UGX$shippingFee2'
                             : selectedButton == Button.BUTTON1
                                 ? 'UGX${shippingFee + 1000}'
-                                : 'UGX$shippingFee'),
+                                : 'UGX$shippingFee',
+                        textColor: selectedButton == Button.BUTTON3
+                            ? Colors.green
+                            : null),
                     SizedBox(
                       child: Divider(
                         thickness: 1.0,
@@ -1179,7 +1195,11 @@ class _CheckoutState extends State<Checkout>
               color: kColorRed,
               //TODO COMPLETE THIS SECTION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
               ///Delete item from the cart --->Success page ---> send data to order history
-              onPressed: () {},
+              ///and data to admin
+              onPressed: () {
+                Navigator.pushNamed(context, MobileMoneyPay.id,
+                    arguments: MobileMoneyPay(orderedProducts: cartList,totalAmount: totalPrice.toString(),));
+              },
               textColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.0),
