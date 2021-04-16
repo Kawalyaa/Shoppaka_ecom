@@ -8,6 +8,7 @@ import 'package:ecommerce_app/componants/tech_category.dart';
 import 'package:ecommerce_app/componants/women_category.dart';
 import 'package:flutter/material.dart';
 import 'home_page.dart';
+import 'package:sizer/sizer.dart';
 
 class CategoryProductsList extends StatefulWidget {
   static const String id = 'CategoryProductsList';
@@ -71,7 +72,7 @@ class _CategoryProductsListState extends State<CategoryProductsList> {
             //Grid view
             Container(
               padding: EdgeInsets.only(bottom: 2.0),
-              height: MediaQuery.of(context).size.height - 130,
+              height: 80.0.h,
               child: Products(),
             ),
           ],
@@ -93,7 +94,7 @@ class _CategoryProductsListState extends State<CategoryProductsList> {
             //Grid view
             Container(
               padding: EdgeInsets.only(bottom: 2.0),
-              height: MediaQuery.of(context).size.height - 130,
+              height: 80.0.h,
               child: ShoesCategory(),
             ),
           ],
@@ -113,7 +114,7 @@ class _CategoryProductsListState extends State<CategoryProductsList> {
             ),
             //Grid view
             Container(
-              height: MediaQuery.of(context).size.height - 130,
+              height: 80.0.h,
               child: MenCategory(),
             ),
           ],
@@ -133,7 +134,7 @@ class _CategoryProductsListState extends State<CategoryProductsList> {
             ),
             //Grid view
             Container(
-              height: MediaQuery.of(context).size.height - 130,
+              height: 80.0.h,
               child: WomenCategory(),
             ),
           ],
@@ -153,7 +154,7 @@ class _CategoryProductsListState extends State<CategoryProductsList> {
             ),
             //Grid view
             Container(
-              height: MediaQuery.of(context).size.height - 130,
+              height: 80.0.h,
               child: TechCategory(),
             ),
           ],
@@ -173,7 +174,7 @@ class _CategoryProductsListState extends State<CategoryProductsList> {
             ),
             //Grid view
             Container(
-              height: MediaQuery.of(context).size.height - 130,
+              height: 80.0.h,
               child: JewelriesCategory(),
             ),
           ],
@@ -193,7 +194,7 @@ class _CategoryProductsListState extends State<CategoryProductsList> {
             ),
             //Grid view
             Container(
-              height: MediaQuery.of(context).size.height - 130,
+              height: 80.0.h,
               child: FeaturedCategory(),
             ),
           ],
@@ -213,7 +214,7 @@ class _CategoryProductsListState extends State<CategoryProductsList> {
             ),
             //Grid view
             Container(
-              height: MediaQuery.of(context).size.height - 130,
+              height: 80.0.h,
               child: Products(),
             ),
           ],

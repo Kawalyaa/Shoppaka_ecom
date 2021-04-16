@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/componants/alart_dialogue.dart';
 import 'package:ecommerce_app/componants/loading.dart';
 import 'package:ecommerce_app/componants/shipment_details.dart';
@@ -7,10 +8,14 @@ import 'package:ecommerce_app/model/cart_model.dart';
 import 'package:ecommerce_app/model/users.dart';
 import 'package:ecommerce_app/pages/pickup_station.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutterwave/core/flutterwave.dart';
+import 'package:flutterwave/utils/flutterwave_currency.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -56,6 +61,14 @@ class _CheckoutState extends State<Checkout>
   int index = 0;
   var result;
   var addressDetails;
+  bool isDebug = false;
+  List<UserModel> _userInfo;
+  String _ugCurrency = FlutterwaveCurrency.UGX;
+  var cartData;
+
+  String _collection = 'orders';
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
   void initState() {
@@ -124,11 +137,13 @@ class _CheckoutState extends State<Checkout>
     _controller.addListener(handleTabSelection);
     final Checkout args = ModalRoute.of(context).settings.arguments;
 
-    List<UserModel> _userInfo = Provider.of<List<UserModel>>(context);
+    _userInfo = Provider.of<List<UserModel>>(context);
     List addressList = _userInfo[0].address;
 
-    var cartData = Provider.of<ProductProvider2>(context);
+    cartData = Provider.of<ProductProvider2>(context);
     List<CartModel> _cartList = cartData.cartProductList;
+
+    //_userInfo = Provider.of<List<UserModel>>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -601,7 +616,6 @@ class _CheckoutState extends State<Checkout>
                             });
                             _controller.animateTo(1);
                           }
-                          ;
                         },
                         child: Container(
                           width: double.infinity,
@@ -866,349 +880,362 @@ class _CheckoutState extends State<Checkout>
 
   //################# Summery Information ##############################
 
-  _summeryInfoTab({double subtotal, List addressList, List cartList}) =>
-      ListView(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 20.0, top: 25.0, bottom: 10.0),
-            child: Text(
-              'YOUR ORDER',
-              style: TextStyle(
-                color: Colors.black54,
-                fontWeight: FontWeight.bold,
-              ),
+  _summeryInfoTab({double subtotal, List addressList, List cartList}) {
+    return ListView(
+      children: [
+        Padding(
+          padding: EdgeInsets.only(left: 20.0, top: 25.0, bottom: 10.0),
+          child: Text(
+            'YOUR ORDER',
+            style: TextStyle(
+              color: Colors.black54,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          Material(
-            elevation: 1,
-            child: Container(
-              color: Colors.white,
-              width: double.infinity,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    _costsTile(
-                        leadingTxt: 'Subtotal',
-                        trailingTxt: 'UGX$subtotal',
-                        textColor: Colors.black),
-                    _costsTile(
-                        leadingTxt: 'Shipping',
-                        trailingTxt: selectedButton == Button.BUTTON3
-                            ? 'UGX$shippingFee2'
-                            : selectedButton == Button.BUTTON1
-                                ? 'UGX${shippingFee + 1000}'
-                                : 'UGX$shippingFee',
-                        textColor: selectedButton == Button.BUTTON3
-                            ? Colors.green
-                            : null),
-                    SizedBox(
-                      child: Divider(
-                        thickness: 1.0,
-                      ),
+        ),
+        Material(
+          elevation: 1,
+          child: Container(
+            color: Colors.white,
+            width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  _costsTile(
+                      leadingTxt: 'Subtotal',
+                      trailingTxt: 'UGX$subtotal',
+                      textColor: Colors.black),
+                  _costsTile(
+                      leadingTxt: 'Shipping',
+                      trailingTxt: selectedButton == Button.BUTTON3
+                          ? 'UGX$shippingFee2'
+                          : selectedButton == Button.BUTTON1
+                              ? 'UGX${shippingFee + 1000}'
+                              : 'UGX$shippingFee',
+                      textColor: selectedButton == Button.BUTTON3
+                          ? Colors.green
+                          : null),
+                  SizedBox(
+                    child: Divider(
+                      thickness: 1.0,
                     ),
-                    _costsTile(
-                        leadingTxt: 'Total', trailingTxt: 'UGX$totalPrice'),
-                  ],
-                ),
+                  ),
+                  _costsTile(
+                      leadingTxt: 'Total', trailingTxt: 'UGX$totalPrice'),
+                ],
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 20.0, top: 15.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'YOUR ADDRESS',
-                  style: TextStyle(
-                    color: Colors.black54,
-                    fontWeight: FontWeight.bold,
-                  ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 20.0, top: 15.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'YOUR ADDRESS',
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontWeight: FontWeight.bold,
                 ),
-                FlatButton(
-                  onPressed: () {
-                    _navigateToAddressBook(context);
-                  },
-                  child: Text(
-                    'CHANGE',
-                    style: TextStyle(
-                        color: kColorRed, fontWeight: FontWeight.bold),
-                  ),
-                )
-              ],
-            ),
+              ),
+              FlatButton(
+                onPressed: () {
+                  _navigateToAddressBook(context);
+                },
+                child: Text(
+                  'CHANGE',
+                  style:
+                      TextStyle(color: kColorRed, fontWeight: FontWeight.bold),
+                ),
+              )
+            ],
           ),
-          Material(
-            elevation: 1,
-            child: Container(
-              color: Colors.white,
-              width: double.infinity,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    //if no address provided
-                    addressList == null || addressList.isEmpty
-                        ? Center(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: kColorRed)),
-                              child: FlatButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(context, AddressBook.id);
-                                },
-                                child: Text(
-                                  'Add Address',
-                                  style: TextStyle(
-                                      color: kColorRed,
-                                      fontSize: 25.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
+        ),
+        Material(
+          elevation: 1,
+          child: Container(
+            color: Colors.white,
+            width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  //if no address provided
+                  addressList == null || addressList.isEmpty
+                      ? Center(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: kColorRed)),
+                            child: FlatButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, AddressBook.id);
+                              },
+                              child: Text(
+                                'Add Address',
+                                style: TextStyle(
+                                    color: kColorRed,
+                                    fontSize: 25.0,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
-                          )
+                          ),
+                        )
 
-                        ///Get address manual provided from pop()
-                        : addressDetails != null
-                            ? Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    addressDetails[0].name,
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 18),
-                                  ),
-                                  SizedBox(
-                                    height: 10.0,
-                                  ),
-                                  _text(
-                                    text: addressDetails[0].town,
-                                  ),
-                                  SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  _text(
-                                    text: addressDetails[0].region,
-                                  ),
-                                  SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  _text(
-                                    text: addressDetails[0].address,
-                                  ),
-                                  SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  _text(
-                                    text: addressDetails[0].phone,
-                                  )
-                                ],
-                              )
+                      ///Get address manual provided from pop()
+                      : addressDetails != null
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  addressDetails[0].name,
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 18),
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                _text(
+                                  text: addressDetails[0].town,
+                                ),
+                                SizedBox(
+                                  height: 5.0,
+                                ),
+                                _text(
+                                  text: addressDetails[0].region,
+                                ),
+                                SizedBox(
+                                  height: 5.0,
+                                ),
+                                _text(
+                                  text: addressDetails[0].address,
+                                ),
+                                SizedBox(
+                                  height: 5.0,
+                                ),
+                                _text(
+                                  text: addressDetails[0].phone,
+                                )
+                              ],
+                            )
 
-                            ///Get address automatically
-                            : Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    addressList[0]['name'],
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 18),
-                                  ),
-                                  SizedBox(
-                                    height: 10.0,
-                                  ),
-                                  _text(
-                                    text: addressList[0]['town'],
-                                  ),
-                                  SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  _text(
-                                    text: addressList[0]['region'],
-                                  ),
-                                  SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  _text(
-                                    text: addressList[0]['address'],
-                                  ),
-                                  SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  _text(
-                                    text: addressList[0]['phone'],
-                                  )
-                                ],
-                              ),
-                  ],
+                          ///Get address automatically
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  addressList[0]['name'],
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 18),
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                _text(
+                                  text: addressList[0]['town'],
+                                ),
+                                SizedBox(
+                                  height: 5.0,
+                                ),
+                                _text(
+                                  text: addressList[0]['region'],
+                                ),
+                                SizedBox(
+                                  height: 5.0,
+                                ),
+                                _text(
+                                  text: addressList[0]['address'],
+                                ),
+                                SizedBox(
+                                  height: 5.0,
+                                ),
+                                _text(
+                                  text: addressList[0]['phone'],
+                                )
+                              ],
+                            ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 20.0, top: 15.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'DELIVERY METHOD',
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 20.0, top: 15.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'DELIVERY METHOD',
-                  style: TextStyle(
-                    color: Colors.black54,
-                    fontWeight: FontWeight.bold,
-                  ),
+              FlatButton(
+                onPressed: () {
+                  setState(() {
+                    index = 0;
+                    _controller.animateTo(0);
+                  });
+                },
+                child: Text(
+                  'CHANGE',
+                  style:
+                      TextStyle(color: kColorRed, fontWeight: FontWeight.bold),
                 ),
-                FlatButton(
-                  onPressed: () {
-                    setState(() {
-                      index = 0;
-                      _controller.animateTo(0);
-                    });
-                  },
-                  child: Text(
-                    'CHANGE',
-                    style: TextStyle(
-                        color: kColorRed, fontWeight: FontWeight.bold),
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-            child: Card(
-              color: Colors.white,
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(8.0, 10, 8.0, 20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      selectedButton == Button.BUTTON1
-                          ? 'Express Shipping'
-                          : selectedButton == Button.BUTTON2
-                              ? 'Standard Shipping'
-                              : 'PickupStation',
-                      style: TextStyle(color: Colors.black, fontSize: 18),
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    _text(
-                      text: selectedButton == Button.BUTTON1
-                          ? 'Delivered today ${_returnDate(DateTime.now())} if ordered before 4pm'
-                          : selectedButton == Button.BUTTON3
-                              ? 'Ready for pickup between ${_returnDate(DateTime.now().add(Duration(days: 1)))}  and ${_returnDate(DateTime.now().add(Duration(days: 3)))}'
-                              : 'Delivered between ${_returnDate(DateTime.now().add(Duration(days: 1)))}  and ${_returnDate(DateTime.now().add(Duration(days: 3)))}',
-                    ),
-                  ],
-                ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+          child: Card(
+            color: Colors.white,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(8.0, 10, 8.0, 20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    selectedButton == Button.BUTTON1
+                        ? 'Express Shipping'
+                        : selectedButton == Button.BUTTON2
+                            ? 'Standard Shipping'
+                            : 'PickupStation',
+                    style: TextStyle(color: Colors.black, fontSize: 18),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  _text(
+                    text: selectedButton == Button.BUTTON1
+                        ? 'Delivered today ${_returnDate(DateTime.now())} if ordered before 4pm'
+                        : selectedButton == Button.BUTTON3
+                            ? 'Ready for pickup between ${_returnDate(DateTime.now().add(Duration(days: 1)))}  and ${_returnDate(DateTime.now().add(Duration(days: 3)))}'
+                            : 'Delivered between ${_returnDate(DateTime.now().add(Duration(days: 1)))}  and ${_returnDate(DateTime.now().add(Duration(days: 3)))}',
+                  ),
+                ],
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 20.0, top: 15.0),
-            child: Text(
-              'SHIPMENT DETAILS',
-              style: TextStyle(
-                color: Colors.black54,
-                fontWeight: FontWeight.bold,
-              ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 20.0, top: 15.0),
+          child: Text(
+            'SHIPMENT DETAILS',
+            style: TextStyle(
+              color: Colors.black54,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: List.generate(
-                    cartList.length,
-                    (index) => ShipmentDetails(
-                      index: index,
-                      packageNumber: cartList.length,
-                      itemNumber: cartList[index].qty,
-                      itemDetails: cartList[index].name,
-                      deliveryDate: selectedButton == Button.BUTTON1
-                          ? 'Delivered today ${_returnDate(DateTime.now())} if ordered before 4pm'
-                          : selectedButton == Button.BUTTON3
-                              ? 'Ready for pickup between ${_returnDate(DateTime.now().add(Duration(days: 1)))}  and ${_returnDate(DateTime.now().add(Duration(days: 3)))}'
-                              : 'Delivered between ${_returnDate(DateTime.now().add(Duration(days: 1)))}  and ${_returnDate(DateTime.now().add(Duration(days: 3)))}',
-                    ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: List.generate(
+                  cartList.length,
+                  (index) => ShipmentDetails(
+                    index: index,
+                    packageNumber: cartList.length,
+                    itemNumber: cartList[index].qty,
+                    itemDetails: cartList[index].name,
+                    deliveryDate: selectedButton == Button.BUTTON1
+                        ? 'Delivered today ${_returnDate(DateTime.now())} if ordered before 4pm'
+                        : selectedButton == Button.BUTTON3
+                            ? 'Ready for pickup between ${_returnDate(DateTime.now().add(Duration(days: 1)))}  and ${_returnDate(DateTime.now().add(Duration(days: 3)))}'
+                            : 'Delivered between ${_returnDate(DateTime.now().add(Duration(days: 1)))}  and ${_returnDate(DateTime.now().add(Duration(days: 3)))}',
                   ),
                 ),
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 20.0, top: 15.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'PAYMENT METHOD',
-                  style: TextStyle(
-                    color: Colors.black54,
-                    fontWeight: FontWeight.bold,
-                  ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 20.0, top: 15.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'PAYMENT METHOD',
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontWeight: FontWeight.bold,
                 ),
-                FlatButton(
-                  onPressed: () {
-                    setState(() {
-                      index = 1;
-                      _controller.animateTo(1);
-                    });
-                  },
-                  child: Text(
-                    'CHANGE',
-                    style: TextStyle(
-                        color: kColorRed, fontWeight: FontWeight.bold),
-                  ),
-                )
-              ],
+              ),
+              FlatButton(
+                onPressed: () {
+                  setState(() {
+                    index = 1;
+                    _controller.animateTo(1);
+                  });
+                },
+                child: Text(
+                  'CHANGE',
+                  style:
+                      TextStyle(color: kColorRed, fontWeight: FontWeight.bold),
+                ),
+              )
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+          child: Card(
+            child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: _text(
+                  text: payMethod == Pay.MobileMoney
+                      ? 'Mobile Money-AIRTEL / MTN'
+                      : 'Pay On Delivery',
+                  fontSize: 18,
+                  color: Colors.black),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-            child: Card(
-              child: Padding(
-                padding: EdgeInsets.all(10.0),
-                child: _text(
-                    text: payMethod == Pay.MobileMoney
-                        ? 'Mobile Money-AIRTEL / MTN'
-                        : 'Pay On Delivery',
-                    fontSize: 18,
-                    color: Colors.black),
-              ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: MaterialButton(
+            height: 45.0,
+            minWidth: double.infinity,
+            color: kColorRed,
+            //TODO COMPLETE THIS SECTION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            ///Delete item from the cart --->Success page ---> send data to order history
+            ///and data to admin
+            onPressed: () {
+              if (payMethod == Pay.MobileMoney) {
+                _handelPaymentInitialization();
+                cartData.removeAllCartProducts();
+
+                ///Add orders to the fire
+                firestore.collection(_collection).add({
+                  'userName': _userInfo[0].name,
+                  'phone': _userInfo[0],
+                  'email': _userInfo[0].email,
+                  'orders': cartList
+                });
+
+                //cartData.removeAllCartProducts();
+              }
+            },
+            textColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
             ),
+            child: Text('CONFIRM'),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: MaterialButton(
-              height: 45.0,
-              minWidth: double.infinity,
-              color: kColorRed,
-              //TODO COMPLETE THIS SECTION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-              ///Delete item from the cart --->Success page ---> send data to order history
-              ///and data to admin
-              onPressed: () {
-                Navigator.pushNamed(context, MobileMoneyPay.id,
-                    arguments: MobileMoneyPay(orderedProducts: cartList,totalAmount: totalPrice.toString(),));
-              },
-              textColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: Text('CONFIRM'),
-            ),
-          )
-        ],
-      );
+        )
+      ],
+    );
+  }
 
   ListTile _costsTile({String leadingTxt, trailingTxt, Color textColor}) =>
       ListTile(
@@ -1237,5 +1264,27 @@ class _CheckoutState extends State<Checkout>
 
   _navigateToAddressBook(BuildContext context) async {
     addressDetails = await Navigator.pushNamed(context, AddressBook.id);
+  }
+
+  _handelPaymentInitialization() async {
+    final flutterWave = Flutterwave.forUIPayment(
+      acceptUSSDPayment: true,
+      fullName: _userInfo[0].name,
+      email: _userInfo[0].email,
+      txRef: DateTime.now().toIso8601String(),
+      phoneNumber: _userInfo[0].phone,
+      isDebugMode: isDebug,
+      currency: _ugCurrency,
+      context: context,
+      amount: totalPrice.toString(),
+      acceptUgandaPayment: true,
+      publicKey: 'FLWPUBK-515fba68c059b487d73e3368c46fc35f-X',
+      encryptionKey: '45742576d0de5608b5801d26',
+    );
+
+    final response = await flutterWave.initializeForUiPayments();
+    response != null
+        ? showAlertDialog(context, 'Msg', response.data.status)
+        : showAlertDialog(context, 'Msg', 'No Response');
   }
 }

@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/pages/home_page.dart';
+import 'package:ecommerce_app/pages/loading_page.dart';
 import 'package:ecommerce_app/pages/login.dart';
 import 'package:ecommerce_app/pages/login_options_page.dart';
 import 'package:ecommerce_app/provider/user.dart';
@@ -18,7 +19,7 @@ class ScreenController extends StatelessWidget {
       case Status.Authenticated:
         return HomePage();
       default:
-        return Login();
+        return LoadingPage();
     }
   }
 }

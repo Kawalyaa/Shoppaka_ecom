@@ -2,6 +2,7 @@ import 'package:ecommerce_app/componants/loading.dart';
 import 'package:ecommerce_app/pages/home_page.dart';
 import 'package:ecommerce_app/pages/signup.dart';
 import 'package:ecommerce_app/provider/user.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/constants.dart';
@@ -17,14 +18,25 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   //final _key = GlobalKey<ScaffoldState>();
 
-  bool _toggleVisibility = true;
+  bool _obscureText = true;
+
+  TextEditingController _email = TextEditingController();
+  TextEditingController _password = TextEditingController();
+  final _key = GlobalKey<ScaffoldState>();
+  final _formKeyLogin = GlobalKey<FormState>();
+
+  void _toggleVisibility() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<UserProv>(context);
+    final _authProvider = Provider.of<UserProv>(context);
 
     return Scaffold(
-      key: authProvider.key,
+      //key: _key,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -44,49 +56,38 @@ class _LoginState extends State<Login> {
               height: 50.0,
             ),
             Form(
-              key: authProvider.formKey,
+              key: _formKeyLogin,
               child: Column(
                 children: <Widget>[
                   SizedBox(
                     height: 20.0,
                   ),
                   TextFormField(
-                    controller: authProvider.email,
+                    controller: _email,
                     style: TextStyle(fontSize: 18.0, color: Colors.black),
                     textAlign: TextAlign.center,
                     decoration: kTextFieldDecoration.copyWith(
                       hintText: 'Enter email',
                     ),
-                    validator: (value) {
-                      if (value.isNotEmpty) {
-                        Pattern pattern =
-                            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                        RegExp regExp = RegExp(pattern);
-                        if (!regExp.hasMatch(value))
-                          return ('The email is invalid');
-                      } else {
-                        return ('Email field should not be empty');
-                      }
-                      return null;
-                    },
+                    validator: (value) => EmailValidator.validate(value.trim())
+                        ? null
+                        : "Valid Email is required",
                   ),
                   SizedBox(
                     height: 20.0,
                   ),
                   TextFormField(
-                    obscureText: _toggleVisibility,
+                    obscureText: _obscureText,
                     style: TextStyle(fontSize: 18.0, color: Colors.black),
-                    controller: authProvider.password,
+                    controller: _password,
                     textAlign: TextAlign.center,
                     decoration: kTextFieldDecoration.copyWith(
                       hintText: 'Enter password',
                       suffixIcon: IconButton(
                         onPressed: () {
-                          setState(() {
-                            _toggleVisibility = !_toggleVisibility;
-                          });
+                          _toggleVisibility();
                         },
-                        icon: _toggleVisibility
+                        icon: _obscureText
                             ? Icon(
                                 Icons.visibility_off,
                                 color: Colors.grey,
@@ -115,18 +116,20 @@ class _LoginState extends State<Login> {
                 buttonText: 'LOGIN',
                 onPressed: () async {
                   //await Firebase.initializeApp();
-                  if (authProvider.formKey.currentState.validate()) {
+                  if (_formKeyLogin.currentState.validate()) {
                     showProgress(context, 'Logging in, please wait...', false);
-                    if (!await authProvider.signIn()) {
+                    if (!await _authProvider.signIn(
+                        email: _email, password: _password)) {
                       hideProgress();
-                      showAlertDialog(context, "Error", "Login Failed");
+                      showAlertDialog(context, "Error",
+                          "Login Failed\n\nIncorrect Email or Password");
                       return;
-                    } else {
-                      hideProgress();
-                      // authProvider.clearController();
-                      //authProvider.reloadUser();
-                      Navigator.pushReplacementNamed(context, HomePage.id);
                     }
+
+                    hideProgress();
+                    //_authProvider.clearController();
+                    _authProvider.reloadUser();
+                    Navigator.pushReplacementNamed(context, HomePage.id);
 
                     //validateForm();
                   }

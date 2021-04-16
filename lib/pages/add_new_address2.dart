@@ -61,7 +61,7 @@ class _AddAddress2State extends State<AddAddress2> {
 
     List userName = _userInfo[0].name.split(" ");
     _firstUserName = userName[0];
-    _lastUserName = userName[1];
+    _lastUserName = userName.length == 1 ? "null" : userName[1];
 
     List<String> _townFilter() {
       switch (_selectedRegion) {
