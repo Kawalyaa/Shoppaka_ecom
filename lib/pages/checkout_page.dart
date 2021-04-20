@@ -6,8 +6,10 @@ import 'package:ecommerce_app/componants/shipment_details.dart';
 import 'package:ecommerce_app/constants.dart';
 import 'package:ecommerce_app/model/cart_model.dart';
 import 'package:ecommerce_app/model/users.dart';
+import 'package:ecommerce_app/pages/payment_successfull.dart';
 import 'package:ecommerce_app/pages/pickup_station.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
+import 'package:ecommerce_app/services/orders_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,6 +20,7 @@ import 'package:flutterwave/core/flutterwave.dart';
 import 'package:flutterwave/utils/flutterwave_currency.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 import '../constants.dart';
 import '../constants.dart';
@@ -53,6 +56,7 @@ class _CheckoutState extends State<Checkout>
   TabController _controller;
   Button selectedButton = Button.BUTTON1;
   Pay payMethod = Pay.MobileMoney;
+
   //int initialPrice = 3264;
   int shippingFee = 7000;
   int extraFee = 1000;
@@ -65,6 +69,12 @@ class _CheckoutState extends State<Checkout>
   List<UserModel> _userInfo;
   String _ugCurrency = FlutterwaveCurrency.UGX;
   var cartData;
+
+  OrdersServices _ordersServices = OrdersServices();
+  CartModel _cartModel = CartModel();
+
+  var _response;
+  List _cartListData;
 
   String _collection = 'orders';
   FirebaseAuth _auth = FirebaseAuth.instance;
@@ -142,6 +152,7 @@ class _CheckoutState extends State<Checkout>
 
     cartData = Provider.of<ProductProvider2>(context);
     List<CartModel> _cartList = cartData.cartProductList;
+    _cartListData = _cartList;
 
     //_userInfo = Provider.of<List<UserModel>>(context);
 
@@ -461,7 +472,7 @@ class _CheckoutState extends State<Checkout>
                   ? Padding(
                       padding: const EdgeInsets.fromLTRB(8.0, 22.0, 8.0, 12.0),
                       child: Container(
-                        height: 315.0,
+                        height: 40.0.h,
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.grey),
                           borderRadius: BorderRadius.circular(5.0),
@@ -1211,19 +1222,34 @@ class _CheckoutState extends State<Checkout>
             ///Delete item from the cart --->Success page ---> send data to order history
             ///and data to admin
             onPressed: () {
+              print('******************${orderedItemsList()}');
               if (payMethod == Pay.MobileMoney) {
                 _handelPaymentInitialization();
-                cartData.removeAllCartProducts();
 
                 ///Add orders to the fire
-                firestore.collection(_collection).add({
-                  'userName': _userInfo[0].name,
-                  'phone': _userInfo[0],
-                  'email': _userInfo[0].email,
-                  'orders': cartList
-                });
+                _ordersServices.createOrders(
+                    userName: _userInfo[0].name,
+                    email: _userInfo[0].email,
+                    phone: addressList[0]['phone'],
+                    ordersList: orderedItemsList(),
+                    paymentStatus: _response,
+                    totalPrice: totalPrice,
+                    paymentMethod: "MobileMoney");
 
-                //cartData.removeAllCartProducts();
+                cartData.removeAllCartProducts();
+              } else {
+                ///Add orders to the fire
+                _ordersServices.createOrders(
+                    userName: _userInfo[0].name,
+                    email: _userInfo[0].email,
+                    phone: addressList[0]['phone'],
+                    ordersList: orderedItemsList(),
+                    paymentStatus: _response,
+                    totalPrice: totalPrice,
+                    paymentMethod: "CashOnDelivery");
+                cartData.removeAllCartProducts();
+
+                Navigator.pushReplacementNamed(context, PaymentSuccessful.id);
               }
             },
             textColor: Colors.white,
@@ -1273,18 +1299,29 @@ class _CheckoutState extends State<Checkout>
       email: _userInfo[0].email,
       txRef: DateTime.now().toIso8601String(),
       phoneNumber: _userInfo[0].phone,
-      isDebugMode: isDebug,
+      isDebugMode: false,
       currency: _ugCurrency,
       context: context,
-      amount: totalPrice.toString(),
+      amount: "500",
       acceptUgandaPayment: true,
       publicKey: 'FLWPUBK-515fba68c059b487d73e3368c46fc35f-X',
       encryptionKey: '45742576d0de5608b5801d26',
     );
 
-    final response = await flutterWave.initializeForUiPayments();
-    response != null
-        ? showAlertDialog(context, 'Msg', response.data.status)
-        : showAlertDialog(context, 'Msg', 'No Response');
+    _response = await flutterWave.initializeForUiPayments();
+    print(_response.data.status);
+    _response.data.status == "successful"
+        ? Navigator.pushReplacementNamed(context, PaymentSuccessful.id)
+        : showAlertDialog(context, 'Msg', _response.data.status);
   }
+
+  List orderedItemsList() => _cartListData
+      .map((item) => {
+            'name': item.name,
+            'qty': item.qty,
+            'price': item.price,
+            'selectedSize': item.selectedSize,
+            'selectedColor': item.selectedColor,
+          })
+      .toList();
 }
