@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/model/product_details_model.dart';
 import 'package:ecommerce_app/pages/prod_detail.dart';
 import 'package:flutter/material.dart';
 
@@ -69,14 +70,16 @@ class FavDetail extends StatelessWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => ProdDetails(
-                      productDetailsName: name,
-                      productDetailsOldPrice: oldPrice,
-                      productDetailsPicture: images,
-                      productDetailsPrice: price,
-                      productBrand: brand,
-                      productColors: colors,
-                      productSizes: sizes,
-                      isFavorite: isFavorite,
+                      productDetailsModel: ProductDetailsModel(
+                        productDetailsName: name,
+                        productDetailsOldPrice: oldPrice,
+                        productDetailsPicture: images,
+                        productDetailsPrice: price,
+                        productBrand: brand,
+                        productColors: colors,
+                        productSizes: sizes,
+                        isFavorite: isFavorite,
+                      ),
                     ),
                   ),
                 );

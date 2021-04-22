@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/model/product_details_model.dart';
 import 'package:ecommerce_app/pages/prod_detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -73,9 +74,9 @@ class SimilarSingleProduct extends StatelessWidget {
               onTap: () {
                 //print(sizes);
                 //passing the values of the product to the productDetails page
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => ProdDetails(
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => ProdDetails(
+                    productDetailsModel: ProductDetailsModel(
                         heroTag: 'name2',
                         productDetailsName: name,
                         productDetailsOldPrice: oldPrice,
@@ -87,8 +88,9 @@ class SimilarSingleProduct extends StatelessWidget {
                         isFavorite: isFavorite,
                         category: category,
                         similarProd: similarProduct),
+//
                   ),
-                );
+                ));
               },
               child: Hero(
                 tag: Text('name2'),
@@ -124,14 +126,7 @@ class SimilarSingleProduct extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    '\$$oldPrice',
-                    style: TextStyle(decoration: TextDecoration.lineThrough),
-                  ),
-                  SizedBox(
-                    width: 15.0,
-                  ),
-                  Text(
-                    '\$$price',
+                    'UGX$price',
                     style: TextStyle(
                         color: Colors.red, fontWeight: FontWeight.bold),
                   ),

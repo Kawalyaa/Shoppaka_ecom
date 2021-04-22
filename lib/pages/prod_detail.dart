@@ -1,9 +1,7 @@
-import 'package:ecommerce_app/componants/similar_prod_detail.dart';
-import 'package:ecommerce_app/componants/single_product.dart';
 import 'package:ecommerce_app/componants/single_similar_product.dart';
 import 'package:ecommerce_app/model/cart_model.dart';
-import 'package:ecommerce_app/model/categary_options.dart';
 import 'package:ecommerce_app/model/color_model.dart';
+import 'package:ecommerce_app/model/product_details_model.dart';
 import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/model/size_model.dart';
 import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
@@ -14,34 +12,14 @@ import 'package:flutter/material.dart';
 import 'package:ecommerce_app/pages/home_page.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
-
+import 'package:sizer/sizer.dart';
 import '../constants.dart';
 
 class ProdDetails extends StatefulWidget {
   static const String id = 'productDetails';
-  final productDetailsName;
-  final List productDetailsPicture;
-  final productDetailsPrice;
-  final productDetailsOldPrice;
-  final productBrand;
-  final List productSizes;
-  final List productColors;
-  final String category;
-  final String heroTag;
-  final List<ProductsModel> similarProd;
-  bool isFavorite;
-  ProdDetails(
-      {this.productDetailsPicture,
-      this.heroTag,
-      this.productDetailsName,
-      this.productDetailsOldPrice,
-      this.productDetailsPrice,
-      this.productBrand,
-      this.productSizes,
-      this.productColors,
-      this.isFavorite,
-      this.category,
-      this.similarProd});
+  final ProductDetailsModel productDetailsModel;
+
+  ProdDetails({this.productDetailsModel});
 
   @override
   _ProdDetailsState createState() => _ProdDetailsState();
@@ -60,6 +38,8 @@ class _ProdDetailsState extends State<ProdDetails> {
 
   List<ProductsModel> similarProdList;
 
+  //bool isFavorite;
+
   @override
   void initState() {
     super.initState();
@@ -71,7 +51,7 @@ class _ProdDetailsState extends State<ProdDetails> {
     sizeList = <SizeModel>[];
     //converting widget.productSizes into SizeModel to resolve onTap issues
 
-    widget.productSizes
+    widget.productDetailsModel.productSizes
         .map((item) => sizeList.add(SizeModel(sizeName: item)))
         .toList();
   }
@@ -81,7 +61,7 @@ class _ProdDetailsState extends State<ProdDetails> {
   populateColorListData() {
     colorList = <ColorModel>[];
 
-    widget.productColors.map((item) {
+    widget.productDetailsModel.productColors.map((item) {
       if (item == 'red') {
         colorList.add(ColorModel(colorName: kColorRed));
       }
@@ -103,7 +83,8 @@ class _ProdDetailsState extends State<ProdDetails> {
     List<CartModel> cartList = providerData.cartProductList;
     var favData = Provider.of<FavoriteList>(context);
 
-    List<ProductsModel> similarProdList = widget.similarProd;
+    List<ProductsModel> similarProdList =
+        widget.productDetailsModel.similarProd;
 
     //========Create a List method that get products depending on the category======
 
@@ -179,7 +160,7 @@ class _ProdDetailsState extends State<ProdDetails> {
       body: ListView(
         children: <Widget>[
           Hero(
-            tag: widget.heroTag,
+            tag: widget.productDetailsModel.heroTag,
             child: Container(
               height: 300.0,
               width: 200.0,
@@ -188,7 +169,7 @@ class _ProdDetailsState extends State<ProdDetails> {
               ),
               child: Center(
                 child: FadeInImage.assetNetwork(
-                  image: widget.productDetailsPicture[0],
+                  image: widget.productDetailsModel.productDetailsPicture[0],
                   placeholder: 'images/loading_gif/Spin-1s-200px.gif',
                   fit: BoxFit.cover,
                 ),
@@ -198,32 +179,42 @@ class _ProdDetailsState extends State<ProdDetails> {
 
           Padding(
             padding: const EdgeInsets.fromLTRB(16.0, 5.0, 5.0, 5.0),
-            child: Row(
-              children: <Widget>[
-                Text(
-                  widget.productDetailsName,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      widget.productDetailsModel.productDetailsName,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20.0),
+                    ),
+                  ],
                 ),
                 SizedBox(
-                  width: 15.0,
+                  height: 15.0,
                 ),
-                Text(
-                  '\$${widget.productDetailsOldPrice}',
-                  style: TextStyle(
-                      fontSize: 25.0,
-                      color: Colors.black54,
-                      decoration: TextDecoration.lineThrough),
+                Row(
+                  children: <Widget>[
+                    Text(
+                      'UGX ${widget.productDetailsModel.productDetailsOldPrice}',
+                      style: TextStyle(
+                          fontSize: 25.0,
+                          color: Colors.black54,
+                          decoration: TextDecoration.lineThrough),
+                    ),
+                    SizedBox(
+                      width: 10.0,
+                    ),
+                    Text(
+                      'UGX${widget.productDetailsModel.productDetailsPrice}',
+                      style: TextStyle(
+                          color: kColorRed,
+                          fontSize: 25.0,
+                          fontWeight: FontWeight.w900),
+                    )
+                  ],
                 ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                Text(
-                  '\$${widget.productDetailsPrice}',
-                  style: TextStyle(
-                      color: kColorRed,
-                      fontSize: 25.0,
-                      fontWeight: FontWeight.w900),
-                )
               ],
             ),
           ),
@@ -246,15 +237,17 @@ class _ProdDetailsState extends State<ProdDetails> {
                       onPressed: () {
                         providerData.addProducts(
                           CartModel(
-                            images: widget.productDetailsPicture,
-                            name: widget.productDetailsName,
-                            brand: widget.productBrand,
-                            price: widget.productDetailsPrice,
+                            images: widget
+                                .productDetailsModel.productDetailsPicture,
+                            name: widget.productDetailsModel.productDetailsName,
+                            brand: widget.productDetailsModel.productBrand,
+                            price:
+                                widget.productDetailsModel.productDetailsPrice,
                             selectedSize: selectedSize == null
-                                ? widget.productSizes[0]
+                                ? widget.productDetailsModel.productSizes[0]
                                 : selectedSize,
                             selectedColor: selectedColor == null
-                                ? widget.productColors[0]
+                                ? widget.productDetailsModel.productColors[0]
                                 : selectedColor,
                           ),
                         );
@@ -273,23 +266,31 @@ class _ProdDetailsState extends State<ProdDetails> {
                 InkWell(
                   onTap: () {
                     setState(() {
-                      widget.isFavorite = !widget.isFavorite;
+                      widget.productDetailsModel.isFavorite =
+                          !widget.productDetailsModel.isFavorite;
 
-                      widget.isFavorite
+                      widget.productDetailsModel.isFavorite
                           ? favData.addToFavorite(ProductsModel(
-                              name: widget.productDetailsName,
-                              images: widget.productDetailsPicture,
-                              price: widget.productDetailsPrice,
-                              oldPrice: widget.productDetailsOldPrice,
-                              favorite: widget.isFavorite,
-                              brand: widget.productBrand,
-                              sizes: widget.productSizes,
-                              colors: widget.productColors))
-                          : favData.removeFavorite(widget.productDetailsName);
+                              name:
+                                  widget.productDetailsModel.productDetailsName,
+                              images: widget
+                                  .productDetailsModel.productDetailsPicture,
+                              price: widget
+                                  .productDetailsModel.productDetailsPrice,
+                              oldPrice: widget
+                                  .productDetailsModel.productDetailsOldPrice,
+                              favorite: widget.productDetailsModel.isFavorite,
+                              brand: widget.productDetailsModel.productBrand,
+                              sizes: widget.productDetailsModel.productSizes,
+                              colors: widget.productDetailsModel.productColors))
+                          : favData.removeFavorite(
+                              widget.productDetailsModel.productDetailsName);
                     });
                   },
                   child: Icon(
-                    widget.isFavorite ? Icons.favorite : Icons.favorite_border,
+                    widget.productDetailsModel.isFavorite
+                        ? Icons.favorite
+                        : Icons.favorite_border,
                     color: kColorRed,
                     size: 30.0,
                   ),
@@ -406,7 +407,7 @@ class _ProdDetailsState extends State<ProdDetails> {
               ),
               Padding(
                 padding: EdgeInsets.all(5.0),
-                child: Text(widget.productDetailsName,
+                child: Text(widget.productDetailsModel.productDetailsName,
                     style: TextStyle(color: Colors.black54)),
               ),
             ],
@@ -421,7 +422,7 @@ class _ProdDetailsState extends State<ProdDetails> {
               ),
               Padding(
                 padding: EdgeInsets.all(5.0),
-                child: Text('${widget.productBrand}',
+                child: Text('${widget.productDetailsModel.productBrand}',
                     style: TextStyle(color: Colors.black54)),
               )
             ],
@@ -449,7 +450,8 @@ class _ProdDetailsState extends State<ProdDetails> {
             child: Text('Similar Products'),
           ),
           Container(
-            height: 180.0,
+            height: 25.0.h,
+            padding: EdgeInsets.only(bottom: 20),
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: similarProdList.length,
