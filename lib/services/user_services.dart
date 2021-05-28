@@ -16,7 +16,7 @@ class UserServices {
       "name": name,
       "email": email,
       "photo": photo,
-      "address": address
+      "address": address,
     });
   }
 

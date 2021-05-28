@@ -1,6 +1,9 @@
 import 'package:ecommerce_app/componants/loading.dart';
 import 'package:ecommerce_app/model/users.dart';
+import 'package:ecommerce_app/provider/user.dart';
 import 'package:ecommerce_app/services/user_services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +24,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
   TextEditingController _lastNameController = TextEditingController();
   TextEditingController _addressController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
   List<String> _countryCodes = ['+256', '+1'];
   List<String> _region = [
@@ -59,10 +63,14 @@ class _AddNewAddressState extends State<AddNewAddress> {
   @override
   Widget build(BuildContext context) {
     List<UserModel> _userInfo = Provider.of<List<UserModel>>(context);
+    var _userProvider = Provider.of<UserProv>(context);
 
     List userName = _userInfo[0].name.split(" ");
     _firstUserName = userName[0];
     _lastUserName = userName.length == 1 ? 'null' : userName[1];
+
+    var _phoneNumber = _selectedCountryCode +
+        _phoneController.text.replaceFirst(RegExp(r'^0+'), '');
 
     List<String> _townFilter() {
       switch (_selectedRegion) {
@@ -319,7 +327,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
                                 if (value.isEmpty) {
                                   return ('Value Can\'t Be Empty');
                                 } else if (value.length != 10) {
-                                  return ('Invalide phone number');
+                                  return ('Invalid phone number');
                                 }
                                 return null;
                               },
@@ -394,13 +402,16 @@ class _AddNewAddressState extends State<AddNewAddress> {
                     'address': _addressController.text,
                     'region': _selectedRegion,
                     'town': _selectedTown,
-                    'phone': _selectedCountryCode +
-                        _phoneController.text.replaceFirst(RegExp(r'^0+'), ''),
+                    'phone': _phoneNumber,
                     'default': isChecked
                   })) {
                     hideProgress();
-                    showAlertDialog(context, "Error", "SignUp Failed");
+                    showAlertDialog(
+                        context, "Error", "Creating address Failed");
                   } else {
+                    ///Update user phone number
+                    _userProvider.updateUserData(
+                        {"phone": _phoneNumber}, _auth.currentUser.uid);
                     hideProgress();
                     Navigator.pop(context);
                   }

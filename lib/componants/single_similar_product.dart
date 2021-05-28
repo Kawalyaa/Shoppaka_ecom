@@ -3,6 +3,7 @@ import 'package:ecommerce_app/pages/prod_detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sizer/sizer.dart';
 
 class SimilarSingleProduct extends StatelessWidget {
   final String id;

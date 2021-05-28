@@ -24,6 +24,7 @@ import 'package:sizer/sizer.dart';
 
 import '../constants.dart';
 import 'adress_book.dart';
+import 'mobile_money_payment.dart';
 
 enum Button { BUTTON1, BUTTON2, BUTTON3 }
 enum Pay { MobileMoney, OnDelivery }
@@ -531,7 +532,7 @@ class _CheckoutState extends State<Checkout>
                               ),
                             ),
                             Center(
-                              child: FlatButton(
+                              child: TextButton(
                                 child: Text(
                                   'CHANGE PICKUP STATION',
                                   style: TextStyle(color: kColorRed),
@@ -560,7 +561,7 @@ class _CheckoutState extends State<Checkout>
                         left: 65.0,
                         right: 65.0,
                       ),
-                      child: FlatButton(
+                      child: TextButton(
                         onPressed: () {
                           setState(() {
                             selectedButton = Button.BUTTON3;
@@ -568,10 +569,11 @@ class _CheckoutState extends State<Checkout>
                           _navigateToPickupStation(context);
                           // print(result[0].placeName);
                         },
-                        textColor: kColorRed,
+                        // textColor: kColorRed,
                         child: Text(
                           'SELECT A PICKUP STATION',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: kColorRed),
                         ),
                       ),
                     )
@@ -619,7 +621,7 @@ class _CheckoutState extends State<Checkout>
                         onTap: () {
                           if (selectedButton == Button.BUTTON3 &&
                                   result == null ||
-                              addressList == null) {
+                              addressList.isEmpty) {
                             showAlertDialog(context, 'Error',
                                 'No Pickup Station Selected\nOr Address is missing');
                           } else {
@@ -800,7 +802,7 @@ class _CheckoutState extends State<Checkout>
             child: Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.baseline,
+                //crossAxisAlignment: CrossAxisAlignment.baseline,
                 children: [
                   Container(
                     height: 50.0,
@@ -1225,36 +1227,43 @@ class _CheckoutState extends State<Checkout>
             onPressed: () {
               print('******************${orderedItemsList()}');
               if (payMethod == Pay.MobileMoney) {
-                _handelPaymentInitialization();
+                Navigator.pushNamed(context, MobileMoneyPay.id,
+                    arguments: MobileMoneyPay(
+                      orderedProducts: orderedItemsList(),
+                      totalAmount: totalPrice,
+                      pickupStation: result,
+                    ));
+                // _handelPaymentInitialization();
 
                 ///Add orders to the fire
-                _ordersServices.createOrders(
-                  userName: _userInfo[0].name,
-                  email: _userInfo[0].email,
-                  phone: addressList[0]['phone'],
-                  ordersList: orderedItemsList(),
-                  paymentStatus: _response,
-                  totalPrice: totalPrice,
-                  paymentMethod: "MobileMoney",
-                  pickupStation: result != null ? pickUpStationList() : null,
-                );
+                // _ordersServices.createOrders(
+                //   userName: _userInfo[0].name,
+                //   email: _userInfo[0].email,
+                //   phone: addressList[0]['phone'],
+                //   ordersList: orderedItemsList(),
+                //   paymentStatus: _response,
+                //   totalPrice: totalPrice,
+                //   paymentMethod: "MobileMoney",
+                //   pickupStation: result != null ? pickUpStationList() : null,
+                //   context: context
+                // );
 
-                cartData.removeAllCartProducts();
+                // cartData.removeAllCartProducts();
               } else {
                 ///Add orders to the fire
                 _ordersServices.createOrders(
-                  userName: _userInfo[0].name,
-                  email: _userInfo[0].email,
-                  phone: addressList[0]['phone'],
-                  ordersList: orderedItemsList(),
-                  paymentStatus: _response,
-                  totalPrice: totalPrice,
-                  paymentMethod: "CashOnDelivery",
-                  pickupStation: result != null ? pickUpStationList() : null,
-                );
+                    userName: _userInfo[0].name,
+                    email: _userInfo[0].email,
+                    phone: addressList[0]['phone'],
+                    ordersList: orderedItemsList(),
+                    paymentStatus: _response,
+                    totalPrice: totalPrice,
+                    paymentMethod: "CashOnDelivery",
+                    pickupStation: result != null ? pickUpStationList() : null,
+                    context: context);
                 cartData.removeAllCartProducts();
 
-                Navigator.pushReplacementNamed(context, PaymentSuccessful.id);
+                //Navigator.pushReplacementNamed(context, PaymentSuccessful.id);
               }
             },
             textColor: Colors.white,
@@ -1299,25 +1308,27 @@ class _CheckoutState extends State<Checkout>
 
   _handelPaymentInitialization() async {
     final flutterWave = Flutterwave.forUIPayment(
-      acceptUSSDPayment: true,
-      fullName: _userInfo[0].name,
-      email: _userInfo[0].email,
-      txRef: DateTime.now().toIso8601String(),
-      phoneNumber: _userInfo[0].phone,
-      isDebugMode: false,
-      currency: _ugCurrency,
-      context: context,
-      amount: "500",
-      acceptUgandaPayment: true,
-      publicKey: 'FLWPUBK-515fba68c059b487d73e3368c46fc35f-X',
-      encryptionKey: '45742576d0de5608b5801d26',
-    );
+        acceptUSSDPayment: true,
+        fullName: _userInfo[0].name,
+        email: _userInfo[0].email,
+        txRef: DateTime.now().toIso8601String(),
+        phoneNumber: addressList[0]['phone'],
+        isDebugMode: false,
+        currency: _ugCurrency,
+        context: context,
+        amount: "500",
+        acceptUgandaPayment: true,
+        publicKey: 'FLWPUBK-515fba68c059b487d73e3368c46fc35f-X',
+        encryptionKey: '45742576d0de5608b5801d26',
+        narration: 'Shopla');
 
-    _response = await flutterWave.initializeForUiPayments();
-    print(_response.data.status);
-    _response.data.status == "successful"
+    var response = await flutterWave.initializeForUiPayments();
+    print(
+        '/////////\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$ ${response.data.status}');
+    _response = response.data.status;
+    response.data.status == "successful"
         ? Navigator.pushReplacementNamed(context, PaymentSuccessful.id)
-        : showAlertDialog(context, 'Msg', _response.data.status);
+        : showAlertDialog(context, 'Msg', response.data.status);
   }
 
   List orderedItemsList() => _cartListData
