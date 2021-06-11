@@ -264,7 +264,7 @@ class _MobileMoneyPayState extends State<MobileMoneyPay> {
         isDebugMode: false,
         currency: _ugCurrency,
         context: context,
-        amount: "500",
+        amount: "300",
         acceptUgandaPayment: true,
         publicKey: 'FLWPUBK-515fba68c059b487d73e3368c46fc35f-X',
         encryptionKey: '45742576d0de5608b5801d26',
@@ -276,19 +276,21 @@ class _MobileMoneyPayState extends State<MobileMoneyPay> {
 
     if (_response.data.status == "successful") {
       ///send payment details to the admin
-      _ordersServices.createOrders(
-          userName: _userInfo[0].name,
-          email: _userInfo[0].email,
-          phone: _userInfo[0].phone,
-          ordersList: widget.orderedProducts,
-          paymentStatus: _response.data.status,
-          totalPrice: widget.totalAmount,
-          paymentMethod: "MobileMoney",
-          pickupStation:
-              widget.pickupStation != null ? _pickUpStationList() : null,
-          context: context);
-
-      Navigator.pushReplacementNamed(context, PaymentSuccessful.id);
+      _ordersServices
+          .createOrders(
+              userName: _userInfo[0].name,
+              email: _userInfo[0].email,
+              phone: _userInfo[0].phone,
+              ordersList: widget.orderedProducts,
+              paymentStatus: _response.data.status,
+              totalPrice: widget.totalAmount,
+              paymentMethod: "MobileMoney",
+              pickupStation:
+                  widget.pickupStation != null ? _pickUpStationList() : null,
+              context: context)
+          .then((value) => value == true
+              ? Navigator.pushReplacementNamed(context, PaymentSuccessful.id)
+              : showAlertDialog(context, 'Message', 'upload error'));
     } else {
       showAlertDialog(context, 'Message', _response.data.status);
     }
