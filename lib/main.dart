@@ -5,6 +5,7 @@ import 'package:ecommerce_app/pages/category_products_list.dart';
 import 'package:ecommerce_app/pages/favorites_page.dart';
 import 'package:ecommerce_app/pages/loading_page.dart';
 import 'package:ecommerce_app/pages/mobile_money_payment.dart';
+import 'package:ecommerce_app/pages/order_list_page.dart';
 import 'package:ecommerce_app/pages/payment_successfull.dart';
 import 'package:ecommerce_app/pages/pickup_station.dart';
 import 'package:ecommerce_app/pages/prod_detail.dart';
@@ -94,6 +95,7 @@ class MyApp extends StatelessWidget {
                 MobileMoneyPay.id: (context) => MobileMoneyPay(),
                 LoadingPage.id: (context) => LoadingPage(),
                 PaymentSuccessful.id: (context) => PaymentSuccessful(),
+                OrderList.id: (context) => OrderList()
               },
               theme: ThemeData(
                   primaryColor: kColorRed, textSelectionHandleColor: kColorRed),
