@@ -1,10 +1,12 @@
 import 'package:ecommerce_app/pages/favorites_page.dart';
+import 'package:ecommerce_app/pages/order_list_page.dart';
 import 'package:ecommerce_app/provider/user.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerce_app/pages/login.dart';
 import 'package:ecommerce_app/services/user_services.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class NavigationDrawer extends StatefulWidget {
   final String name;
@@ -50,10 +52,19 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                           ),
                         ),
                       )
-                    : FadeInImage.assetNetwork(
+                    : CachedNetworkImage(
                         fit: BoxFit.cover,
-                        placeholder: 'images/loading_gif/Spin-1s-200px.gif',
-                        image: widget.photo),
+                        placeholder: (context, url) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage(
+                                    'images/loading_gif/Spin-1s-200px.gif'),
+                                fit: BoxFit.cover),
+                          ),
+                        ),
+                        imageUrl: widget.photo,
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
               ),
             ),
           ),
@@ -74,10 +85,12 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, OrderList.id);
+            },
             child: ListTile(
               leading: Icon(Icons.shopping_basket),
-              title: Text('My Oders'),
+              title: Text('My Orders'),
             ),
           ),
           InkWell(
@@ -134,3 +147,8 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
     );
   }
 }
+
+// FadeInImage.assetNetwork(
+// fit: BoxFit.cover,
+// placeholder: 'images/loading_gif/Spin-1s-200px.gif',
+// image: widget.photo),

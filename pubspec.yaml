@@ -32,7 +32,7 @@ dependencies:
   firebase_storage: ^8.0.5
   firebase_database: ^6.1.2
   provider: ^4.0.4
-  uuid: ^2.0.4
+  uuid: ^3.0.0
   firebase_core: ^1.1.0
   firebase_messaging: ^9.1.3
   flutter_spinkit: ^4.1.2+1
@@ -47,6 +47,8 @@ dependencies:
   sizer: ^1.1.8
   email_validator: any
   http: ^0.13.3
+  cached_network_image: ^3.0.0
+
 
 
 
@@ -105,6 +107,7 @@ flutter:
    - images/banners/
    - images/interests/
    - images/logos/
+   - images/img_place_holder/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
