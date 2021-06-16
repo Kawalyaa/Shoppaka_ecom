@@ -8,6 +8,7 @@ class OrderModel {
   static const PICKUP_STATION = 'pickupStation';
   static const ORDER_STATUS = 'orderStatus';
   static const DELIVERY_DATE = 'deliveryDate';
+  static const TIME = 'time';
 
   final List ordersList;
   final List pickupStation;
@@ -15,6 +16,7 @@ class OrderModel {
   final String orderNumber;
   final double totalPrice;
   final String deliveryDate;
+  final time;
 
   OrderModel(
       {this.totalPrice,
@@ -22,7 +24,8 @@ class OrderModel {
       this.ordersList,
       this.orderStatus,
       this.pickupStation,
-      this.deliveryDate});
+      this.deliveryDate,
+      this.time});
 
   factory OrderModel.fromSnapShot(Map data) => OrderModel(
       totalPrice: data[TOTAL_PRICE],
@@ -30,5 +33,6 @@ class OrderModel {
       ordersList: data[ORDER_LIST] ?? [],
       orderStatus: data[ORDER_STATUS] ?? '',
       pickupStation: data[PICKUP_STATION] ?? [],
-      deliveryDate: data[DELIVERY_DATE] ?? '');
+      deliveryDate: data[DELIVERY_DATE] ?? '',
+      time: data[TIME] ?? '');
 }

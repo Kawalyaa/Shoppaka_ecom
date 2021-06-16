@@ -61,6 +61,7 @@ class _OrderListState extends State<OrderList> {
         stream: _reference
             .where('id', isEqualTo: _auth.currentUser.uid)
             .snapshots(),
+        //.orderBy('time', descending: true)
         //.map((snaps) => snaps.docs.map((snap) => OrderModel.fromSnapShot(snap)).toList()),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
@@ -76,10 +77,13 @@ class _OrderListState extends State<OrderList> {
             return Center(
                 child: Text("Loading....", style: TextStyle(color: kColorRed)));
           }
-          var snapData = snapshot.data.docs
+          List snapData = snapshot.data.docs
               .map((DocumentSnapshot snap) =>
                   OrderModel.fromSnapShot(snap.data()))
               .toList();
+
+          /// Sort incoming data by time
+          snapData.sort((a, b) => b.time.compareTo(a.time));
           return snapData.isEmpty
               ? Container(
                   child: Center(child: Text('No Order Data')),
@@ -119,6 +123,7 @@ class SingleOrder extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(bottom: 8.0),
       child: Card(
+        elevation: 2.0,
         //color: Colors.white70,
         child: Column(
           children: [

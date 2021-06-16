@@ -462,7 +462,7 @@ class _ProdDetailsState extends State<ProdDetails> {
             ),
           ),
           Container(
-            height: 25.0.h,
+            height: 200,
             padding: EdgeInsets.only(bottom: 20),
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
