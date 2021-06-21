@@ -20,13 +20,12 @@ class _AddAddress2State extends State<AddAddress2> {
   TextEditingController _lastNameController = TextEditingController();
   TextEditingController _addressController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
+  FocusNode myFocusNode = FocusNode();
 
-  List<String> _countryCodes = ['+256', '+1'];
+  List<String> _countryCodes = ['+1', '+256'];
   List<String> _region = [
     'Central',
-    'Eastern',
     'Western',
-    'Northern',
   ];
   List<String> _centralTowns = [
     'Kampala',
@@ -37,7 +36,7 @@ class _AddAddress2State extends State<AddAddress2> {
   ];
   List<String> _westernTowns = [
     'Mbarara',
-    'Bwizibwere',
+    'Bwizibwera',
     'Rukungiri',
     'Kabale',
     'Kisolo'
@@ -47,7 +46,7 @@ class _AddAddress2State extends State<AddAddress2> {
 
   String _selectedTown;
 
-  String _selectedCountryCode = '+1';
+  String _selectedCountryCode = '+256';
   UserServices _userServices = UserServices();
 
   bool isChecked = false;
@@ -73,7 +72,7 @@ class _AddAddress2State extends State<AddAddress2> {
           break;
       }
       //Return a list to a void null error
-      return ['Central'];
+      return ['error'];
     }
 
     var countryDropdown = Container(
@@ -98,7 +97,7 @@ class _AddAddress2State extends State<AddAddress2> {
         value: _selectedCountryCode,
       ),
     );
-    var countryDropdown1 = Container(
+    var regionDropdown = Container(
       width: 50,
       child: DropdownButtonFormField(
         hint: Text(
@@ -118,13 +117,14 @@ class _AddAddress2State extends State<AddAddress2> {
             .toList(),
         onChanged: (value) {
           setState(() {
+            _selectedTown = null;
             _selectedRegion = value;
           });
         },
         value: _selectedRegion,
       ),
     );
-    var countryDropdown2 = Container(
+    var townDropdown = Container(
       width: 50,
       child: DropdownButtonFormField(
         hint: Text(
@@ -157,7 +157,7 @@ class _AddAddress2State extends State<AddAddress2> {
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.black),
         title: Text(
-          'Add New Address2 ',
+          'Add Second Address ',
           style: TextStyle(color: Colors.black),
         ),
       ),
@@ -190,6 +190,7 @@ class _AddAddress2State extends State<AddAddress2> {
                           return null;
                         },
                         decoration: InputDecoration(
+                          focusedBorder: kUnderLineBorder,
                           labelText: 'First Name',
                           hintText: 'First Name',
                           suffixIcon: Padding(
@@ -217,6 +218,7 @@ class _AddAddress2State extends State<AddAddress2> {
                           return null;
                         },
                         decoration: InputDecoration(
+                          focusedBorder: kUnderLineBorder,
                           labelText: 'Last Name',
 
                           hintText: 'Last Name',
@@ -245,8 +247,9 @@ class _AddAddress2State extends State<AddAddress2> {
                           return null;
                         },
                         decoration: InputDecoration(
-                          labelText: 'Adress',
-                          hintText: 'Adress',
+                          focusedBorder: kUnderLineBorder,
+                          labelText: 'Address',
+                          hintText: 'Address',
                           suffixIcon: Padding(
                             padding: const EdgeInsets.only(
                                 left: 20.0, top: 20.0, bottom: 5.0, right: 2.0),
@@ -265,8 +268,7 @@ class _AddAddress2State extends State<AddAddress2> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                            flex: 11,
-                            child: Container(child: countryDropdown1)),
+                            flex: 11, child: Container(child: regionDropdown)),
                         SizedBox(
                           width: 15,
                         ),
@@ -285,8 +287,7 @@ class _AddAddress2State extends State<AddAddress2> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                            flex: 11,
-                            child: Container(child: countryDropdown2)),
+                            flex: 11, child: Container(child: townDropdown)),
                         SizedBox(
                           width: 15,
                         ),
@@ -311,18 +312,20 @@ class _AddAddress2State extends State<AddAddress2> {
                         Expanded(
                           flex: 5,
                           child: Container(
+                            padding: EdgeInsets.only(bottom: 10),
                             child: TextFormField(
                               controller: _phoneController,
                               keyboardType: TextInputType.number,
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return ('Value Can\'t Be Empty');
-                                } else if (value.length != 10) {
-                                  return ('Invalide phone number');
+                                } else if (value.length > 10) {
+                                  return ('Invalid phone number');
                                 }
                                 return null;
                               },
                               decoration: InputDecoration(
+                                focusedBorder: kUnderLineBorder,
                                 labelText: 'Mobile Phone Number',
                                 hintText: 'Mobile Phone Number',
                                 //prefix: countryDropdown,

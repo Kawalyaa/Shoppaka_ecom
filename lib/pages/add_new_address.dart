@@ -3,7 +3,6 @@ import 'package:ecommerce_app/model/users.dart';
 import 'package:ecommerce_app/provider/user.dart';
 import 'package:ecommerce_app/services/user_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,12 +25,10 @@ class _AddNewAddressState extends State<AddNewAddress> {
   TextEditingController _phoneController = TextEditingController();
   FirebaseAuth _auth = FirebaseAuth.instance;
 
-  List<String> _countryCodes = ['+256', '+1'];
+  List<String> _countryCodes = ['+1', '+256'];
   List<String> _region = [
     'Central',
-    'Eastern',
     'Western',
-    'Northern',
   ];
   List<String> _centralTowns = [
     'Kampala',
@@ -52,7 +49,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
 
   String _selectedTown;
 
-  String _selectedCountryCode = '+1';
+  String _selectedCountryCode = '+256';
   UserServices _userServices = UserServices();
 
   bool isChecked = false;
@@ -82,7 +79,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
           break;
       }
       //Return a list to a void null error
-      return ['Central'];
+      return ['error'];
     }
 
     var countryDropdown = Container(
@@ -107,7 +104,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
         value: _selectedCountryCode,
       ),
     );
-    var countryDropdown1 = Container(
+    var regionDropdown = Container(
       width: 50,
       child: DropdownButtonFormField(
         hint: Text(
@@ -127,13 +124,15 @@ class _AddNewAddressState extends State<AddNewAddress> {
             .toList(),
         onChanged: (value) {
           setState(() {
+            ///set _selectedTown to null to remove error on town if user changes region
+            _selectedTown = null;
             _selectedRegion = value;
           });
         },
         value: _selectedRegion,
       ),
     );
-    var countryDropdown2 = Container(
+    var townDropdown = Container(
       width: 50,
       child: DropdownButtonFormField(
         hint: Text(
@@ -199,6 +198,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
                           return null;
                         },
                         decoration: InputDecoration(
+                          focusedBorder: kUnderLineBorder,
                           labelText: 'First Name',
                           hintText: 'First Name',
                           suffixIcon: Padding(
@@ -226,6 +226,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
                           return null;
                         },
                         decoration: InputDecoration(
+                          focusedBorder: kUnderLineBorder,
                           labelText: 'Last Name',
 
                           hintText: 'Last Name',
@@ -254,8 +255,9 @@ class _AddNewAddressState extends State<AddNewAddress> {
                           return null;
                         },
                         decoration: InputDecoration(
-                          labelText: 'Adress',
-                          hintText: 'Adress',
+                          focusedBorder: kUnderLineBorder,
+                          labelText: 'Address',
+                          hintText: 'Address',
                           suffixIcon: Padding(
                             padding: const EdgeInsets.only(
                                 left: 20.0, top: 20.0, bottom: 5.0, right: 2.0),
@@ -274,8 +276,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                            flex: 11,
-                            child: Container(child: countryDropdown1)),
+                            flex: 11, child: Container(child: regionDropdown)),
                         SizedBox(
                           width: 15,
                         ),
@@ -294,8 +295,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                            flex: 11,
-                            child: Container(child: countryDropdown2)),
+                            flex: 11, child: Container(child: townDropdown)),
                         SizedBox(
                           width: 15,
                         ),
@@ -320,21 +320,22 @@ class _AddNewAddressState extends State<AddNewAddress> {
                         Expanded(
                           flex: 5,
                           child: Container(
+                            padding: EdgeInsets.only(bottom: 10),
                             child: TextFormField(
                               controller: _phoneController,
                               keyboardType: TextInputType.number,
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return ('Value Can\'t Be Empty');
-                                } else if (value.length != 10) {
+                                } else if (value.length > 10) {
                                   return ('Invalid phone number');
                                 }
                                 return null;
                               },
                               decoration: InputDecoration(
+                                focusedBorder: kUnderLineBorder,
                                 labelText: 'Mobile Phone Number',
                                 hintText: 'Mobile Phone Number',
-                                //prefix: countryDropdown,
                                 suffixIcon: Padding(
                                   padding: const EdgeInsets.only(
                                       left: 20.0,
@@ -365,8 +366,6 @@ class _AddNewAddressState extends State<AddNewAddress> {
                           onChanged: (value) {
                             setState(() {
                               isChecked = value;
-                              //TODO Update the address list where default equal to true turn to false
-                              //  if(isChecked==true)
                             });
                           },
                         ),

@@ -16,13 +16,10 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  //final _key = GlobalKey<ScaffoldState>();
-
   bool _obscureText = true;
 
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
-  final _key = GlobalKey<ScaffoldState>();
   final _formKeyLogin = GlobalKey<FormState>();
 
   void _toggleVisibility() {

@@ -98,7 +98,14 @@ class MyApp extends StatelessWidget {
                 OrderList.id: (context) => OrderList()
               },
               theme: ThemeData(
-                  primaryColor: kColorRed, textSelectionHandleColor: kColorRed),
+                  inputDecorationTheme: InputDecorationTheme(
+                    labelStyle: TextStyle(color: kColorRed),
+                  ),
+                  primaryColor: kColorRed,
+                  textSelectionTheme: TextSelectionThemeData(
+                      cursorColor: kColorRed,
+                      selectionColor: kColorRed,
+                      selectionHandleColor: kColorRed)),
               home: initScreen == 0 || initScreen == null
                   ? WelcomeLoginOptions()
                   : ScreenController(),

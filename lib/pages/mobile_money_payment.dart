@@ -1,5 +1,4 @@
 import 'package:ecommerce_app/componants/loading.dart';
-import 'package:ecommerce_app/model/cart_model.dart';
 import 'package:ecommerce_app/model/users.dart';
 import 'package:ecommerce_app/pages/payment_successfull.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
@@ -230,28 +229,6 @@ class _MobileMoneyPayState extends State<MobileMoneyPay> {
         ));
   }
 
-  _handelPaymentInitialization2() async {
-    final flutterWave = Flutterwave.forUIPayment(
-      acceptUSSDPayment: true,
-      fullName: _userInfo[0].name,
-      email: _userInfo[0].email,
-      txRef: DateTime.now().toIso8601String(),
-      phoneNumber: _mtnPhoneController.text.trim(),
-      isDebugMode: isDebug,
-      currency: _ugCurrency,
-      context: context,
-      amount: widget.totalAmount.toString(),
-      acceptUgandaPayment: true,
-      publicKey: 'FLWPUBK_TEST-8c05487cc28d9fe8f34f08eb46589ed6-X',
-      encryptionKey: 'FLWSECK_TESTb4725f3c6e15',
-    );
-
-    final response = await flutterWave.initializeForUiPayments();
-    response != null
-        ? showAlertDialog(context, 'Msg', response.data.status)
-        : showAlertDialog(context, 'Msg', 'No Response');
-  }
-
   _handelPaymentInitialization() async {
     final flutterWave = Flutterwave.forUIPayment(
         acceptUSSDPayment: true,
@@ -271,8 +248,6 @@ class _MobileMoneyPayState extends State<MobileMoneyPay> {
         narration: 'Shopla');
 
     _response = await flutterWave.initializeForUiPayments();
-    print(
-        '/////////\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$ ${_response.data.status}');
 
     if (_response.data.status == "successful") {
       ///send payment details to the admin

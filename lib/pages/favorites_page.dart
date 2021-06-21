@@ -1,5 +1,4 @@
 import 'package:ecommerce_app/componants/fav_detail.dart';
-import 'package:ecommerce_app/componants/single_product.dart';
 import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
