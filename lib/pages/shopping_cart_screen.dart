@@ -23,6 +23,10 @@ class _ShoppingCartState extends State<ShoppingCart> {
     List<CartModel> cartList = getValue.cartProductList;
     double totalPrice = getValue.getTotalPrice();
 
+    ///remove duplicates objects from cart
+    final ids = cartList.map((e) => e.name).toSet();
+    cartList.retainWhere((x) => ids.remove(x.name));
+
     return cartList.length == 0
         ? Scaffold(
             appBar: AppBar(
@@ -30,9 +34,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                 'My Cart',
                 style: TextStyle(
                   color: Colors.black54,
-                  fontWeight: FontWeight.w900,
-                  fontFamily: 'Poppins',
-                  fontSize: 24.0,
+                  fontSize: 22.0,
                 ),
               ),
               backgroundColor: Colors.white,
@@ -71,9 +73,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                 'My Cart',
                 style: TextStyle(
                   color: Colors.black54,
-                  fontWeight: FontWeight.w900,
-                  fontFamily: 'Poppins',
-                  fontSize: 24.0,
+                  fontSize: 22.0,
                 ),
               ),
               backgroundColor: Colors.white,
@@ -95,7 +95,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                       subtitle: Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: Text(
-                          '\$${totalPrice.roundToDouble()}',
+                          'UGX${totalPrice.roundToDouble()}',
                           style: TextStyle(
                               fontSize: 18.0, fontWeight: FontWeight.bold),
                         ),
@@ -143,6 +143,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                 },
                 deleteItem: () {
                   getValue.removeProduct(index);
+                  // getValue.removeAllCartProducts();
                 },
               ),
             ),

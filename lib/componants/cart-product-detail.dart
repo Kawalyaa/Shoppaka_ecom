@@ -1,4 +1,3 @@
-import 'package:ecommerce_app/model/products_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ecommerce_app/constants.dart';
@@ -44,63 +43,68 @@ class CartItems extends StatelessWidget {
               width: 20.0,
             ),
 
-            Column(
-              children: <Widget>[
-                Text(
-                  '$name',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
-                ),
-                SizedBox(
-                  height: 8.0,
-                ),
+            Container(
+              width: 100,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    '$name',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+                  ),
+                  SizedBox(
+                    height: 8.0,
+                  ),
 
-                //******Size section******
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                    children: [
-                      TextSpan(text: 'Size :'),
-                      TextSpan(
-                        text: '$selectedSize',
-                        style: TextStyle(color: kColorRed),
+                  //******Size section******
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                        color: Colors.black,
                       ),
-                    ],
-                  ),
-                ),
-
-                SizedBox(
-                  height: 5.0,
-                ),
-
-                //*****Color section*******
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(
-                      color: Colors.black,
+                      children: [
+                        TextSpan(text: 'Size :'),
+                        TextSpan(
+                          text: '$selectedSize',
+                          style: TextStyle(color: kColorRed),
+                        ),
+                      ],
                     ),
-                    children: [
-                      TextSpan(text: 'Color : '),
-                      TextSpan(
-                        text: '$selectedColor',
-                        style: TextStyle(color: kColorRed),
+                  ),
+
+                  SizedBox(
+                    height: 5.0,
+                  ),
+
+                  //*****Color section*******
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                        color: Colors.black,
                       ),
-                    ],
+                      children: [
+                        TextSpan(text: 'Color : '),
+                        TextSpan(
+                          text: '$selectedColor',
+                          style: TextStyle(color: kColorRed),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                //******Price Section******
-                Padding(
-                  padding: EdgeInsets.all(4.0),
-                  child: Text(
-                    '\$$price',
-                    style: TextStyle(
-                        color: kColorRed,
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold),
+                  //******Price Section******
+                  Padding(
+                    padding: EdgeInsets.only(top: 4.0, bottom: 4.0),
+                    child: Text(
+                      'UGX$price',
+                      style: TextStyle(
+                          color: kColorRed,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
 
             SizedBox(
