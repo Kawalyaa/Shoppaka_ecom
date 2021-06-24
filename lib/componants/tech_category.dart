@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/componants/single_product.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
+import 'package:ecommerce_app/model/favorites_model.dart';
 import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class _TechCategoryState extends State<TechCategory> {
     List<ProductsModel> techCategoryList =
         CategoryOptions().getCategory(allProds, techCategory);
 
-    var favData = Provider.of<FavoriteList>(context);
+    var favData = Provider.of<FavoritesProvider>(context);
 
     return GridView.builder(
         itemCount: techCategoryList.length,
@@ -44,16 +45,17 @@ class _TechCategoryState extends State<TechCategory> {
 
                   //===Add or Remove  Favorite======
                   techCategoryList[index].favorite
-                      ? favData.addToFavorite(ProductsModel(
+                      ? favData.addToFavorite(FavoritesModel(
                           name: techCategoryList[index].name,
                           images: techCategoryList[index].images,
                           price: techCategoryList[index].price,
                           oldPrice: techCategoryList[index].oldPrice,
                           brand: techCategoryList[index].brand,
-                          colors: techCategoryList[index].colors,
-                          sizes: techCategoryList[index].sizes,
+                          category: techCategoryList[index].category,
+                          selectedColor: techCategoryList[index].colors,
+                          selectedSize: techCategoryList[index].sizes,
                           favorite: techCategoryList[index].favorite))
-                      : favData.removeFavorite(techCategoryList[index].name);
+                      : favData.removeFavorite(index);
                 });
               },
             ));

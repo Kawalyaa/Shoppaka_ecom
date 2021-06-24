@@ -23,10 +23,6 @@ class _ShoppingCartState extends State<ShoppingCart> {
     List<CartModel> cartList = getValue.cartProductList;
     double totalPrice = getValue.getTotalPrice();
 
-    ///remove duplicates objects from cart
-    final ids = cartList.map((e) => e.name).toSet();
-    cartList.retainWhere((x) => ids.remove(x.name));
-
     return cartList.length == 0
         ? Scaffold(
             appBar: AppBar(

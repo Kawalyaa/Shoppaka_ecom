@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/componants/single_product.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
+import 'package:ecommerce_app/model/favorites_model.dart';
 import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,10 +22,9 @@ class _FeaturedSectionState extends State<FeaturedSection> {
     bool featured = true;
     List<ProductsModel> featuredList =
         CategoryOptions().getFeaturedProd(allProds, featured);
-    var favData = Provider.of<FavoriteList>(context);
+    var favData = Provider.of<FavoritesProvider>(context);
 
     var size = MediaQuery.of(context).size;
-    var time = DateTime.now();
     return Stack(
       children: [
         Container(
@@ -100,17 +100,18 @@ class _FeaturedSectionState extends State<FeaturedSection> {
                               //===Add or Remove  Favorite======
 
                               featuredList[index].favorite
-                                  ? favData.addToFavorite(ProductsModel(
+                                  ? favData.addToFavorite(FavoritesModel(
                                       name: featuredList[index].name,
                                       images: featuredList[index].images,
                                       price: featuredList[index].price,
                                       oldPrice: featuredList[index].oldPrice,
                                       favorite: featuredList[index].favorite,
                                       brand: featuredList[index].brand,
-                                      sizes: featuredList[index].sizes,
-                                      colors: featuredList[index].colors))
-                                  : favData
-                                      .removeFavorite(featuredList[index].name);
+                                      category: featuredList[index].category,
+                                      selectedSize: featuredList[index].sizes,
+                                      selectedColor:
+                                          featuredList[index].colors))
+                                  : favData.removeFavorite(index);
                             });
                           },
                           images: featuredList[index].images,

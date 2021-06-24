@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/componants/single_product.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
+import 'package:ecommerce_app/model/favorites_model.dart';
 import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class _WomenCategoryState extends State<WomenCategory> {
     List<ProductsModel> womenCategoryList =
         CategoryOptions().getCategory(allProds, womenCategory);
 
-    var favData = Provider.of<FavoriteList>(context);
+    var favData = Provider.of<FavoritesProvider>(context);
 
     return GridView.builder(
         itemCount: womenCategoryList.length,
@@ -44,16 +45,17 @@ class _WomenCategoryState extends State<WomenCategory> {
 
                   //===Add or Remove  Favorite======
                   womenCategoryList[index].favorite
-                      ? favData.addToFavorite(ProductsModel(
+                      ? favData.addToFavorite(FavoritesModel(
                           name: womenCategoryList[index].name,
                           images: womenCategoryList[index].images,
                           price: womenCategoryList[index].price,
                           oldPrice: womenCategoryList[index].oldPrice,
+                          category: womenCategoryList[index].category,
                           brand: womenCategoryList[index].brand,
-                          colors: womenCategoryList[index].colors,
-                          sizes: womenCategoryList[index].sizes,
+                          selectedColor: womenCategoryList[index].colors,
+                          selectedSize: womenCategoryList[index].sizes,
                           favorite: womenCategoryList[index].favorite))
-                      : favData.removeFavorite(womenCategoryList[index].name);
+                      : favData.removeFavorite(index);
                 });
               },
             ));

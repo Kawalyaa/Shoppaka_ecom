@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/componants/search_text_field.dart';
 import 'package:ecommerce_app/componants/single_product.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
+import 'package:ecommerce_app/model/favorites_model.dart';
 import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
@@ -54,7 +55,7 @@ class _ProductSearchState extends State<ProductSearch> {
     var data = Provider.of<ProductProvider2>(context);
     final List searchResult = data.search(_terms, allProds);
 
-    var favData = Provider.of<FavoriteList>(context);
+    var favData = Provider.of<FavoritesProvider>(context);
 
     return Material(
       child: SafeArea(
@@ -81,7 +82,7 @@ class _ProductSearchState extends State<ProductSearch> {
                                   //===Add or Remove  Favorite======
 
                                   searchResult[index].favorite
-                                      ? favData.addToFavorite(ProductsModel(
+                                      ? favData.addToFavorite(FavoritesModel(
                                           name: searchResult[index].name,
                                           images: searchResult[index].images,
                                           price: searchResult[index].price,
@@ -90,10 +91,13 @@ class _ProductSearchState extends State<ProductSearch> {
                                           favorite:
                                               searchResult[index].favorite,
                                           brand: searchResult[index].brand,
-                                          sizes: searchResult[index].sizes,
-                                          colors: searchResult[index].colors))
-                                      : favData.removeFavorite(
-                                          searchResult[index].name);
+                                          category:
+                                              searchResult[index].category,
+                                          selectedSize:
+                                              searchResult[index].sizes,
+                                          selectedColor:
+                                              searchResult[index].colors))
+                                      : favData.removeFavorite(index);
                                 });
                               },
                               images: searchResult[index].images,
@@ -112,31 +116,3 @@ class _ProductSearchState extends State<ProductSearch> {
     );
   }
 }
-
-//
-//Container(
-//width: 300,
-//decoration: BoxDecoration(
-//color: Colors.blueGrey[50],
-//borderRadius: BorderRadius.all(
-//Radius.circular(5.0),
-//),
-//),
-//child: TextField(
-//style: TextStyle(fontSize: 15.0, color: Colors.blueGrey[300]),
-//decoration: InputDecoration(
-//contentPadding: EdgeInsets.all(10.0),
-//border: OutlineInputBorder(
-//borderRadius: BorderRadius.circular(5.0),
-//borderSide: BorderSide(color: Colors.white),
-//),
-//hintText: 'Eg: iphone 11',
-//prefix: Icon(
-//Icons.search,
-//color: Colors.blueGrey[300],
-//),
-//hintStyle: TextStyle(fontSize: 15.0, color: Colors.blueGrey[300]),
-//),
-//maxLines: 1,
-//),
-//)

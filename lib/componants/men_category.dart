@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/componants/single_product.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
+import 'package:ecommerce_app/model/favorites_model.dart';
 import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class _MenCategoryState extends State<MenCategory> {
     List<ProductsModel> menCategoryList =
         CategoryOptions().getCategory(allProds, menCategory);
 
-    var favData = Provider.of<FavoriteList>(context);
+    var favData = Provider.of<FavoritesProvider>(context);
 
     return GridView.builder(
         itemCount: menCategoryList.length,
@@ -42,16 +43,17 @@ class _MenCategoryState extends State<MenCategory> {
 
                   //===Add or Remove  Favorite======
                   menCategoryList[index].favorite
-                      ? favData.addToFavorite(ProductsModel(
+                      ? favData.addToFavorite(FavoritesModel(
                           name: menCategoryList[index].name,
                           images: menCategoryList[index].images,
                           price: menCategoryList[index].price,
+                          category: menCategoryList[index].category,
                           oldPrice: menCategoryList[index].oldPrice,
                           brand: menCategoryList[index].brand,
-                          colors: menCategoryList[index].colors,
-                          sizes: menCategoryList[index].sizes,
+                          selectedColor: menCategoryList[index].colors,
+                          selectedSize: menCategoryList[index].sizes,
                           favorite: menCategoryList[index].favorite))
-                      : favData.removeFavorite(menCategoryList[index].name);
+                      : favData.removeFavorite(index);
                 });
               },
             ));

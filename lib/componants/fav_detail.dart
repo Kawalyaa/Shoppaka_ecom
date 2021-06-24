@@ -16,22 +16,23 @@ class FavDetail extends StatelessWidget {
   final bool isFavorite;
   final bool featured;
   final Function removeFavorite;
+  final List similarProducts;
 
-  FavDetail({
-    this.id,
-    this.name,
-    this.brand,
-    this.category,
-    this.images,
-    this.price,
-    this.oldPrice,
-    this.quantity,
-    this.colors,
-    this.sizes,
-    this.isFavorite,
-    this.featured,
-    this.removeFavorite,
-  });
+  FavDetail(
+      {this.id,
+      this.name,
+      this.brand,
+      this.category,
+      this.images,
+      this.price,
+      this.oldPrice,
+      this.quantity,
+      this.colors,
+      this.sizes,
+      this.isFavorite,
+      this.featured,
+      this.removeFavorite,
+      this.similarProducts});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -71,15 +72,16 @@ class FavDetail extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => ProdDetails(
                       productDetailsModel: ProductDetailsModel(
-                        productDetailsName: name,
-                        productDetailsOldPrice: oldPrice,
-                        productDetailsPicture: images,
-                        productDetailsPrice: price,
-                        productBrand: brand,
-                        productColors: colors,
-                        productSizes: sizes,
-                        isFavorite: isFavorite,
-                      ),
+                          heroTag: 'favTag',
+                          productDetailsName: name,
+                          productDetailsOldPrice: oldPrice,
+                          productDetailsPicture: images,
+                          productDetailsPrice: price,
+                          productBrand: brand,
+                          productColors: colors,
+                          productSizes: sizes,
+                          isFavorite: isFavorite,
+                          similarProd: similarProducts),
                     ),
                   ),
                 );
@@ -89,10 +91,13 @@ class FavDetail extends StatelessWidget {
                 child: Container(
                   height: 100.0,
                   width: 100.0,
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    image: DecorationImage(
-                        image: NetworkImage(images[0]), fit: BoxFit.cover),
+                  child: Center(
+                    child: FadeInImage.assetNetwork(
+                      placeholder:
+                          'images/img_place_holder/placeholder-image.png',
+                      image: images[0],
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
