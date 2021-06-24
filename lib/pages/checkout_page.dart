@@ -1229,6 +1229,7 @@ class _CheckoutState extends State<Checkout>
                         userName: _userInfo[0].name,
                         email: _userInfo[0].email,
                         phone: addressList[0]['phone'],
+                        addressList: addressList,
                         ordersList: orderedItemsList(),
                         paymentStatus: _response,
                         totalPrice: totalPrice,

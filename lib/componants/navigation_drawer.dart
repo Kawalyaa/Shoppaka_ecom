@@ -1,4 +1,6 @@
+import 'package:ecommerce_app/pages/adress_book.dart';
 import 'package:ecommerce_app/pages/favorites_page.dart';
+import 'package:ecommerce_app/pages/home_page.dart';
 import 'package:ecommerce_app/pages/order_list_page.dart';
 import 'package:ecommerce_app/provider/user.dart';
 import 'package:flutter/material.dart';
@@ -71,17 +73,21 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
 
           //Body
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, HomePage.id);
+            },
             child: ListTile(
               title: Text('Home Page'),
               leading: Icon(Icons.home),
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, AddressBook.id);
+            },
             child: ListTile(
-              title: Text('My Account'),
-              leading: Icon(Icons.person),
+              title: Text('My Address'),
+              leading: Icon(Icons.location_on),
             ),
           ),
           InkWell(
@@ -115,23 +121,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
             ),
           ),
           Divider(),
-          InkWell(
-            onTap: () {},
-            child: ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
-            ),
-          ),
-          InkWell(
-            onTap: () {},
-            child: ListTile(
-              leading: Icon(
-                Icons.help,
-                color: Colors.blue,
-              ),
-              title: Text('About'),
-            ),
-          ),
+
           InkWell(
             onTap: () {
               authState.signOut();
@@ -147,8 +137,3 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
     );
   }
 }
-
-// FadeInImage.assetNetwork(
-// fit: BoxFit.cover,
-// placeholder: 'images/loading_gif/Spin-1s-200px.gif',
-// image: widget.photo),

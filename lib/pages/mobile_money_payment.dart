@@ -39,12 +39,12 @@ class _MobileMoneyPayState extends State<MobileMoneyPay> {
   String _ugCurrency = FlutterwaveCurrency.UGX;
   var _response;
   var _cartData;
+  List addressList;
 
   @override
   Widget build(BuildContext context) {
-    //args = ModalRoute.of(context).settings.arguments;
     _userInfo = Provider.of<List<UserModel>>(context);
-    //_args = ModalRoute.of(context).settings.arguments as MobileMoneyPay;
+    addressList = _userInfo[0].address;
 
     _cartData = Provider.of<ProductProvider2>(context);
 
@@ -259,6 +259,7 @@ class _MobileMoneyPayState extends State<MobileMoneyPay> {
               ordersList: widget.orderedProducts,
               paymentStatus: _response.data.status,
               totalPrice: widget.totalAmount,
+              addressList: addressList,
               paymentMethod: "MobileMoney",
               pickupStation:
                   widget.pickupStation != null ? _pickUpStationList() : null,

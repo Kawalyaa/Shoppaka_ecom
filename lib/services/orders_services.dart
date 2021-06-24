@@ -29,6 +29,7 @@ class OrdersServices {
     double totalPrice,
     String paymentMethod,
     String paymentStatus,
+    List addressList,
     BuildContext context,
   }) async {
     try {
@@ -44,6 +45,7 @@ class OrdersServices {
         'paymentMethod': paymentMethod,
         'pickupStation': pickupStation,
         'orderNumber': orderNumber(),
+        'address': addressList,
         'orderStatus': 'sorting',
         'time': DateTime.now(),
         'deliveryDate': ''
