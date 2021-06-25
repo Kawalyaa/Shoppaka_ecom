@@ -1,12 +1,17 @@
+import 'package:ecommerce_app/db/databse_services.dart';
 import 'package:ecommerce_app/model/cart_model.dart';
+import 'package:ecommerce_app/model/users.dart';
 import 'package:ecommerce_app/pages/checkout_page.dart';
+import 'package:ecommerce_app/pages/login.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
+import 'package:ecommerce_app/provider/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/componants/cart-product-detail.dart';
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
+import 'loading_page.dart';
 
 class ShoppingCart extends StatefulWidget {
   static const String id = 'shoppingCart';
@@ -19,6 +24,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
   @override
   Widget build(BuildContext context) {
     var getValue = Provider.of<ProductProvider2>(context);
+    UserProv auth = Provider.of<UserProv>(context);
 
     List<CartModel> cartList = getValue.cartProductList;
     double totalPrice = getValue.getTotalPrice();
@@ -104,11 +110,26 @@ class _ShoppingCartState extends State<ShoppingCart> {
                       color: kColorRed,
                       borderRadius: BorderRadius.circular(30.0),
                       child: MaterialButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, Checkout.id,
-                              arguments: Checkout(
-                                productPrice: totalPrice.roundToDouble(),
-                              ));
+                        onPressed: () async {
+                          //await auth.reloadUser();
+                          switch (auth.status) {
+                            case Status.Unauthenticated:
+                              return Navigator.pushNamed(context, Login.id);
+                            case Status.Authenticating:
+                            case Status.Authenticated:
+                              return Navigator.pushNamed(context, Checkout.id,
+                                  arguments: Checkout(
+                                    productPrice: totalPrice.roundToDouble(),
+                                  ));
+                            default:
+                              return LoadingPage();
+                          }
+
+                          ///>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                          // Navigator.pushNamed(context, Checkout.id,
+                          //     arguments: Checkout(
+                          //       productPrice: totalPrice.roundToDouble(),
+                          //     ));
                         },
                         minWidth: 200.0,
                         height: 35.0,

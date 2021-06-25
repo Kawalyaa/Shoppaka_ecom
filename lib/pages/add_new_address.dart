@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/componants/loading.dart';
 import 'package:ecommerce_app/model/users.dart';
 import 'package:ecommerce_app/provider/user.dart';
@@ -24,6 +25,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
   TextEditingController _addressController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
   FirebaseAuth _auth = FirebaseAuth.instance;
+  CollectionReference _users = FirebaseFirestore.instance.collection('users');
 
   List<String> _countryCodes = ['+1', '+256'];
   List<String> _region = [
@@ -59,12 +61,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
 
   @override
   Widget build(BuildContext context) {
-    List<UserModel> _userInfo = Provider.of<List<UserModel>>(context);
     var _userProvider = Provider.of<UserProv>(context);
-
-    List userName = _userInfo[0].name.split(" ");
-    _firstUserName = userName[0];
-    _lastUserName = userName.length == 1 ? 'null' : userName[1];
 
     var _phoneNumber = _selectedCountryCode +
         _phoneController.text.replaceFirst(RegExp(r'^0+'), '');
@@ -169,173 +166,66 @@ class _AddNewAddressState extends State<AddNewAddress> {
           style: TextStyle(color: Colors.black),
         ),
       ),
-      body: ListView(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [Text('ADDRESS DETAILS'), Text('* Required')],
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            color: Colors.white,
-            child: Form(
-              key: _addressFormKey,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),
-                    child: Container(
-                      // margin: EdgeInsets.only(left: 2, right: 20),
-                      child: TextFormField(
-                        controller: _firstNameController..text = _firstUserName,
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return ('Value Can\'t Be Empty');
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          focusedBorder: kUnderLineBorder,
-                          labelText: 'First Name',
-                          hintText: 'First Name',
-                          suffixIcon: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 20.0, top: 20.0, bottom: 5.0, right: 2.0),
-                            child: Text(
-                              '*',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),
-                    child: Container(
-                      // margin: EdgeInsets.only(left: 2, right: 20),
-                      child: TextFormField(
-                        controller: _lastNameController..text = _lastUserName,
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return ('Value Can\'t Be Empty');
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          focusedBorder: kUnderLineBorder,
-                          labelText: 'Last Name',
+      body: StreamBuilder<QuerySnapshot>(
+          stream:
+              _users.where('id', isEqualTo: _auth.currentUser.uid).snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  'Something went wrong',
+                  style: TextStyle(color: kColorRed),
+                ),
+              );
+            }
 
-                          hintText: 'Last Name',
-                          // icon: Icon(Icons.star),
-                          suffixIcon: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 20.0, top: 20.0, bottom: 5.0, right: 2.0),
-                            child: Text(
-                              '*',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                  child:
+                      Text("Loading....", style: TextStyle(color: kColorRed)));
+            }
+            List snapData = snapshot.data.docs
+                .map((DocumentSnapshot snap) =>
+                    UserModel.fromSnapShot(snap.data()))
+                .toList();
+
+            List userName = snapData[0].name.split(" ");
+            _firstUserName = userName[0];
+            _lastUserName = userName.length == 1 ? "null" : userName[1];
+
+            return ListView(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [Text('ADDRESS DETAILS'), Text('* Required')],
                   ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),
-                    child: Container(
-                      child: TextFormField(
-                        controller: _addressController,
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return ('Value Can\'t Be Empty');
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          focusedBorder: kUnderLineBorder,
-                          labelText: 'Address',
-                          hintText: 'Address',
-                          suffixIcon: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 20.0, top: 20.0, bottom: 5.0, right: 2.0),
-                            child: Text(
-                              '*',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                ),
+                Container(
+                  width: double.infinity,
+                  color: Colors.white,
+                  child: Form(
+                    key: _addressFormKey,
+                    child: Column(
                       children: [
-                        Expanded(
-                            flex: 11, child: Container(child: regionDropdown)),
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Expanded(
-                          child: Text(
-                            '*',
-                            style: TextStyle(fontSize: 18.0),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                            flex: 11, child: Container(child: townDropdown)),
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Expanded(
-                          child: Text(
-                            '*',
-                            style: TextStyle(fontSize: 18.0),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(child: Container(child: countryDropdown)),
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Expanded(
-                          flex: 5,
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),
                           child: Container(
-                            padding: EdgeInsets.only(bottom: 10),
+                            // margin: EdgeInsets.only(left: 2, right: 20),
                             child: TextFormField(
-                              controller: _phoneController,
-                              keyboardType: TextInputType.number,
+                              controller: _firstNameController
+                                ..text = _firstUserName,
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return ('Value Can\'t Be Empty');
-                                } else if (value.length > 10) {
-                                  return ('Invalid phone number');
                                 }
                                 return null;
                               },
                               decoration: InputDecoration(
                                 focusedBorder: kUnderLineBorder,
-                                labelText: 'Mobile Phone Number',
-                                hintText: 'Mobile Phone Number',
+                                labelText: 'First Name',
+                                hintText: 'First Name',
                                 suffixIcon: Padding(
                                   padding: const EdgeInsets.only(
                                       left: 20.0,
@@ -351,80 +241,230 @@ class _AddNewAddressState extends State<AddNewAddress> {
                             ),
                           ),
                         ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),
+                          child: Container(
+                            // margin: EdgeInsets.only(left: 2, right: 20),
+                            child: TextFormField(
+                              controller: _lastNameController
+                                ..text = _lastUserName,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return ('Value Can\'t Be Empty');
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                focusedBorder: kUnderLineBorder,
+                                labelText: 'Last Name',
+
+                                hintText: 'Last Name',
+                                // icon: Icon(Icons.star),
+                                suffixIcon: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 20.0,
+                                      top: 20.0,
+                                      bottom: 5.0,
+                                      right: 2.0),
+                                  child: Text(
+                                    '*',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),
+                          child: Container(
+                            child: TextFormField(
+                              controller: _addressController,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return ('Value Can\'t Be Empty');
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                focusedBorder: kUnderLineBorder,
+                                labelText: 'Address',
+                                hintText: 'Address',
+                                suffixIcon: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 20.0,
+                                      top: 20.0,
+                                      bottom: 5.0,
+                                      right: 2.0),
+                                  child: Text(
+                                    '*',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                  flex: 11,
+                                  child: Container(child: regionDropdown)),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  '*',
+                                  style: TextStyle(fontSize: 18.0),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                  flex: 11,
+                                  child: Container(child: townDropdown)),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  '*',
+                                  style: TextStyle(fontSize: 18.0),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                  child: Container(child: countryDropdown)),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Expanded(
+                                flex: 5,
+                                child: Container(
+                                  padding: EdgeInsets.only(bottom: 10),
+                                  child: TextFormField(
+                                    controller: _phoneController,
+                                    keyboardType: TextInputType.number,
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return ('Value Can\'t Be Empty');
+                                      } else if (value.length > 10) {
+                                        return ('Invalid phone number');
+                                      }
+                                      return null;
+                                    },
+                                    decoration: InputDecoration(
+                                      focusedBorder: kUnderLineBorder,
+                                      labelText: 'Mobile Phone Number',
+                                      hintText: 'Mobile Phone Number',
+                                      suffixIcon: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 20.0,
+                                            top: 20.0,
+                                            bottom: 5.0,
+                                            right: 2.0),
+                                        child: Text(
+                                          '*',
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(5.0, 8.0, 10.0, 8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Checkbox(
+                                activeColor: kColorRed,
+                                checkColor: Colors.white,
+                                value: isChecked,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isChecked = value;
+                                  });
+                                },
+                              ),
+                              SizedBox(
+                                width: 5.0,
+                              ),
+                              Text(
+                                'Default Shipping Address',
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 16),
+                              ),
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(5.0, 8.0, 10.0, 8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Checkbox(
-                          activeColor: kColorRed,
-                          checkColor: Colors.white,
-                          value: isChecked,
-                          onChanged: (value) {
-                            setState(() {
-                              isChecked = value;
-                            });
-                          },
-                        ),
-                        SizedBox(
-                          width: 5.0,
-                        ),
-                        Text(
-                          'Default Shipping Address',
-                          style: TextStyle(color: Colors.black, fontSize: 16),
-                        ),
-                      ],
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),
+                  child: MaterialButton(
+                    height: 45.0,
+                    minWidth: double.infinity,
+                    color: kColorRed,
+                    onPressed: () async {
+                      if (_addressFormKey.currentState.validate() &&
+                          _selectedRegion != null &&
+                          _selectedTown != null) {
+                        showProgress(context, 'Saving...', false);
+                        if (!await _userServices.editAddress({
+                          'name': _firstNameController.text +
+                              ' ' +
+                              _lastNameController.text,
+                          'address': _addressController.text,
+                          'region': _selectedRegion,
+                          'town': _selectedTown,
+                          'phone': _phoneNumber,
+                          'default': isChecked
+                        })) {
+                          hideProgress();
+                          showAlertDialog(
+                              context, "Error", "Creating address Failed");
+                        } else {
+                          ///Update user phone number
+                          _userProvider.updateUserData(
+                              {"phone": _phoneNumber}, _auth.currentUser.uid);
+                          hideProgress();
+                          Navigator.pop(context);
+                        }
+                      }
+                    },
+                    textColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),
-            child: MaterialButton(
-              height: 45.0,
-              minWidth: double.infinity,
-              color: kColorRed,
-              onPressed: () async {
-                if (_addressFormKey.currentState.validate() &&
-                    _selectedRegion != null &&
-                    _selectedTown != null) {
-                  showProgress(context, 'Saving...', false);
-                  if (!await _userServices.editAddress({
-                    'name': _firstNameController.text +
-                        ' ' +
-                        _lastNameController.text,
-                    'address': _addressController.text,
-                    'region': _selectedRegion,
-                    'town': _selectedTown,
-                    'phone': _phoneNumber,
-                    'default': isChecked
-                  })) {
-                    hideProgress();
-                    showAlertDialog(
-                        context, "Error", "Creating address Failed");
-                  } else {
-                    ///Update user phone number
-                    _userProvider.updateUserData(
-                        {"phone": _phoneNumber}, _auth.currentUser.uid);
-                    hideProgress();
-                    Navigator.pop(context);
-                  }
-                }
-              },
-              textColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: Text('SAVE'),
-            ),
-          )
-        ],
-      ),
+                    child: Text('SAVE'),
+                  ),
+                )
+              ],
+            );
+          }),
     );
   }
 }

@@ -83,7 +83,12 @@ class _OrderListState extends State<OrderList> {
           snapData.sort((a, b) => b.time.compareTo(a.time));
           return snapData.isEmpty
               ? Container(
-                  child: Center(child: Text('No Order Data')),
+                  child: Center(
+                      child: Text('No Order Data',
+                          style: TextStyle(
+                              color: kColorRed,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.0))),
                 )
               : ListView.builder(
                   itemBuilder: (context, int index) {

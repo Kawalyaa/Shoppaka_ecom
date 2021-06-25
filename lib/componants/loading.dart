@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:ecommerce_app/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -48,10 +49,36 @@ hideProgress() async {
 //helper method to show alert dialog
 showAlertDialog(BuildContext context, String title, String content) {
   // set up the AlertDialog
-  Widget okButton = FlatButton(
+  Widget okButton = TextButton(
     child: Text("OK"),
     onPressed: () {
       Navigator.pop(context);
+    },
+  );
+  AlertDialog alert = AlertDialog(
+    title: Text(title),
+    content: Text(content),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+//showLoginAlertDialog(context, 'No info', 'First Login')
+showLoginAlertDialog(BuildContext context, String title, String content) {
+  // set up the AlertDialog
+  Widget okButton = TextButton(
+    child: Text("Login"),
+    onPressed: () {
+      //Navigator.pushReplacementNamed(context, Login.id);
     },
   );
   AlertDialog alert = AlertDialog(

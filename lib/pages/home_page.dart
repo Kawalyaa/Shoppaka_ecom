@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/componants/image_carousel_slider.dart';
+import 'package:ecommerce_app/componants/loading.dart';
 import 'package:ecommerce_app/componants/original_product_section.dart';
 import 'package:ecommerce_app/componants/featured_section.dart';
 import 'package:ecommerce_app/db/app_data.dart';
@@ -34,7 +35,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     var data = Provider.of<ProductProvider2>(context);
-    List<UserModel> userInfo = Provider.of<List<UserModel>>(context);
     List cartList = data.cartProductList;
 
     return Scaffold(
@@ -88,16 +88,13 @@ class _HomePageState extends State<HomePage> {
         iconTheme: IconThemeData(color: Colors.black54),
         elevation: 0.0,
       ),
-      drawer: userInfo == null
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : NavigationDrawer(
-              name: userInfo[0].name,
-              address: userInfo[0].address,
-              photo: userInfo[0].photo,
-              email: userInfo[0].email,
-            ), //Navigation drawer
+      drawer: NavigationDrawer(
+          // userInfo: userInfo,
+          // name: userInfo[0].name,
+          // address: userInfo[0].address,
+          // photo: userInfo[0].photo,
+          // email: userInfo[0].email,
+          ), //Navigation drawer
       body: ListView(
         children: <Widget>[
           ImageCarouselSlider(),

@@ -125,7 +125,7 @@ class _LoginState extends State<Login> {
 
                     hideProgress();
                     //_authProvider.clearController();
-                    _authProvider.reloadUser();
+                    await _authProvider.reloadUser();
                     Navigator.pushReplacementNamed(context, HomePage.id);
 
                     //validateForm();
