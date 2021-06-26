@@ -38,11 +38,14 @@ class SingleOrder extends StatelessWidget {
                               height: 50.0,
                               width: 50.0,
                               child: FadeInImage.assetNetwork(
-                                alignment: Alignment.center,
-                                image: orderList[index]['image'],
-                                placeholder:
-                                    'images/img_place_holder/placeholder-image.png',
-                              ),
+                                  alignment: Alignment.center,
+                                  image: orderList[index]['image'],
+                                  placeholder:
+                                      'images/img_place_holder/placeholder-image.png',
+                                  imageErrorBuilder: (context, url, error) =>
+                                      Icon(
+                                        Icons.error,
+                                      )),
                             ),
                             SizedBox(
                               width: 14.0,

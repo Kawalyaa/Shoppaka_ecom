@@ -34,11 +34,12 @@ class CartItems extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Image.network(
-              picture,
-              width: 80.0,
-              height: 80.0,
-            ),
+            Image.network(picture,
+                width: 80.0,
+                height: 80.0,
+                errorBuilder: (context, url, error) => Icon(
+                      Icons.error,
+                    )),
             SizedBox(
               width: 20.0,
             ),
