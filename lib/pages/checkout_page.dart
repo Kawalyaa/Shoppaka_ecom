@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/componants/loading.dart';
 import 'package:ecommerce_app/componants/shipment_details.dart';
 import 'package:ecommerce_app/constants.dart';
-import 'package:ecommerce_app/db/databse_services.dart';
 import 'package:ecommerce_app/model/cart_model.dart';
 import 'package:ecommerce_app/model/users.dart';
 import 'package:ecommerce_app/pages/payment_successfull.dart';
@@ -65,7 +64,6 @@ class _CheckoutState extends State<Checkout>
   var cartData;
 
   OrdersServices _ordersServices = OrdersServices();
-  DatabaseServices _databaseServices = DatabaseServices();
 
   var _response;
   List _cartListData;
@@ -143,14 +141,9 @@ class _CheckoutState extends State<Checkout>
     _controller.addListener(handleTabSelection);
     final Checkout args = ModalRoute.of(context).settings.arguments;
 
-    //_userInfo = Provider.of<List<UserModel>>(context, listen: true);
-    //addressList = _userInfo[0].address;
-
     cartData = Provider.of<ProductProvider2>(context);
     List<CartModel> _cartList = cartData.cartProductList;
     _cartListData = _cartList;
-
-    //_userInfo = Provider.of<List<UserModel>>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -361,18 +354,16 @@ class _CheckoutState extends State<Checkout>
           ),
         ),
         Card(
-          child: ListTile(
-            leading: Radio(
-              activeColor: kColorRed,
-              groupValue: selectedButton,
-              onChanged: (Button value) {
-                setState(() {
-                  selectedButton = value;
-                });
-              },
-              value: Button.BUTTON1,
-            ),
-            subtitle: Padding(
+          child: RadioListTile(
+            activeColor: kColorRed,
+            groupValue: selectedButton,
+            onChanged: (Button value) {
+              setState(() {
+                selectedButton = value;
+              });
+            },
+            value: Button.BUTTON1,
+            title: Padding(
               padding: const EdgeInsets.only(top: 22.0, bottom: 12.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -408,18 +399,16 @@ class _CheckoutState extends State<Checkout>
           ),
         ),
         Card(
-          child: ListTile(
-            leading: Radio(
-              activeColor: kColorRed,
-              groupValue: selectedButton,
-              onChanged: (Button value) {
-                setState(() {
-                  selectedButton = value;
-                });
-              },
-              value: Button.BUTTON2,
-            ),
-            subtitle: Padding(
+          child: RadioListTile(
+            activeColor: kColorRed,
+            groupValue: selectedButton,
+            onChanged: (Button value) {
+              setState(() {
+                selectedButton = value;
+              });
+            },
+            value: Button.BUTTON2,
+            title: Padding(
               padding: const EdgeInsets.only(top: 22.0, bottom: 12.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -457,18 +446,16 @@ class _CheckoutState extends State<Checkout>
         Card(
           child: Column(
             children: [
-              ListTile(
-                leading: Radio(
-                  activeColor: kColorRed,
-                  groupValue: selectedButton,
-                  value: Button.BUTTON3,
-                  onChanged: (Button value) {
-                    setState(() {
-                      selectedButton = value;
-                    });
-                  },
-                ),
-                subtitle: Padding(
+              RadioListTile(
+                activeColor: kColorRed,
+                groupValue: selectedButton,
+                value: Button.BUTTON3,
+                onChanged: (Button value) {
+                  setState(() {
+                    selectedButton = value;
+                  });
+                },
+                title: Padding(
                   padding: const EdgeInsets.only(top: 22.0, bottom: 12.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -703,17 +690,15 @@ class _CheckoutState extends State<Checkout>
               ? Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: Card(
-                    child: ListTile(
-                      leading: Radio(
-                        activeColor: kColorRed,
-                        groupValue: payMethod,
-                        value: Pay.MobileMoney,
-                        onChanged: (Pay value) {
-                          setState(() {
-                            payMethod = value;
-                          });
-                        },
-                      ),
+                    child: RadioListTile(
+                      activeColor: kColorRed,
+                      groupValue: payMethod,
+                      value: Pay.MobileMoney,
+                      onChanged: (Pay value) {
+                        setState(() {
+                          payMethod = value;
+                        });
+                      },
                       title: Padding(
                         padding: const EdgeInsets.only(bottom: 10.0, top: 20.0),
                         child: Column(
@@ -746,17 +731,15 @@ class _CheckoutState extends State<Checkout>
               : Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: Card(
-                    child: ListTile(
-                      leading: Radio(
-                        activeColor: kColorRed,
-                        groupValue: payMethod,
-                        value: Pay.MobileMoney,
-                        onChanged: (Pay value) {
-                          setState(() {
-                            payMethod = value;
-                          });
-                        },
-                      ),
+                    child: RadioListTile(
+                      activeColor: kColorRed,
+                      groupValue: payMethod,
+                      value: Pay.MobileMoney,
+                      onChanged: (Pay value) {
+                        setState(() {
+                          payMethod = value;
+                        });
+                      },
                       title: Padding(
                         padding: const EdgeInsets.only(bottom: 10.0, top: 20.0),
                         child: Column(
@@ -793,17 +776,15 @@ class _CheckoutState extends State<Checkout>
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
             child: Card(
-              child: ListTile(
-                leading: Radio(
-                  activeColor: kColorRed,
-                  groupValue: payMethod,
-                  value: Pay.OnDelivery,
-                  onChanged: (Pay value) {
-                    setState(() {
-                      payMethod = value;
-                    });
-                  },
-                ),
+              child: RadioListTile(
+                activeColor: kColorRed,
+                groupValue: payMethod,
+                value: Pay.OnDelivery,
+                onChanged: (Pay value) {
+                  setState(() {
+                    payMethod = value;
+                  });
+                },
                 title: Text(
                   'Cash On Delivery',
                   style: TextStyle(color: Colors.black54, fontSize: 18.0),

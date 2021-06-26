@@ -1,6 +1,4 @@
-import 'package:ecommerce_app/db/databse_services.dart';
 import 'package:ecommerce_app/model/cart_model.dart';
-import 'package:ecommerce_app/model/users.dart';
 import 'package:ecommerce_app/pages/checkout_page.dart';
 import 'package:ecommerce_app/pages/login.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
@@ -125,11 +123,6 @@ class _ShoppingCartState extends State<ShoppingCart> {
                               return LoadingPage();
                           }
 
-                          ///>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                          // Navigator.pushNamed(context, Checkout.id,
-                          //     arguments: Checkout(
-                          //       productPrice: totalPrice.roundToDouble(),
-                          //     ));
                         },
                         minWidth: 200.0,
                         height: 35.0,
@@ -167,3 +160,6 @@ class _ShoppingCartState extends State<ShoppingCart> {
           );
   }
 }
+
+//TODO 1 Change the Radio buttons in checkout page to RadioList
+//TODO 2 Add error handler in FadeInImage provider
