@@ -160,4 +160,4 @@ class _ShoppingCartState extends State<ShoppingCart> {
   }
 }
 
-//TODO 1 Add error handler in FadeInImage provider
+//TODO 1 Add description to products

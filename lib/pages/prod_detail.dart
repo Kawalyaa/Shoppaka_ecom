@@ -393,6 +393,7 @@ class _ProdDetailsState extends State<ProdDetails> {
             title: Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Text(
+                //TODO add dynamic description
                 'Description',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
               ),

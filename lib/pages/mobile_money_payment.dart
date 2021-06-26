@@ -16,8 +16,13 @@ class MobileMoneyPay extends StatefulWidget {
   final double totalAmount;
   final List orderedProducts;
   final pickupStation;
+  final List userInfo;
 
-  MobileMoneyPay({this.orderedProducts, this.totalAmount, this.pickupStation});
+  MobileMoneyPay(
+      {this.orderedProducts,
+      this.totalAmount,
+      this.pickupStation,
+      this.userInfo});
 
   static const String id = 'mobileMoneyPay';
 
@@ -34,7 +39,6 @@ class _MobileMoneyPayState extends State<MobileMoneyPay> {
   ServiceProvider _serviceProvider = ServiceProvider.AIRTEL;
 
   bool isDebug = true;
-  // MobileMoneyPay _args;
   List<UserModel> _userInfo;
   String _ugCurrency = FlutterwaveCurrency.UGX;
   var _response;
@@ -43,8 +47,11 @@ class _MobileMoneyPayState extends State<MobileMoneyPay> {
 
   @override
   Widget build(BuildContext context) {
-    _userInfo = Provider.of<List<UserModel>>(context);
-    addressList = _userInfo[0].address;
+    ///The the passed arguments on named route
+    final MobileMoneyPay args = ModalRoute.of(context).settings.arguments;
+
+    _userInfo = args.userInfo;
+    addressList = args.userInfo[0].address;
 
     _cartData = Provider.of<ProductProvider2>(context);
 
@@ -203,7 +210,7 @@ class _MobileMoneyPayState extends State<MobileMoneyPay> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: MaterialButton(
-                height: 45.0,
+                height: 43.0,
                 minWidth: double.infinity,
                 color: kColorRed,
                 onPressed: () {

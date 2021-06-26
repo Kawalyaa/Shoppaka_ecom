@@ -60,7 +60,7 @@ class _CheckoutState extends State<Checkout>
   var result;
   var addressDetails;
   bool isDebug = false;
-  List<UserModel> _userInfo;
+  List<UserModel> userInfo;
   var cartData;
 
   OrdersServices _ordersServices = OrdersServices();
@@ -193,6 +193,7 @@ class _CheckoutState extends State<Checkout>
                 .toList();
 
             addressList = snapData[0].address;
+            userInfo = snapData;
 
             return TabBarView(
               controller: _controller,
@@ -202,9 +203,11 @@ class _CheckoutState extends State<Checkout>
                     subtotal: args.productPrice, addressList: addressList),
                 _paymentInfoList(args.productPrice),
                 _summeryInfoTab(
-                    subtotal: args.productPrice,
-                    addressList: addressList,
-                    cartList: _cartList),
+                  subtotal: args.productPrice,
+                  addressList: addressList,
+                  cartList: _cartList,
+                  // userInfo: snapData
+                ),
               ],
             );
           }),
@@ -1231,16 +1234,16 @@ class _CheckoutState extends State<Checkout>
                 ///Go to mobile money page
                 Navigator.pushNamed(context, MobileMoneyPay.id,
                     arguments: MobileMoneyPay(
-                      orderedProducts: orderedItemsList(),
-                      totalAmount: totalPrice,
-                      pickupStation: result,
-                    ));
+                        orderedProducts: orderedItemsList(),
+                        totalAmount: totalPrice,
+                        pickupStation: result,
+                        userInfo: userInfo));
               } else {
-                ///Add orders to the fire
+                //  Add orders to the fire
                 _ordersServices
                     .createOrders(
-                        userName: _userInfo[0].name,
-                        email: _userInfo[0].email,
+                        userName: userInfo[0].name,
+                        email: userInfo[0].email,
                         phone: addressList[0]['phone'],
                         addressList: addressList,
                         ordersList: orderedItemsList(),
@@ -1256,8 +1259,6 @@ class _CheckoutState extends State<Checkout>
                         : showAlertDialog(context, 'Message', 'upload error'));
 
                 cartData.removeAllCartProducts();
-
-                //Navigator.pushReplacementNamed(context, PaymentSuccessful.id);
               }
             },
             textColor: Colors.white,
