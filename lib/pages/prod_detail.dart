@@ -168,10 +168,12 @@ class _ProdDetailsState extends State<ProdDetails> {
               ),
               child: Center(
                 child: FadeInImage.assetNetwork(
-                  image: widget.productDetailsModel.productDetailsPicture[0],
-                  placeholder: 'images/loading_gif/Spin-1s-200px.gif',
-                  fit: BoxFit.cover,
-                ),
+                    image: widget.productDetailsModel.productDetailsPicture[0],
+                    placeholder: 'images/loading_gif/Spin-1s-200px.gif',
+                    fit: BoxFit.cover,
+                    imageErrorBuilder: (context, url, error) => Icon(
+                          Icons.error,
+                        )),
               ),
             ),
           ),
@@ -234,10 +236,6 @@ class _ProdDetailsState extends State<ProdDetails> {
                       minWidth: 200.0,
                       height: 42.0,
                       onPressed: () {
-                        ///>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                        // apiUser.createApiUser();
-                        // apiUser.generateApiKey();
-                        // apiUser.generateJwtToken2();
                         providerData.addProducts(
                           CartModel(
                             images: widget
