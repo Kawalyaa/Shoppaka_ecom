@@ -122,7 +122,7 @@ class _CheckoutState extends State<Checkout>
         child: Align(
           alignment: Alignment.center,
           child: Text(
-            'Summery',
+            'Summary',
             style: TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: 16.0,

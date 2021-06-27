@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-
+import 'package:intl/intl.dart';
 import '../constants.dart';
 
 class SingleOrder extends StatelessWidget {
   final List orderList;
   final String orderNumber;
   final String orderStatus;
-  final String deliveryDate;
+  final deliveryDate;
   final double totalPrice;
+  final orderedTime;
   SingleOrder(
       {this.orderList,
       this.orderNumber,
       this.orderStatus,
       this.deliveryDate,
+      this.orderedTime,
       this.totalPrice});
   @override
   Widget build(BuildContext context) {
@@ -51,12 +53,14 @@ class SingleOrder extends StatelessWidget {
                               width: 14.0,
                             ),
                             Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(orderList[index]['name']),
                                 Text(
                                   'qty: ${orderList[index]['qty'].toString()}',
                                 ),
+                                Text(
+                                    'on: ${DateFormat.yMd().format(orderedTime.toDate())}'),
                               ],
                             ),
                           ],
@@ -96,7 +100,10 @@ class SingleOrder extends StatelessWidget {
                       ),
                     ),
                   ),
-                  deliveryDate == '' ? Container() : Text('on $deliveryDate'),
+                  deliveryDate == ''
+                      ? Container()
+                      : Text(
+                          'on: ${DateFormat.yMd().format(deliveryDate.toDate())}'),
                   Text('UGX$totalPrice'),
                   Text(
                     '# $orderNumber',
