@@ -5,6 +5,7 @@ import 'package:ecommerce_app/model/favorites_model.dart';
 import 'package:ecommerce_app/model/product_details_model.dart';
 import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/model/size_model.dart';
+import 'package:ecommerce_app/pages/product_description.dart';
 import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
@@ -389,25 +390,60 @@ class _ProdDetailsState extends State<ProdDetails> {
           ),
 
           Divider(),
-          ListTile(
-            title: Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                //TODO add dynamic description
-                'Description',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+          Padding(
+            padding: const EdgeInsets.only(left: 2.0, right: 2.0),
+            child: Card(
+              elevation: 0.5,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0)),
+              child: Column(
+                children: [
+                  Container(
+                    child: ListTile(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
+                      onTap: () {
+                        Navigator.pushNamed(context, Description.id);
+                      },
+                      leading: Text(
+                        'Description',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18.0),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios_sharp,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  Divider(),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    height: 60.0,
+                    width: double.infinity,
+                    child: ListView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: [
+                        Text(
+                            'The latest fashion trending in town.This fashion is fitting and classic for both the youth and elders,they are strong and with colors that can not be breached'),
+                      ],
+                    ),
+                  )
+                ],
               ),
             ),
-            subtitle: Text(
-                'The latest fasion trending in town.This fashion is fitting and classic for both the youth and elders,they are strong and with colors that can not be breached'),
           ),
+
+          ///TODO add a list of description[]--when adding we can add anything
+          ///a single description = itemName,condition,spec,review,
+          ///specify only web review
+
           Divider(),
           Row(
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.fromLTRB(16.0, 5.0, 5.0, 5.0),
                 child: Text(
-                  'Product Name',
+                  'Name:',
                 ),
               ),
               Padding(
@@ -422,7 +458,7 @@ class _ProdDetailsState extends State<ProdDetails> {
               Padding(
                 padding: EdgeInsets.fromLTRB(16.0, 5.0, 5.0, 5.0),
                 child: Text(
-                  'Product Brand',
+                  'Brand:',
                 ),
               ),
               Padding(
@@ -437,7 +473,7 @@ class _ProdDetailsState extends State<ProdDetails> {
               Padding(
                 padding: EdgeInsets.fromLTRB(16.0, 5.0, 5.0, 5.0),
                 child: Text(
-                  'Product Condition',
+                  'Condition:',
                 ),
               ),
               Padding(
