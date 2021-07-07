@@ -66,6 +66,8 @@ class _ProductsState extends State<Products> {
                     },
                     similarProduct: CategoryOptions()
                         .getCategory(allProds, allProds[index].category),
+                    description: allProds[index].description,
+                    keyFeatures: allProds[index].keyFeatures,
                   ),
             staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
           );

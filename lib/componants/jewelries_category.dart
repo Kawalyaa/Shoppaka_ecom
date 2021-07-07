@@ -57,6 +57,8 @@ class _JewelriesCategoryState extends State<JewelriesCategory> {
                       : favData.removeFavorite(index);
                 });
               },
+              description: jewelriesCategoryList[index].description,
+              keyFeatures: jewelriesCategoryList[index].keyFeatures,
             ));
   }
 }

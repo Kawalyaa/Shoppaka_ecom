@@ -21,24 +21,29 @@ class SingleProduct extends StatelessWidget {
   final Function toggleFavorite;
   final Widget placeholder;
   final heroTag;
+  final List description;
+  final List keyFeatures;
 
-  SingleProduct(
-      {this.id,
-      this.name,
-      this.heroTag,
-      this.brand,
-      this.category,
-      this.images,
-      this.price,
-      this.oldPrice,
-      this.quantity,
-      this.colors,
-      this.sizes,
-      this.isFavorite,
-      this.featured,
-      this.toggleFavorite,
-      this.placeholder,
-      this.similarProduct});
+  SingleProduct({
+    this.id,
+    this.name,
+    this.heroTag,
+    this.brand,
+    this.category,
+    this.images,
+    this.price,
+    this.oldPrice,
+    this.quantity,
+    this.colors,
+    this.sizes,
+    this.isFavorite,
+    this.featured,
+    this.toggleFavorite,
+    this.placeholder,
+    this.similarProduct,
+    this.description,
+    this.keyFeatures,
+  });
   @override
   Widget build(BuildContext context) {
     //var _time = DateTime.now().toString();
@@ -80,6 +85,8 @@ class SingleProduct extends StatelessWidget {
                         isFavorite: isFavorite,
                         category: category,
                         similarProd: similarProduct,
+                        description: description,
+                        keyFeatures: keyFeatures,
                       ),
                     ),
                   ),
@@ -94,7 +101,7 @@ class SingleProduct extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: FadeInImage.assetNetwork(
-                    fit: BoxFit.cover,
+                    fit: BoxFit.scaleDown,
                     placeholder: 'images/loading_gif/Spin-1s-200px.gif',
                     image: images[0],
                     imageErrorBuilder: (context, url, error) => Icon(
@@ -115,7 +122,7 @@ class SingleProduct extends StatelessWidget {
             SizedBox(
               height: 5.0,
             ),
-            Row(
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
@@ -123,12 +130,12 @@ class SingleProduct extends StatelessWidget {
                   style: TextStyle(decoration: TextDecoration.lineThrough),
                 ),
                 SizedBox(
-                  width: 10.0,
+                  height: 10.0,
                 ),
                 Text(
                   'UGX$price',
                   style:
-                      TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                      TextStyle(color: kColorRed, fontWeight: FontWeight.bold),
                 ),
               ],
             ),

@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class ProductsModel {
   static const ID = 'id';
   static const NAME = 'name';
@@ -11,6 +13,8 @@ class ProductsModel {
   static const QUANTITY = 'quantity';
   static const FAVORITE = 'favorite';
   static const FEATURED = 'featured';
+  static const DESCRIPTION = 'description';
+  static const KEY_FEATURES = 'keyFeatures';
 
   final String id;
   final String name;
@@ -24,6 +28,8 @@ class ProductsModel {
   final List sizes;
   bool favorite;
   final bool featured;
+  final List description;
+  final List keyFeatures;
 
   ProductsModel({
     this.id,
@@ -38,6 +44,8 @@ class ProductsModel {
     this.sizes,
     this.favorite,
     this.featured,
+    this.description,
+    this.keyFeatures,
   });
 
   factory ProductsModel.fromSnapShot(Map data) {
@@ -54,6 +62,8 @@ class ProductsModel {
       sizes: data[SIZES] ?? [],
       favorite: data[FAVORITE] ?? false,
       featured: data[FEATURED] ?? false,
+      description: data[DESCRIPTION] ?? [],
+      keyFeatures: data[KEY_FEATURES] ?? [],
     );
   }
 }

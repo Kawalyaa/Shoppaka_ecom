@@ -37,8 +37,11 @@ class _ProdDetailsState extends State<ProdDetails> {
   String selectedColor;
 
   List<ProductsModel> similarProdList;
+  bool descHeight = false;
 
   //bool isFavorite;
+  var _controller = ScrollController();
+  var physics;
 
   @override
   void initState() {
@@ -85,6 +88,12 @@ class _ProdDetailsState extends State<ProdDetails> {
 
     List<ProductsModel> similarProdList =
         widget.productDetailsModel.similarProd;
+
+    _controller.addListener(() {
+      if (_controller.position.atEdge) {
+        physics = const NeverScrollableScrollPhysics();
+      }
+    });
 
     //========Create a List method that get products depending on the category======
 
@@ -402,32 +411,73 @@ class _ProdDetailsState extends State<ProdDetails> {
                     child: ListTile(
                       contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
                       onTap: () {
-                        Navigator.pushNamed(context, Description.id);
+                        setState(() {
+                          descHeight = !descHeight;
+                        });
                       },
                       leading: Text(
                         'Description',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 18.0),
                       ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios_sharp,
-                        color: Colors.black,
-                      ),
+                      trailing: !descHeight
+                          ? Text(
+                              'More',
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.5),
+                            )
+                          : Text(
+                              'Less',
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.5),
+                            ),
                     ),
                   ),
                   Divider(),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10.0),
-                    height: 60.0,
-                    width: double.infinity,
-                    child: ListView(
-                      physics: const NeverScrollableScrollPhysics(),
-                      children: [
-                        Text(
-                            'The latest fashion trending in town.This fashion is fitting and classic for both the youth and elders,they are strong and with colors that can not be breached'),
-                      ],
-                    ),
-                  )
+                  !descHeight
+                      ? Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10.0),
+                          height: 60.0,
+                          width: double.infinity,
+                          child: widget.productDetailsModel.keyFeatures.isEmpty
+                              ? ListView(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  children: [
+                                    Text(
+                                        'The latest fashion trending in town.This fashion is fitting and classic for both the youth and elders,they are strong and with colors that can not be breached'),
+                                  ],
+                                )
+                              : ListView(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  children:
+                                      widget.productDetailsModel.keyFeatures,
+                                ),
+                        )
+                      : Card(
+                          elevation: 0,
+                          // height: 400,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Column(
+                              children: [
+                                // Card(),
+                                // Card(),
+                                Text(
+                                    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
+                                Text(
+                                    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
+                                Text(
+                                    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
+                                Text(
+                                    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+                              ],
+                            ),
+                          ),
+                        )
                 ],
               ),
             ),

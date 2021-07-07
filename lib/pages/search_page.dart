@@ -53,7 +53,7 @@ class _ProductSearchState extends State<ProductSearch> {
   Widget build(BuildContext context) {
     List<ProductsModel> allProds = Provider.of<List<ProductsModel>>(context);
     var data = Provider.of<ProductProvider2>(context);
-    final List searchResult = data.search(_terms, allProds);
+    final List<ProductsModel> searchResult = data.search(_terms, allProds);
 
     var favData = Provider.of<FavoritesProvider>(context);
 
@@ -65,50 +65,50 @@ class _ProductSearchState extends State<ProductSearch> {
             children: [
               _searchBar(),
               Expanded(
-                  child: ListView.builder(
-                      itemCount: searchResult.length,
-                      itemBuilder: (context, index) => _terms.isEmpty
-                          ? SizedBox()
-                          : SingleProduct(
-                              name: searchResult[index].name,
-                              brand: searchResult[index].brand,
-                              heroTag: searchResult[index].name,
-                              isFavorite: searchResult[index].favorite,
-                              toggleFavorite: () {
-                                setState(() {
-                                  searchResult[index].favorite =
-                                      !searchResult[index].favorite;
+                child: ListView.builder(
+                  itemCount: searchResult.length,
+                  itemBuilder: (context, index) => _terms.isEmpty
+                      ? SizedBox()
+                      : SingleProduct(
+                          name: searchResult[index].name,
+                          brand: searchResult[index].brand,
+                          heroTag: searchResult[index].name,
+                          isFavorite: searchResult[index].favorite,
+                          toggleFavorite: () {
+                            setState(() {
+                              searchResult[index].favorite =
+                                  !searchResult[index].favorite;
 
-                                  //===Add or Remove  Favorite======
+                              //===Add or Remove  Favorite======
 
-                                  searchResult[index].favorite
-                                      ? favData.addToFavorite(FavoritesModel(
-                                          name: searchResult[index].name,
-                                          images: searchResult[index].images,
-                                          price: searchResult[index].price,
-                                          oldPrice:
-                                              searchResult[index].oldPrice,
-                                          favorite:
-                                              searchResult[index].favorite,
-                                          brand: searchResult[index].brand,
-                                          category:
-                                              searchResult[index].category,
-                                          selectedSize:
-                                              searchResult[index].sizes,
-                                          selectedColor:
-                                              searchResult[index].colors))
-                                      : favData.removeFavorite(index);
-                                });
-                              },
-                              images: searchResult[index].images,
-                              price: searchResult[index].price,
-                              oldPrice: searchResult[index].oldPrice,
-                              sizes: searchResult[index].sizes,
-                              colors: searchResult[index].colors,
-                              category: searchResult[index].category,
-                              similarProduct: CategoryOptions().getCategory(
-                                  allProds, searchResult[index].category),
-                            )))
+                              searchResult[index].favorite
+                                  ? favData.addToFavorite(FavoritesModel(
+                                      name: searchResult[index].name,
+                                      images: searchResult[index].images,
+                                      price: searchResult[index].price,
+                                      oldPrice: searchResult[index].oldPrice,
+                                      favorite: searchResult[index].favorite,
+                                      brand: searchResult[index].brand,
+                                      category: searchResult[index].category,
+                                      selectedSize: searchResult[index].sizes,
+                                      selectedColor:
+                                          searchResult[index].colors))
+                                  : favData.removeFavorite(index);
+                            });
+                          },
+                          images: searchResult[index].images,
+                          price: searchResult[index].price,
+                          oldPrice: searchResult[index].oldPrice,
+                          sizes: searchResult[index].sizes,
+                          colors: searchResult[index].colors,
+                          category: searchResult[index].category,
+                          similarProduct: CategoryOptions().getCategory(
+                              allProds, searchResult[index].category),
+                          description: searchResult[index].description,
+                          keyFeatures: searchResult[index].keyFeatures,
+                        ),
+                ),
+              )
             ],
           ),
         ),

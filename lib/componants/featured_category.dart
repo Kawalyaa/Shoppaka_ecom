@@ -65,6 +65,8 @@ class _FeaturedCategoryState extends State<FeaturedCategory> {
               category: featuredList[index].category,
               similarProduct: CategoryOptions()
                   .getCategory(allProds, featuredList[index].category),
+              description: featuredList[index].description,
+              keyFeatures: featuredList[index].keyFeatures,
             ),
       staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
     );

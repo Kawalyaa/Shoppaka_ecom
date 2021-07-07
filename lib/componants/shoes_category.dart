@@ -65,6 +65,8 @@ class _ShoesCategoryState extends State<ShoesCategory> {
               category: shoesList[index].category,
               similarProduct: CategoryOptions()
                   .getCategory(allProds, shoesList[index].category),
+              description: shoesList[index].description,
+              keyFeatures: shoesList[index].keyFeatures,
             ),
       staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
     );
