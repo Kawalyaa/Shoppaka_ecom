@@ -14,6 +14,7 @@ class SingleProduct extends StatelessWidget {
   final double oldPrice;
   final int quantity;
   final List colors;
+  final String color;
   final List sizes;
   final List similarProduct;
   final bool isFavorite;
@@ -43,6 +44,7 @@ class SingleProduct extends StatelessWidget {
     this.similarProduct,
     this.description,
     this.keyFeatures,
+    this.color,
   });
   @override
   Widget build(BuildContext context) {
@@ -87,6 +89,7 @@ class SingleProduct extends StatelessWidget {
                         similarProd: similarProduct,
                         description: description,
                         keyFeatures: keyFeatures,
+                        color: color,
                       ),
                     ),
                   ),

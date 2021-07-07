@@ -15,6 +15,7 @@ class ProductsModel {
   static const FEATURED = 'featured';
   static const DESCRIPTION = 'description';
   static const KEY_FEATURES = 'keyFeatures';
+  static const COLOR = 'color';
 
   final String id;
   final String name;
@@ -30,6 +31,7 @@ class ProductsModel {
   final bool featured;
   final List description;
   final List keyFeatures;
+  final String color;
 
   ProductsModel({
     this.id,
@@ -46,6 +48,7 @@ class ProductsModel {
     this.featured,
     this.description,
     this.keyFeatures,
+    this.color,
   });
 
   factory ProductsModel.fromSnapShot(Map data) {
@@ -64,6 +67,7 @@ class ProductsModel {
       featured: data[FEATURED] ?? false,
       description: data[DESCRIPTION] ?? [],
       keyFeatures: data[KEY_FEATURES] ?? [],
+      color: data[COLOR] ?? '',
     );
   }
 }

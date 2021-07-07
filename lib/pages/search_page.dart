@@ -73,6 +73,7 @@ class _ProductSearchState extends State<ProductSearch> {
                           name: searchResult[index].name,
                           brand: searchResult[index].brand,
                           heroTag: searchResult[index].name,
+                          color: searchResult[index].color,
                           isFavorite: searchResult[index].favorite,
                           toggleFavorite: () {
                             setState(() {
@@ -91,6 +92,7 @@ class _ProductSearchState extends State<ProductSearch> {
                                       brand: searchResult[index].brand,
                                       category: searchResult[index].category,
                                       selectedSize: searchResult[index].sizes,
+                                      color: searchResult[index].color,
                                       selectedColor:
                                           searchResult[index].colors))
                                   : favData.removeFavorite(index);

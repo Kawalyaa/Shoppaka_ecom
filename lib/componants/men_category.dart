@@ -30,6 +30,7 @@ class _MenCategoryState extends State<MenCategory> {
         images: menCategoryList[index].images,
         price: menCategoryList[index].price,
         oldPrice: menCategoryList[index].oldPrice,
+        color: menCategoryList[index].color,
         brand: menCategoryList[index].brand,
         colors: menCategoryList[index].colors,
         sizes: menCategoryList[index].sizes,
@@ -51,6 +52,7 @@ class _MenCategoryState extends State<MenCategory> {
                     brand: menCategoryList[index].brand,
                     selectedColor: menCategoryList[index].colors,
                     selectedSize: menCategoryList[index].sizes,
+                    color: menCategoryList[index].color,
                     favorite: menCategoryList[index].favorite))
                 : favData.removeFavorite(index);
           });

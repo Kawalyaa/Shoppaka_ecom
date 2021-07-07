@@ -53,7 +53,6 @@ class _ProdDetailsState extends State<ProdDetails> {
   populateSizeListData() {
     sizeList = <SizeModel>[];
     //converting widget.productSizes into SizeModel to resolve onTap issues
-
     widget.productDetailsModel.productSizes
         .map((item) => sizeList.add(SizeModel(sizeName: item)))
         .toList();
@@ -65,18 +64,32 @@ class _ProdDetailsState extends State<ProdDetails> {
     colorList = <ColorModel>[];
 
     widget.productDetailsModel.productColors.map((item) {
-      if (item == 'red') {
-        colorList.add(ColorModel(colorName: kColorRed));
+      switch (item) {
+        case 'red':
+          colorList.add(ColorModel(colorName: kColorRed));
+          break;
+        case 'white':
+          colorList.add(ColorModel(colorName: Colors.white));
+          break;
+        case 'black':
+          colorList.add(ColorModel(colorName: Colors.black));
+          break;
+        case 'brown':
+          colorList.add(ColorModel(colorName: Colors.brown));
       }
-      if (item == 'white') {
-        colorList.add(ColorModel(colorName: Colors.white));
-      }
-      if (item == 'black') {
-        colorList.add(ColorModel(colorName: Colors.black));
-      }
-      if (item == 'brown') {
-        colorList.add(ColorModel(colorName: Colors.brown));
-      }
+
+      // if (item == 'red') {
+      //   colorList.add(ColorModel(colorName: kColorRed));
+      // }
+      // if (item == 'white') {
+      //   colorList.add(ColorModel(colorName: Colors.white));
+      // }
+      // if (item == 'black') {
+      //   colorList.add(ColorModel(colorName: Colors.black));
+      // }
+      // if (item == 'brown') {
+      //   colorList.add(ColorModel(colorName: Colors.brown));
+      // }
     }).toList();
   }
 
@@ -317,86 +330,97 @@ class _ProdDetailsState extends State<ProdDetails> {
           SizedBox(
             height: 15.0,
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(left: 8.0, top: 5.0, bottom: 15.0),
-                  child: Text(
-                    'Available Sizes',
-                    style:
-                        TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+          widget.productDetailsModel.productSizes.isEmpty
+              ? Container()
+              : Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding:
+                            EdgeInsets.only(left: 8.0, top: 5.0, bottom: 15.0),
+                        child: Text(
+                          'Available Sizes',
+                          style: TextStyle(
+                              fontSize: 14.0, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+
+                      //index and   int currentSelectedIndex are used to make 1 selection at ago
+                      Container(
+                        height: 50.0,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: sizeList.length,
+                            itemBuilder: (context, int index) {
+                              return _sizeCard(
+                                  aSize: sizeList[index].sizeName,
+                                  isSelected: currentSelectedSizeIndex == index,
+                                  toggleIsSelected: () {
+                                    setState(() {
+                                      currentSelectedSizeIndex = index;
+                                      selectedSize = sizeList[index].sizeName;
+                                    });
+                                  });
+                            }),
+                      ),
+                    ],
                   ),
                 ),
-
-                //index and   int currentSelectedIndex are used to make 1 selection at ago
-                Container(
-                  height: 50.0,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: sizeList.length,
-                      itemBuilder: (context, int index) {
-                        return _sizeCard(
-                            aSize: sizeList[index].sizeName,
-                            isSelected: currentSelectedSizeIndex == index,
-                            toggleIsSelected: () {
-                              setState(() {
-                                currentSelectedSizeIndex = index;
-                                selectedSize = sizeList[index].sizeName;
-                              });
-                            });
-                      }),
-                ),
-              ],
-            ),
-          ),
           SizedBox(
             height: 15.0,
           ),
           //=======Color Options Section===========
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(left: 8.0, top: 5.0, bottom: 5.0),
-                  child: Text(
-                    'Colors',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          widget.productDetailsModel.productColors.isEmpty
+              ? Container()
+              : Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding:
+                            EdgeInsets.only(left: 8.0, top: 5.0, bottom: 5.0),
+                        child: Text(
+                          'Colors',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 14),
+                        ),
+                      ),
+                      Container(
+                        height: 50.0,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: colorList.length,
+                            itemBuilder: (context, int index) => _colorCard(
+                                color: colorList[index].colorName,
+                                isSelected: currentSelectedColorIndex == index,
+                                toggleIsSelected: () {
+                                  setState(() {
+                                    currentSelectedColorIndex = index;
+                                    if (colorList[index].colorName ==
+                                        kColorRed) {
+                                      selectedColor = 'red';
+                                    }
+                                    if (colorList[index].colorName ==
+                                        Colors.black) {
+                                      selectedColor = 'black';
+                                    }
+                                    if (colorList[index].colorName ==
+                                        Colors.white) {
+                                      selectedColor = 'white';
+                                    }
+                                    if (colorList[index].colorName ==
+                                        Colors.brown) {
+                                      selectedColor = 'brown';
+                                    }
+                                  });
+                                })),
+                      ),
+                    ],
                   ),
                 ),
-                Container(
-                  height: 50.0,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: colorList.length,
-                      itemBuilder: (context, int index) => _colorCard(
-                          color: colorList[index].colorName,
-                          isSelected: currentSelectedColorIndex == index,
-                          toggleIsSelected: () {
-                            setState(() {
-                              currentSelectedColorIndex = index;
-                              if (colorList[index].colorName == kColorRed) {
-                                selectedColor = 'red';
-                              }
-                              if (colorList[index].colorName == Colors.black) {
-                                selectedColor = 'black';
-                              }
-                              if (colorList[index].colorName == Colors.white) {
-                                selectedColor = 'white';
-                              }
-                              if (colorList[index].colorName == Colors.brown) {
-                                selectedColor = 'browm';
-                              }
-                            });
-                          })),
-                ),
-              ],
-            ),
-          ),
 
           Divider(),
           Padding(
@@ -443,7 +467,7 @@ class _ProdDetailsState extends State<ProdDetails> {
                           padding: EdgeInsets.symmetric(horizontal: 10.0),
                           height: 60.0,
                           width: double.infinity,
-                          child: widget.productDetailsModel.keyFeatures.isEmpty
+                          child: widget.productDetailsModel.description.isEmpty
                               ? ListView(
                                   physics: const NeverScrollableScrollPhysics(),
                                   children: [
@@ -453,31 +477,84 @@ class _ProdDetailsState extends State<ProdDetails> {
                                 )
                               : ListView(
                                   physics: const NeverScrollableScrollPhysics(),
-                                  children:
-                                      widget.productDetailsModel.keyFeatures,
+                                  children: _description()
+                                  //TODO if color is unique make a default color list empty & use a different list
+                                  //widget.productDetailsModel.description,
+                                  ),
+                        )
+                      : widget.productDetailsModel.keyFeatures == null
+                          ? Card(
+                              elevation: 0,
+                              // height: 400,
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: Column(
+                                  // children: widget.productDetailsModel.keyFeatures,
+                                  children: [
+                                    // Card(),
+                                    // Card(),
+                                    Text(
+                                        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
+                                    Text(
+                                        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
+                                    Text(
+                                        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
+                                    Text(
+                                        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+                                  ],
                                 ),
-                        )
-                      : Card(
-                          elevation: 0,
-                          // height: 400,
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
-                            child: Column(
-                              children: [
-                                // Card(),
-                                // Card(),
-                                Text(
-                                    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
-                                Text(
-                                    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
-                                Text(
-                                    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
-                                Text(
-                                    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-                              ],
-                            ),
-                          ),
-                        )
+                              ),
+                            )
+                          : Card(
+                              elevation: 0,
+                              // height: 400,
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Card(
+                                        elevation: 0,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: _description(),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Text(
+                                        'Key Features',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Card(
+                                        elevation: 0,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: _keyFeatures(),
+                                        ),
+                                      ),
+                                    ]
+                                    // widget.productDetailsModel.keyFeatures,
+                                    //  children: [
+                                    //    // Card(),
+                                    //    // Card(),
+                                    //    Text(
+                                    //        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
+                                    //    Text(
+                                    //        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
+                                    //    Text(
+                                    //        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
+                                    //    Text(
+                                    //        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+                                    //  ],
+                                    ),
+                              ),
+                            )
                 ],
               ),
             ),
@@ -647,4 +724,10 @@ class _ProdDetailsState extends State<ProdDetails> {
       ),
     );
   }
+
+  List<Widget> _description() =>
+      widget.productDetailsModel.description.map((item) => Text(item)).toList();
+  List<Widget> _keyFeatures() => widget.productDetailsModel.keyFeatures
+      .map((item) => Text('--$item'))
+      .toList();
 }

@@ -27,6 +27,7 @@ class _WomenCategoryState extends State<WomenCategory> {
           SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
       itemBuilder: (context, int index) => SingleProduct(
         name: womenCategoryList[index].name,
+        color: womenCategoryList[index].color,
         images: womenCategoryList[index].images,
         price: womenCategoryList[index].price,
         oldPrice: womenCategoryList[index].oldPrice,
@@ -49,6 +50,7 @@ class _WomenCategoryState extends State<WomenCategory> {
                     name: womenCategoryList[index].name,
                     images: womenCategoryList[index].images,
                     price: womenCategoryList[index].price,
+                    color: womenCategoryList[index].color,
                     oldPrice: womenCategoryList[index].oldPrice,
                     category: womenCategoryList[index].category,
                     brand: womenCategoryList[index].brand,

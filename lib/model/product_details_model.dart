@@ -14,7 +14,7 @@ class ProductDetailsModel {
   bool isFavorite;
   final List description;
   final List keyFeatures;
-  final String specs;
+  final String color;
   ProductDetailsModel({
     this.productDetailsPicture,
     this.heroTag,
@@ -29,6 +29,6 @@ class ProductDetailsModel {
     this.similarProd,
     this.description,
     this.keyFeatures,
-    this.specs,
+    this.color,
   });
 }

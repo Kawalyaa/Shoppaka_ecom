@@ -90,6 +90,7 @@ class _OriginalProductSectionState extends State<OriginalProductSection> {
                         )
                       : SingleProduct(
                           name: shoesList[index].name,
+                          color: shoesList[index].color,
                           brand: shoesList[index].brand,
                           heroTag: shoesList[index].brand,
                           isFavorite: shoesList[index].favorite,
@@ -104,6 +105,9 @@ class _OriginalProductSectionState extends State<OriginalProductSection> {
                                       name: shoesList[index].name,
                                       images: shoesList[index].images,
                                       price: shoesList[index].price,
+                                      color: shoesList[index].color,
+                                      description: shoesList[index].description,
+                                      keyFeatures: shoesList[index].keyFeatures,
                                       category: shoesList[index].category,
                                       oldPrice: shoesList[index].oldPrice,
                                       favorite: shoesList[index].favorite,

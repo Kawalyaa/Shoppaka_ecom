@@ -91,6 +91,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
                           name: featuredList[index].name,
                           brand: featuredList[index].brand,
                           heroTag: featuredList[index].name,
+                          color: featuredList[index].color,
                           isFavorite: featuredList[index].favorite,
                           toggleFavorite: () {
                             setState(() {
@@ -108,6 +109,11 @@ class _FeaturedSectionState extends State<FeaturedSection> {
                                       favorite: featuredList[index].favorite,
                                       brand: featuredList[index].brand,
                                       category: featuredList[index].category,
+                                      color: featuredList[index].color,
+                                      description:
+                                          featuredList[index].description,
+                                      keyFeatures:
+                                          featuredList[index].keyFeatures,
                                       selectedSize: featuredList[index].sizes,
                                       selectedColor:
                                           featuredList[index].colors))
