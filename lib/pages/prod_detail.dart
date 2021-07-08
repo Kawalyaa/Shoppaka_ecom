@@ -267,12 +267,21 @@ class _ProdDetailsState extends State<ProdDetails> {
                             brand: widget.productDetailsModel.productBrand,
                             price:
                                 widget.productDetailsModel.productDetailsPrice,
-                            selectedSize: selectedSize == null
-                                ? widget.productDetailsModel.productSizes[0]
-                                : selectedSize,
-                            selectedColor: selectedColor == null
-                                ? widget.productDetailsModel.productColors[0]
-                                : selectedColor,
+                            selectedSize: selectedSize == null &&
+                                    widget.productDetailsModel.productSizes
+                                        .isEmpty
+                                ? 'No Size'
+                                : selectedSize == null
+                                    ? widget.productDetailsModel.productSizes[0]
+                                    : selectedSize,
+                            selectedColor: selectedColor == null &&
+                                    widget.productDetailsModel.productColors
+                                        .isEmpty
+                                ? widget.productDetailsModel.color
+                                : selectedColor == null
+                                    ? widget
+                                        .productDetailsModel.productColors[0]
+                                    : selectedColor,
                           ),
                         );
                       },
@@ -479,20 +488,15 @@ class _ProdDetailsState extends State<ProdDetails> {
                                   physics: const NeverScrollableScrollPhysics(),
                                   children: _description()
                                   //TODO if color is unique make a default color list empty & use a different list
-                                  //widget.productDetailsModel.description,
                                   ),
                         )
-                      : widget.productDetailsModel.keyFeatures == null
+                      : widget.productDetailsModel.keyFeatures.isEmpty
                           ? Card(
                               elevation: 0,
-                              // height: 400,
                               child: Padding(
                                 padding: const EdgeInsets.only(bottom: 8.0),
                                 child: Column(
-                                  // children: widget.productDetailsModel.keyFeatures,
                                   children: [
-                                    // Card(),
-                                    // Card(),
                                     Text(
                                         'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
                                     Text(
@@ -538,21 +542,7 @@ class _ProdDetailsState extends State<ProdDetails> {
                                           children: _keyFeatures(),
                                         ),
                                       ),
-                                    ]
-                                    // widget.productDetailsModel.keyFeatures,
-                                    //  children: [
-                                    //    // Card(),
-                                    //    // Card(),
-                                    //    Text(
-                                    //        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
-                                    //    Text(
-                                    //        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
-                                    //    Text(
-                                    //        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
-                                    //    Text(
-                                    //        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-                                    //  ],
-                                    ),
+                                    ]),
                               ),
                             )
                 ],
@@ -565,52 +555,44 @@ class _ProdDetailsState extends State<ProdDetails> {
           ///specify only web review
 
           Divider(),
-          Row(
-            children: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               Padding(
                 padding: EdgeInsets.fromLTRB(16.0, 5.0, 5.0, 5.0),
-                child: Text(
-                  'Name:',
+                child: _specs(
+                  text1: 'Brand',
+                  text2: widget.productDetailsModel.productBrand,
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(5.0),
-                child: Text(widget.productDetailsModel.productDetailsName,
-                    style: TextStyle(color: Colors.black54)),
+                padding: EdgeInsets.fromLTRB(16.0, 5.0, 5.0, 5.0),
+                child: _specs(
+                    text1: 'Name',
+                    text2: widget.productDetailsModel.productDetailsName),
+              ),
+              widget.productDetailsModel.color == ''
+                  ? Padding(
+                      padding: EdgeInsets.fromLTRB(16.0, 5.0, 5.0, 5.0),
+                      child: _specs(
+                          text1: 'Color',
+                          text2: selectedColor == null
+                              ? widget.productDetailsModel.productColors[0]
+                              : selectedColor),
+                    )
+                  : Padding(
+                      padding: EdgeInsets.fromLTRB(16.0, 5.0, 5.0, 5.0),
+                      child: _specs(
+                          text1: 'Color',
+                          text2: widget.productDetailsModel.color),
+                    ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(16.0, 5.0, 5.0, 5.0),
+                child: _specs(text1: 'Condition', text2: 'New'),
               ),
             ],
           ),
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.fromLTRB(16.0, 5.0, 5.0, 5.0),
-                child: Text(
-                  'Brand:',
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(5.0),
-                child: Text('${widget.productDetailsModel.productBrand}',
-                    style: TextStyle(color: Colors.black54)),
-              )
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.fromLTRB(16.0, 5.0, 5.0, 5.0),
-                child: Text(
-                  'Condition:',
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(
-                  (5.0),
-                ),
-                child: Text('New', style: TextStyle(color: Colors.black54)),
-              )
-            ],
-          ),
+
           //******SIMILAR PRODUCTS*******
           Divider(),
           Padding(
@@ -637,6 +619,9 @@ class _ProdDetailsState extends State<ProdDetails> {
                           brand: similarProdList[index].brand,
                           colors: similarProdList[index].colors,
                           sizes: similarProdList[index].sizes,
+                          color: similarProdList[index].color,
+                          description: similarProdList[index].description,
+                          keyFeatures: similarProdList[index].keyFeatures,
                           similarProduct: similarProdList,
                           isFavorite: similarProdList[index].favorite,
                           toggleFavorite: () {
@@ -654,6 +639,11 @@ class _ProdDetailsState extends State<ProdDetails> {
                                       oldPrice: similarProdList[index].oldPrice,
                                       brand: similarProdList[index].brand,
                                       category: similarProdList[index].category,
+                                      color: similarProdList[index].color,
+                                      description:
+                                          similarProdList[index].description,
+                                      keyFeatures:
+                                          similarProdList[index].keyFeatures,
                                       selectedColor:
                                           similarProdList[index].colors,
                                       selectedSize:
@@ -730,4 +720,10 @@ class _ProdDetailsState extends State<ProdDetails> {
   List<Widget> _keyFeatures() => widget.productDetailsModel.keyFeatures
       .map((item) => Text('--$item'))
       .toList();
+
+  Widget _specs({String text1, String text2}) => RichText(
+          text: TextSpan(style: TextStyle(color: Colors.black), children: [
+        TextSpan(text: "$text1: "),
+        TextSpan(text: text2, style: TextStyle(color: Colors.black54))
+      ]));
 }

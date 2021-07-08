@@ -77,7 +77,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
               child: StaggeredGridView.countBuilder(
                 crossAxisCount: 2,
                 padding: EdgeInsets.all(10),
-                itemCount: 3,
+                itemCount: 4,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   return featuredList.isEmpty

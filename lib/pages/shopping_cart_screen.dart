@@ -159,5 +159,3 @@ class _ShoppingCartState extends State<ShoppingCart> {
           );
   }
 }
-
-//TODO 1 Add description to products

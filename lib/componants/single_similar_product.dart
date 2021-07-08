@@ -22,6 +22,9 @@ class SimilarSingleProduct extends StatelessWidget {
   final Function toggleFavorite;
   final List similarProduct;
   final placeholder;
+  final String color;
+  final List description;
+  final List keyFeatures;
 
   SimilarSingleProduct(
       {this.id,
@@ -37,6 +40,9 @@ class SimilarSingleProduct extends StatelessWidget {
       this.sizes,
       this.isFavorite,
       this.featured,
+      this.color,
+      this.description,
+      this.keyFeatures,
       this.toggleFavorite,
       this.similarProduct,
       this.placeholder});
@@ -78,17 +84,21 @@ class SimilarSingleProduct extends StatelessWidget {
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ProdDetails(
                     productDetailsModel: ProductDetailsModel(
-                        heroTag: 'name2',
-                        productDetailsName: name,
-                        productDetailsOldPrice: oldPrice,
-                        productDetailsPicture: images,
-                        productDetailsPrice: price,
-                        productBrand: brand,
-                        productColors: colors,
-                        productSizes: sizes,
-                        isFavorite: isFavorite,
-                        category: category,
-                        similarProd: similarProduct),
+                      heroTag: 'name2',
+                      productDetailsName: name,
+                      productDetailsOldPrice: oldPrice,
+                      productDetailsPicture: images,
+                      productDetailsPrice: price,
+                      productBrand: brand,
+                      productColors: colors,
+                      productSizes: sizes,
+                      isFavorite: isFavorite,
+                      category: category,
+                      similarProd: similarProduct,
+                      color: color,
+                      description: description,
+                      keyFeatures: keyFeatures,
+                    ),
 //
                   ),
                 ));
