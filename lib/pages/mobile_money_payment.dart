@@ -17,12 +17,14 @@ class MobileMoneyPay extends StatefulWidget {
   final List orderedProducts;
   final pickupStation;
   final List userInfo;
+  final String deliveryMethod;
 
   MobileMoneyPay(
       {this.orderedProducts,
       this.totalAmount,
       this.pickupStation,
-      this.userInfo});
+      this.userInfo,
+      this.deliveryMethod});
 
   static const String id = 'mobileMoneyPay';
 
@@ -205,7 +207,7 @@ class _MobileMoneyPayState extends State<MobileMoneyPay> {
                   )
                 : Container(),
             SizedBox(
-              height: 30.0,
+              height: 28.0,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -219,7 +221,6 @@ class _MobileMoneyPayState extends State<MobileMoneyPay> {
                         _serviceProvider == ServiceProvider.MTN) {
                       _handelPaymentInitialization();
 
-                      _cartData.removeAllCartProducts();
                       _airtelPhoneController.clear();
                       _mtnPhoneController.clear();
                     }
@@ -248,7 +249,7 @@ class _MobileMoneyPayState extends State<MobileMoneyPay> {
         isDebugMode: false,
         currency: _ugCurrency,
         context: context,
-        amount: "300",
+        amount: "500",
         acceptUgandaPayment: true,
         publicKey: 'FLWPUBK-515fba68c059b487d73e3368c46fc35f-X',
         encryptionKey: '45742576d0de5608b5801d26',
@@ -268,13 +269,18 @@ class _MobileMoneyPayState extends State<MobileMoneyPay> {
               totalPrice: widget.totalAmount,
               addressList: addressList,
               paymentMethod: "MobileMoney",
+              deliveryMethod: widget.deliveryMethod,
               pickupStation:
                   widget.pickupStation != null ? _pickUpStationList() : null,
               context: context)
           .then((value) => value == true
               ? Navigator.pushReplacementNamed(context, PaymentSuccessful.id)
               : showAlertDialog(context, 'Message', 'upload error'));
+
+      ///Clear Cart
+      _cartData.removeAllCartProducts();
     } else {
+      print(_response.data.status);
       showAlertDialog(context, 'Message', _response.data.status);
     }
   }

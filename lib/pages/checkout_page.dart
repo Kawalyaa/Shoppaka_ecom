@@ -1237,7 +1237,12 @@ class _CheckoutState extends State<Checkout>
                         orderedProducts: orderedItemsList(),
                         totalAmount: totalPrice,
                         pickupStation: result,
-                        userInfo: userInfo));
+                        userInfo: userInfo,
+                        deliveryMethod: selectedButton == Button.BUTTON1
+                            ? 'express'
+                            : selectedButton == Button.BUTTON2
+                                ? 'standard'
+                                : 'pickup'));
               } else {
                 //  Add orders to the fire
                 _ordersServices
@@ -1250,6 +1255,11 @@ class _CheckoutState extends State<Checkout>
                         paymentStatus: _response,
                         totalPrice: totalPrice,
                         paymentMethod: "CashOnDelivery",
+                        deliveryMethod: selectedButton == Button.BUTTON1
+                            ? 'express'
+                            : selectedButton == Button.BUTTON2
+                                ? 'standard'
+                                : 'pickup',
                         pickupStation:
                             result != null ? pickUpStationList() : null,
                         context: context)

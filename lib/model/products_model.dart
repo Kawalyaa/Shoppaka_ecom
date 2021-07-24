@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 class ProductsModel {
   static const ID = 'id';
   static const NAME = 'name';
@@ -16,6 +14,7 @@ class ProductsModel {
   static const DESCRIPTION = 'description';
   static const KEY_FEATURES = 'keyFeatures';
   static const COLOR = 'color';
+  static const TIME = 'time';
 
   final String id;
   final String name;
@@ -32,24 +31,25 @@ class ProductsModel {
   final List description;
   final List keyFeatures;
   final String color;
+  final time;
 
-  ProductsModel({
-    this.id,
-    this.name,
-    this.brand,
-    this.category,
-    this.images,
-    this.price,
-    this.oldPrice,
-    this.quantity,
-    this.colors,
-    this.sizes,
-    this.favorite,
-    this.featured,
-    this.description,
-    this.keyFeatures,
-    this.color,
-  });
+  ProductsModel(
+      {this.id,
+      this.name,
+      this.brand,
+      this.category,
+      this.images,
+      this.price,
+      this.oldPrice,
+      this.quantity,
+      this.colors,
+      this.sizes,
+      this.favorite,
+      this.featured,
+      this.description,
+      this.keyFeatures,
+      this.color,
+      this.time});
 
   factory ProductsModel.fromSnapShot(Map data) {
     return ProductsModel(
@@ -68,6 +68,7 @@ class ProductsModel {
       description: data[DESCRIPTION] ?? [],
       keyFeatures: data[KEY_FEATURES] ?? [],
       color: data[COLOR] ?? '',
+      time: data[TIME] ?? '',
     );
   }
 }
