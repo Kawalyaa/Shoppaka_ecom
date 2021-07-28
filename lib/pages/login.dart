@@ -11,6 +11,9 @@ import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   static const String id = 'login';
+  // final String lastPage;
+  //
+  // Login({this.lastPage});
   @override
   _LoginState createState() => _LoginState();
 }
@@ -31,6 +34,8 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     final _authProvider = Provider.of<UserProv>(context);
+
+    var args = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       //key: _key,
@@ -99,7 +104,7 @@ class _LoginState extends State<Login> {
                       if (value.isEmpty) {
                         return 'Password Field Is Required';
                       } else if (value.length < 6)
-                        return 'Password must be atleast 6 characters';
+                        return 'Password must be at least 6 characters';
                       return null;
                     },
                   ),
@@ -126,7 +131,11 @@ class _LoginState extends State<Login> {
                     hideProgress();
                     //_authProvider.clearController();
                     await _authProvider.reloadUser();
-                    Navigator.pushReplacementNamed(context, HomePage.id);
+
+                    ///Check if there is one page in a stack to a void pop()
+                    args == 'onePage'
+                        ? Navigator.pushReplacementNamed(context, HomePage.id)
+                        : Navigator.pop(context);
 
                     //validateForm();
                   }
@@ -149,7 +158,7 @@ class _LoginState extends State<Login> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, SignUp.id);
+                      Navigator.pushNamed(context, SignUp.id, arguments: args);
                     },
                     child: Text(
                       'Register',

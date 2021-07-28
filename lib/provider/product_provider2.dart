@@ -32,7 +32,6 @@ class ProductProvider2 with ChangeNotifier {
 
     for (int i = 0; i < _cartProductList.length; i++) {
       if (_cartProductList[i].name == cartItem.name) {
-        _cartProductList[i].qty++;
         present = true;
       } else {
         present = false;

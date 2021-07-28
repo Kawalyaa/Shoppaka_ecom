@@ -204,7 +204,7 @@ class _ProdDetailsState extends State<ProdDetails> {
           Padding(
             padding: const EdgeInsets.fromLTRB(16.0, 5.0, 5.0, 5.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
@@ -218,26 +218,22 @@ class _ProdDetailsState extends State<ProdDetails> {
                 SizedBox(
                   height: 15.0,
                 ),
-                Row(
-                  children: <Widget>[
-                    Text(
-                      'UGX ${widget.productDetailsModel.productDetailsOldPrice}',
-                      style: TextStyle(
-                          fontSize: 25.0,
-                          color: Colors.black54,
-                          decoration: TextDecoration.lineThrough),
-                    ),
-                    SizedBox(
-                      width: 10.0,
-                    ),
-                    Text(
-                      'UGX${widget.productDetailsModel.productDetailsPrice}',
-                      style: TextStyle(
-                          color: kColorRed,
-                          fontSize: 25.0,
-                          fontWeight: FontWeight.w900),
-                    )
-                  ],
+                Text(
+                  'UGX ${widget.productDetailsModel.productDetailsOldPrice}',
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.black54,
+                      decoration: TextDecoration.lineThrough),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Text(
+                  'UGX${widget.productDetailsModel.productDetailsPrice}',
+                  style: TextStyle(
+                      color: kColorRed,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w900),
                 ),
               ],
             ),
@@ -251,44 +247,49 @@ class _ProdDetailsState extends State<ProdDetails> {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(left: 5.0),
-                  child: Material(
-                    elevation: 2.0,
-                    color: kColorRed,
-                    borderRadius: BorderRadius.circular(30.0),
-                    child: MaterialButton(
-                      minWidth: 200.0,
-                      height: 42.0,
-                      onPressed: () {
-                        providerData.addProducts(
-                          CartModel(
-                            images: widget
-                                .productDetailsModel.productDetailsPicture,
-                            name: widget.productDetailsModel.productDetailsName,
-                            brand: widget.productDetailsModel.productBrand,
-                            price:
-                                widget.productDetailsModel.productDetailsPrice,
-                            selectedSize: selectedSize == null &&
-                                    widget.productDetailsModel.productSizes
-                                        .isEmpty
-                                ? 'No Size'
-                                : selectedSize == null
-                                    ? widget.productDetailsModel.productSizes[0]
-                                    : selectedSize,
-                            selectedColor: selectedColor == null &&
-                                    widget.productDetailsModel.productColors
-                                        .isEmpty
-                                ? widget.productDetailsModel.color
-                                : selectedColor == null
-                                    ? widget
-                                        .productDetailsModel.productColors[0]
-                                    : selectedColor,
-                          ),
-                        );
-                      },
-                      elevation: 0.2,
-                      child: Text(
-                        'Add To Cart',
-                        style: TextStyle(color: Colors.white),
+                  child: SizedBox(
+                    height: 42,
+                    child: Material(
+                      elevation: 2.0,
+                      color: kColorRed,
+                      borderRadius: BorderRadius.circular(15.0),
+                      child: MaterialButton(
+                        minWidth: 140.0,
+                        //height: 42.0,
+                        onPressed: () {
+                          providerData.addProducts(
+                            CartModel(
+                              images: widget
+                                  .productDetailsModel.productDetailsPicture,
+                              name:
+                                  widget.productDetailsModel.productDetailsName,
+                              brand: widget.productDetailsModel.productBrand,
+                              price: widget
+                                  .productDetailsModel.productDetailsPrice,
+                              selectedSize: selectedSize == null &&
+                                      widget.productDetailsModel.productSizes
+                                          .isEmpty
+                                  ? 'No Size'
+                                  : selectedSize == null
+                                      ? widget
+                                          .productDetailsModel.productSizes[0]
+                                      : selectedSize,
+                              selectedColor: selectedColor == null &&
+                                      widget.productDetailsModel.productColors
+                                          .isEmpty
+                                  ? widget.productDetailsModel.color
+                                  : selectedColor == null
+                                      ? widget
+                                          .productDetailsModel.productColors[0]
+                                      : selectedColor,
+                            ),
+                          );
+                        },
+                        elevation: 0.2,
+                        child: Text(
+                          'Add To Cart',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                   ),
@@ -486,9 +487,7 @@ class _ProdDetailsState extends State<ProdDetails> {
                                 )
                               : ListView(
                                   physics: const NeverScrollableScrollPhysics(),
-                                  children: _description()
-                                  //TODO if color is unique make a default color list empty & use a different list
-                                  ),
+                                  children: _description()),
                         )
                       : widget.productDetailsModel.keyFeatures.isEmpty
                           ? Card(
@@ -549,10 +548,6 @@ class _ProdDetailsState extends State<ProdDetails> {
               ),
             ),
           ),
-
-          ///TODO add a list of description[]--when adding we can add anything
-          ///a single description = itemName,condition,spec,review,
-          ///specify only web review
 
           Divider(),
           Column(
