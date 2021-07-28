@@ -1302,7 +1302,8 @@ class _CheckoutState extends State<Checkout>
       );
 
   _navigateToPickupStation(BuildContext context) async {
-    result = await Navigator.pushNamed(context, PickupStation.id);
+    result = await Navigator.pushNamed(context, PickupStation.id,
+        arguments: addressList);
   }
 
   String _returnDate(DateTime dateTime) => DateFormat.MMMEd().format(dateTime);

@@ -1,7 +1,7 @@
 import 'package:ecommerce_app/componants/single_pickup_location.dart';
 import 'package:ecommerce_app/db/pickup_location_data.dart';
 import 'package:ecommerce_app/model/pickup_location_model.dart';
-import 'package:ecommerce_app/pages/checkout_page.dart';
+import 'package:ecommerce_app/pages/adress_book.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +19,8 @@ class _PickupStationState extends State<PickupStation> {
 
   @override
   Widget build(BuildContext context) {
+    List args = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -61,7 +63,7 @@ class _PickupStationState extends State<PickupStation> {
                                   height: 5.0,
                                 ),
                                 Text(
-                                  'Kampala Region',
+                                  args[0]['region'],
                                 ),
                               ],
                             ),
@@ -79,7 +81,7 @@ class _PickupStationState extends State<PickupStation> {
                                 SizedBox(
                                   height: 5.0,
                                 ),
-                                Text('Central Business District')
+                                Text(args[0]['town'])
                               ],
                             ),
                           ),
@@ -94,7 +96,9 @@ class _PickupStationState extends State<PickupStation> {
                     height: 45.0,
                     minWidth: double.infinity,
                     color: kColorRed,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, AddressBook.id);
+                    },
                     textColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
@@ -115,17 +119,28 @@ class _PickupStationState extends State<PickupStation> {
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Container(
               width: MediaQuery.of(context).size.width,
-              child: Column(
-                children: List.generate(
-                  pickupInfo.length,
-                  (index) => SinglePickupLocation(
-                    placeName: pickupInfo[index].placeName,
-                    location: pickupInfo[index].location,
-                    openingHours: pickupInfo[index].openingHours,
-                    shippingFee: 3000,
-                  ),
-                ),
-              ),
+              child: args[0]['town'] != 'Kampala'
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 50.0, left: 15.0),
+                      child: Text(
+                        'No PickupStation',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18.0,
+                            color: kColorRed),
+                      ),
+                    )
+                  : Column(
+                      children: List.generate(
+                        pickupInfo.length,
+                        (index) => SinglePickupLocation(
+                          placeName: pickupInfo[index].placeName,
+                          location: pickupInfo[index].location,
+                          openingHours: pickupInfo[index].openingHours,
+                          shippingFee: 0,
+                        ),
+                      ),
+                    ),
             ),
           )
         ],
