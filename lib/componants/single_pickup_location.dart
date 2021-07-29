@@ -1,5 +1,4 @@
 import 'package:ecommerce_app/model/pickup_location_model.dart';
-import 'package:ecommerce_app/pages/checkout_page.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -60,7 +59,7 @@ class SinglePickupLocation extends StatelessWidget {
             Center(
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-                child: FlatButton(
+                child: TextButton(
                   child: Text(
                     'SELECT PICKUP STATION',
                     style: TextStyle(color: kColorRed),

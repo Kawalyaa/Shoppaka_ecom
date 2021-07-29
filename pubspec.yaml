@@ -48,35 +48,15 @@ dependencies:
   email_validator: any
   http: ^0.13.3
   cached_network_image: ^3.0.0
-  webview_flutter: ^2.0.9
+  flutter_launcher_icons: ^0.9.1
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+flutter_icons:
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  image_path: "images/icons/shopla.png"
 
 
 
