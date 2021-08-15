@@ -7,7 +7,7 @@ class SingleOrder extends StatelessWidget {
   final String orderNumber;
   final String orderStatus;
   final deliveryDate;
-  final double totalPrice;
+  final int totalPrice;
   final orderedTime;
   SingleOrder(
       {this.orderList,

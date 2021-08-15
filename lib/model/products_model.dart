@@ -21,8 +21,8 @@ class ProductsModel {
   final String brand;
   final String category;
   final images;
-  final double price;
-  final double oldPrice;
+  final int price;
+  final int oldPrice;
   int quantity;
   final List colors;
   final List sizes;

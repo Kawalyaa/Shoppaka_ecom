@@ -4,8 +4,8 @@ class CartModel {
   final String brand;
   final String category;
   final List images;
-  final double price;
-  final double oldPrice;
+  final int price;
+  final int oldPrice;
   final bool favorite;
   final bool featured;
   final String selectedSize;
@@ -56,20 +56,18 @@ class CartModel {
         selectedColor = json['selectedColor'],
         selectedSize = json['selectedSize'];
 
-
-  Map<String,dynamic> toMap()=>{
-    'id': id,
-    'name': name,
-    'qty': 1,
-    'brand': brand,
-    'category': category,
-    'images': images,
-    'price': price,
-    'oldPrice': oldPrice,
-    'favorite': favorite,
-    'featured': featured,
-    'selectedSize': selectedSize,
-    'selectedColor': selectedColor,
-  };
-
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'name': name,
+        'qty': 1,
+        'brand': brand,
+        'category': category,
+        'images': images,
+        'price': price,
+        'oldPrice': oldPrice,
+        'favorite': favorite,
+        'featured': featured,
+        'selectedSize': selectedSize,
+        'selectedColor': selectedColor,
+      };
 }

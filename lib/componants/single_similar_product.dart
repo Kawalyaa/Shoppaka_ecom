@@ -3,7 +3,6 @@ import 'package:ecommerce_app/pages/prod_detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:sizer/sizer.dart';
 
 class SimilarSingleProduct extends StatelessWidget {
   final String id;
@@ -12,8 +11,8 @@ class SimilarSingleProduct extends StatelessWidget {
   final String heroTag;
   final String category;
   final List images;
-  final double price;
-  final double oldPrice;
+  final int price;
+  final int oldPrice;
   final int quantity;
   final List colors;
   final List sizes;

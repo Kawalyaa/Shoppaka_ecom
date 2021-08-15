@@ -27,7 +27,7 @@ enum Pay { MobileMoney, OnDelivery }
 class Checkout extends StatefulWidget {
   static const String id = 'checkout';
 
-  final double productPrice;
+  final int productPrice;
   final String productName;
   final String size;
   final String quantity;
@@ -56,7 +56,7 @@ class _CheckoutState extends State<Checkout>
   int shippingFeeSt = 3000;
   int extraFee = 1000;
   int shippingFee2 = 0;
-  double totalPrice;
+  int totalPrice;
   int index = 0;
   var result;
   var addressDetails;
@@ -217,7 +217,7 @@ class _CheckoutState extends State<Checkout>
 
   //################# Delivery Information ##############################
 
-  Widget _deliveryInfoList({double subtotal, List addressList}) {
+  Widget _deliveryInfoList({int subtotal, List addressList}) {
     totalPrice = selectedButton == Button.BUTTON1
         ? subtotal + shippingFee + extraFee
         : selectedButton == Button.BUTTON2
@@ -610,7 +610,7 @@ class _CheckoutState extends State<Checkout>
                         ? 'UGX$shippingFee2'
                         : selectedButton == Button.BUTTON1
                             ? 'UGX${shippingFee + extraFee}'
-                            : 'UGX$shippingFee',
+                            : 'UGX$shippingFeeSt',
                     textColor:
                         selectedButton == Button.BUTTON3 ? Colors.green : null),
                 Divider(
@@ -680,7 +680,7 @@ class _CheckoutState extends State<Checkout>
 
 //################# Payment Information ##############################
 
-  _paymentInfoList(double subtotal) => ListView(
+  _paymentInfoList(int subtotal) => ListView(
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 14.0, top: 18.0, bottom: 10.0),
@@ -903,7 +903,7 @@ class _CheckoutState extends State<Checkout>
 
   //################# Summery Information ##############################
 
-  _summeryInfoTab({double subtotal, List addressList, List cartList}) {
+  _summeryInfoTab({int subtotal, List addressList, List cartList}) {
     return ListView(
       children: [
         Padding(

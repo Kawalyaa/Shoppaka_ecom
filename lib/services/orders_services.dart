@@ -26,7 +26,7 @@ class OrdersServices {
     String phone,
     List ordersList,
     List pickupStation,
-    double totalPrice,
+    int totalPrice,
     String paymentMethod,
     String paymentStatus,
     List addressList,

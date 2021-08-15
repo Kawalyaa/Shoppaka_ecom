@@ -7,7 +7,7 @@ class DatabaseServices {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final User _user = FirebaseAuth.instance.currentUser;
 
-  String collection = 'Products';
+  String collection = 'Products2';
   String category = 'category';
   String featured = 'featured';
   String _collection2 = 'users';

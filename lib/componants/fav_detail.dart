@@ -8,8 +8,8 @@ class FavDetail extends StatelessWidget {
   final String brand;
   final String category;
   final images;
-  final double price;
-  final double oldPrice;
+  final int price;
+  final int oldPrice;
   final int quantity;
   final colors;
   final sizes;

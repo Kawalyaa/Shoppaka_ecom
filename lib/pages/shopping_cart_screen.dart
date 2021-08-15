@@ -25,7 +25,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
     UserProv auth = Provider.of<UserProv>(context);
 
     List<CartModel> cartList = getValue.cartProductList;
-    double totalPrice = getValue.getTotalPrice();
+    int totalPrice = getValue.getTotalPrice();
 
     return cartList.length == 0
         ? Scaffold(
@@ -95,7 +95,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                       subtitle: Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: Text(
-                          'UGX${totalPrice.roundToDouble()}',
+                          'UGX$totalPrice',
                           style: TextStyle(
                               fontSize: 18.0, fontWeight: FontWeight.bold),
                         ),
@@ -117,7 +117,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                             case Status.Authenticated:
                               return Navigator.pushNamed(context, Checkout.id,
                                   arguments: Checkout(
-                                    productPrice: totalPrice.roundToDouble(),
+                                    productPrice: totalPrice,
                                   ));
                             default:
                               return LoadingPage();
