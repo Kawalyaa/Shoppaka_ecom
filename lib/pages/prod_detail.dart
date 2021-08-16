@@ -75,6 +75,7 @@ class _ProdDetailsState extends State<ProdDetails> {
           break;
         case 'brown':
           colorList.add(ColorModel(colorName: Colors.brown));
+          break;
       }
     }).toList();
   }
@@ -368,55 +369,62 @@ class _ProdDetailsState extends State<ProdDetails> {
             height: 15.0,
           ),
           //=======Color Options Section===========
-          widget.productDetailsModel.productColors.isEmpty
-              ? Container()
-              : Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding:
-                            EdgeInsets.only(left: 8.0, top: 5.0, bottom: 5.0),
-                        child: Text(
-                          'Colors',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 14),
-                        ),
-                      ),
-                      Container(
-                        height: 50.0,
-                        child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: colorList.length,
-                            itemBuilder: (context, int index) => _colorCard(
-                                color: colorList[index].colorName,
-                                isSelected: currentSelectedColorIndex == index,
-                                toggleIsSelected: () {
-                                  setState(() {
-                                    currentSelectedColorIndex = index;
-                                    if (colorList[index].colorName ==
-                                        kColorRed) {
-                                      selectedColor = 'red';
-                                    }
-                                    if (colorList[index].colorName ==
-                                        Colors.black) {
-                                      selectedColor = 'black';
-                                    }
-                                    if (colorList[index].colorName ==
-                                        Colors.white) {
-                                      selectedColor = 'white';
-                                    }
-                                    if (colorList[index].colorName ==
-                                        Colors.brown) {
-                                      selectedColor = 'brown';
-                                    }
-                                  });
-                                })),
-                      ),
-                    ],
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(left: 8.0, top: 5.0, bottom: 5.0),
+                  child: Text(
+                    'Colors',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                 ),
+                Container(
+                  height: 50.0,
+                  child: colorList.isEmpty
+                      ? Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                              widget.productDetailsModel.productColors[0],
+                              style: TextStyle(
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.bold)),
+                        )
+                      : ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: colorList.length,
+                          itemBuilder: (context, int index) => _colorCard(
+                              color: colorList[index].colorName,
+                              isSelected: currentSelectedColorIndex == index,
+                              toggleIsSelected: () {
+                                setState(() {
+                                  currentSelectedColorIndex = index;
+                                  if (colorList[index].colorName == kColorRed) {
+                                    selectedColor = 'red';
+                                  }
+                                  if (colorList[index].colorName ==
+                                      Colors.black) {
+                                    selectedColor = 'black';
+                                  }
+                                  if (colorList[index].colorName ==
+                                      Colors.white) {
+                                    selectedColor = 'white';
+                                  }
+                                  if (colorList[index].colorName ==
+                                      Colors.brown) {
+                                    selectedColor = 'brown';
+                                  } else {
+                                    selectedColor = widget
+                                        .productDetailsModel.productColors[0];
+                                  }
+                                });
+                              })),
+                ),
+              ],
+            ),
+          ),
 
           Divider(),
           Padding(
@@ -464,36 +472,13 @@ class _ProdDetailsState extends State<ProdDetails> {
                           height: 60.0,
                           width: double.infinity,
                           child: widget.productDetailsModel.description.isEmpty
-                              ? ListView(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  children: [
-                                    Text(
-                                        'The latest fashion trending in town.This fashion is fitting and classic for both the youth and elders,they are strong and with colors that can not be breached'),
-                                  ],
-                                )
+                              ? Container()
                               : ListView(
                                   physics: const NeverScrollableScrollPhysics(),
                                   children: _description()),
                         )
                       : widget.productDetailsModel.keyFeatures.isEmpty
-                          ? Card(
-                              elevation: 0,
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
-                                    Text(
-                                        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
-                                    Text(
-                                        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
-                                    Text(
-                                        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-                                  ],
-                                ),
-                              ),
-                            )
+                          ? Container()
                           : Card(
                               elevation: 0,
                               // height: 400,
