@@ -19,13 +19,13 @@ class _OriginalProductSectionState extends State<OriginalProductSection> {
   @override
   Widget build(BuildContext context) {
     List<ProductsModel> allProds = Provider.of<List<ProductsModel>>(context);
-    String shoesCat = 'Shoes';
-    List<ProductsModel> shoesList =
+    String shoesCat = 'phones';
+    List<ProductsModel> phonesList =
         CategoryOptions().getCategory(allProds, shoesCat);
     var favData = Provider.of<FavoritesProvider>(context);
+    phonesList.sort((a, b) => a.name.compareTo(b.name));
 
     var size = MediaQuery.of(context).size;
-    var _time = DateTime.now().microsecond.toString();
     return Stack(
       children: [
         Container(
@@ -56,7 +56,7 @@ class _OriginalProductSectionState extends State<OriginalProductSection> {
                           borderRadius: BorderRadius.circular(5)),
                       child: Padding(
                         padding: EdgeInsets.all(5),
-                        child: Text('Veiw All'),
+                        child: Text('View All'),
                       ),
                     ),
                   ),
@@ -81,7 +81,7 @@ class _OriginalProductSectionState extends State<OriginalProductSection> {
                 itemCount: 4,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return shoesList.isEmpty
+                  return phonesList.isEmpty
                       ? Container(
                           child: Center(
                             child: Image.asset(
@@ -89,44 +89,47 @@ class _OriginalProductSectionState extends State<OriginalProductSection> {
                           ),
                         )
                       : SingleProduct(
-                          name: shoesList[index].name,
-                          color: shoesList[index].color,
-                          brand: shoesList[index].brand,
-                          heroTag: shoesList[index].brand,
-                          isFavorite: shoesList[index].favorite,
+                          name: phonesList[index].name,
+                          color: phonesList[index].color,
+                          brand: phonesList[index].brand,
+                          heroTag: phonesList[index].brand,
+                          isFavorite: phonesList[index].favorite,
                           toggleFavorite: () {
                             setState(() {
-                              shoesList[index].favorite =
-                                  !shoesList[index].favorite;
+                              phonesList[index].favorite =
+                                  !phonesList[index].favorite;
 
                               //===Add or Remove  Favorite======
-                              shoesList[index].favorite
+                              phonesList[index].favorite
                                   ? favData.addToFavorite(FavoritesModel(
-                                      name: shoesList[index].name,
-                                      images: shoesList[index].images,
-                                      price: shoesList[index].price,
-                                      color: shoesList[index].color,
-                                      description: shoesList[index].description,
-                                      keyFeatures: shoesList[index].keyFeatures,
-                                      category: shoesList[index].category,
-                                      oldPrice: shoesList[index].oldPrice,
-                                      favorite: shoesList[index].favorite,
-                                      brand: shoesList[index].brand,
-                                      selectedSize: shoesList[index].sizes,
-                                      selectedColor: shoesList[index].colors))
-                                  : favData.removeFavorite(index);
+                                      name: phonesList[index].name,
+                                      images: phonesList[index].images,
+                                      price: phonesList[index].price,
+                                      color: phonesList[index].color,
+                                      description:
+                                          phonesList[index].description,
+                                      keyFeatures:
+                                          phonesList[index].keyFeatures,
+                                      category: phonesList[index].category,
+                                      oldPrice: phonesList[index].oldPrice,
+                                      favorite: phonesList[index].favorite,
+                                      brand: phonesList[index].brand,
+                                      selectedSize: phonesList[index].sizes,
+                                      selectedColor: phonesList[index].colors))
+                                  : favData
+                                      .removeFavorite(phonesList[index].id);
                             });
                           },
-                          images: shoesList[index].images,
-                          price: shoesList[index].price,
-                          oldPrice: shoesList[index].oldPrice,
-                          sizes: shoesList[index].sizes,
-                          colors: shoesList[index].colors,
-                          category: shoesList[index].category,
-                          similarProduct: CategoryOptions()
-                              .getCategory(allProds, shoesList[index].category),
-                          description: shoesList[index].description,
-                          keyFeatures: shoesList[index].keyFeatures,
+                          images: phonesList[index].images,
+                          price: phonesList[index].price,
+                          oldPrice: phonesList[index].oldPrice,
+                          sizes: phonesList[index].sizes,
+                          colors: phonesList[index].colors,
+                          category: phonesList[index].category,
+                          similarProduct: CategoryOptions().getCategory(
+                              allProds, phonesList[index].category),
+                          description: phonesList[index].description,
+                          keyFeatures: phonesList[index].keyFeatures,
                         );
                 },
                 staggeredTileBuilder: (int index) => StaggeredTile.fit(1),

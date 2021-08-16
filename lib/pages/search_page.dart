@@ -95,7 +95,8 @@ class _ProductSearchState extends State<ProductSearch> {
                                       color: searchResult[index].color,
                                       selectedColor:
                                           searchResult[index].colors))
-                                  : favData.removeFavorite(index);
+                                  : favData
+                                      .removeFavorite(searchResult[index].id);
                             });
                           },
                           images: searchResult[index].images,

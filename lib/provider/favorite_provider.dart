@@ -42,8 +42,8 @@ class FavoritesProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeFavorite(int index) {
-    _favoriteList.removeAt(index);
+  void removeFavorite(String id) {
+    _favoriteList.remove(id);
     updateSharedPreferences();
     notifyListeners();
   }

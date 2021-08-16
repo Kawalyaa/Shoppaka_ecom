@@ -76,19 +76,6 @@ class _ProdDetailsState extends State<ProdDetails> {
         case 'brown':
           colorList.add(ColorModel(colorName: Colors.brown));
       }
-
-      // if (item == 'red') {
-      //   colorList.add(ColorModel(colorName: kColorRed));
-      // }
-      // if (item == 'white') {
-      //   colorList.add(ColorModel(colorName: Colors.white));
-      // }
-      // if (item == 'black') {
-      //   colorList.add(ColorModel(colorName: Colors.black));
-      // }
-      // if (item == 'brown') {
-      //   colorList.add(ColorModel(colorName: Colors.brown));
-      // }
     }).toList();
   }
 
@@ -644,7 +631,8 @@ class _ProdDetailsState extends State<ProdDetails> {
                                           similarProdList[index].sizes,
                                       favorite:
                                           similarProdList[index].favorite))
-                                  : favData.removeFavorite(index);
+                                  : favData.removeFavorite(
+                                      similarProdList[index].id);
                             });
                           },
                         )),
