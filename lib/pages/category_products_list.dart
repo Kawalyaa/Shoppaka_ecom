@@ -140,14 +140,14 @@ class _CategoryProductsListState extends State<CategoryProductsList> {
           ],
         );
         break;
-      case Options.TECH:
+      case Options.HIGH_END:
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
               padding: EdgeInsets.all(15.0),
               child: Text(
-                'Tech Products',
+                'High End SmartPhones ',
                 style: TextStyle(
                     fontWeight: FontWeight.bold, color: Colors.black54),
               ),

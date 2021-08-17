@@ -36,7 +36,7 @@ class OrdersServices {
     try {
       showProgress(context, 'Submitting order...', true);
 
-      await _firestore.collection('allOrders').add({
+      await _firestore.collection(ref).add({
         'id': _auth.currentUser.uid,
         'userName': userName,
         'phone': phone,

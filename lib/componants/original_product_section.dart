@@ -68,7 +68,7 @@ class _OriginalProductSectionState extends State<OriginalProductSection> {
         Positioned(
           top: size.height / 10,
           child: Container(
-            height: size.height / 1.4,
+            height: size.height,
             padding: EdgeInsets.only(left: 2, right: 2),
             width: size.width,
             child: Card(

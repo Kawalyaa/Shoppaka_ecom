@@ -15,7 +15,7 @@ class OrderList extends StatefulWidget {
 
 class _OrderListState extends State<OrderList> {
   CollectionReference _reference =
-      FirebaseFirestore.instance.collection('allOrders');
+      FirebaseFirestore.instance.collection('orders');
   FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
