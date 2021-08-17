@@ -56,7 +56,7 @@ class _JewelriesCategoryState extends State<JewelriesCategory> {
                           selectedColor: jewelriesCategoryList[index].colors,
                           selectedSize: jewelriesCategoryList[index].sizes,
                           favorite: jewelriesCategoryList[index].favorite))
-                      : favData.removeFavorite(jewelriesCategoryList[index].id);
+                      : favData.removeFavorite(index);
                 });
               },
               description: jewelriesCategoryList[index].description,

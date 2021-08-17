@@ -118,8 +118,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
                                       selectedSize: featuredList[index].sizes,
                                       selectedColor:
                                           featuredList[index].colors))
-                                  : favData
-                                      .removeFavorite(featuredList[index].id);
+                                  : favData.removeFavorite(index);
                             });
                           },
                           images: featuredList[index].images,

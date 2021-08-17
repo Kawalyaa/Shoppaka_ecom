@@ -54,7 +54,7 @@ class _MenCategoryState extends State<MenCategory> {
                     selectedSize: menCategoryList[index].sizes,
                     color: menCategoryList[index].color,
                     favorite: menCategoryList[index].favorite))
-                : favData.removeFavorite(menCategoryList[index].id);
+                : favData.removeFavorite(index);
           });
         },
         description: menCategoryList[index].description,

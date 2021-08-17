@@ -616,8 +616,7 @@ class _ProdDetailsState extends State<ProdDetails> {
                                           similarProdList[index].sizes,
                                       favorite:
                                           similarProdList[index].favorite))
-                                  : favData.removeFavorite(
-                                      similarProdList[index].id);
+                                  : favData.removeFavorite(index);
                             });
                           },
                         )),

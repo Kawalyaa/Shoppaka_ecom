@@ -117,8 +117,7 @@ class _OriginalProductSectionState extends State<OriginalProductSection> {
                                       brand: phonesList[index].brand,
                                       selectedSize: phonesList[index].sizes,
                                       selectedColor: phonesList[index].colors))
-                                  : favData
-                                      .removeFavorite(phonesList[index].id);
+                                  : favData.removeFavorite(index);
                             });
                           },
                           images: phonesList[index].images,
