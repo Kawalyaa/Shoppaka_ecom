@@ -72,6 +72,7 @@ class _OriginalProductSectionState extends State<OriginalProductSection> {
             padding: EdgeInsets.only(left: 2, right: 2),
             width: size.width,
             child: Card(
+              elevation: 0,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
               color: Colors.white,

@@ -98,8 +98,10 @@ class SingleProduct extends StatelessWidget {
               child: Hero(
                 tag: heroTag,
                 child: Container(
-                  height: MediaQuery.of(context).size.height / 6.2,
-                  width: MediaQuery.of(context).size.height / 5.6,
+                  height: 105,
+                  width: 105,
+                  // height: MediaQuery.of(context).size.height / 6.2,
+                  //width: MediaQuery.of(context).size.height / 5.6,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
                   ),

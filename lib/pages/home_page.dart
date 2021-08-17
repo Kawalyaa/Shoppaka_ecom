@@ -13,6 +13,7 @@ import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
 import 'package:ecommerce_app/componants/navigation_drawer.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
+import 'package:sizer/sizer.dart';
 
 Options categoryOption = Options.ALL;
 
@@ -185,7 +186,7 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            height: MediaQuery.of(context).size.height / 1.2,
+            height: 550,
             child: FeaturedSection(
               featuredCallback: () {
                 categoryOption = Options.FEATURED;
@@ -201,7 +202,7 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            height: MediaQuery.of(context).size.height / 1.2,
+            height: 550,
             child: OriginalProductSection(
               orignProdCallback: () {
                 categoryOption = Options.SORTED;
