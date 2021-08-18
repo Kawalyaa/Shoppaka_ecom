@@ -8,23 +8,23 @@ class AppData<T> {
     ),
     CategoryOptions(
       imageLocation: 'images/categories_icons/iphone.png',
-      caption: 'phones',
+      caption: 'Phones',
     ),
     CategoryOptions(
-      imageLocation: 'images/categories_icons/shoe-icon.jpg',
-      caption: 'Shoes',
+      imageLocation: 'images/categories_icons/budget.jpeg',
+      caption: 'Budget',
     ),
     CategoryOptions(
-      imageLocation: 'images/categories_icons/men-trouser.png',
-      caption: 'Men',
+      imageLocation: 'images/categories_icons/used.jpeg',
+      caption: 'Used',
     ),
     CategoryOptions(
-      imageLocation: 'images/categories_icons/dress.jpg',
-      caption: 'Women',
+      imageLocation: 'images/categories_icons/earphone.jpg',
+      caption: 'Earphones',
     ),
     CategoryOptions(
-      imageLocation: 'images/categories_icons/jewelry.jpeg',
-      caption: 'Jewelries',
+      imageLocation: 'images/categories_icons/charger.jpg',
+      caption: 'Chargers+',
     ),
   ];
 

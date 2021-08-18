@@ -1,6 +1,8 @@
 import 'package:ecommerce_app/componants/image_carousel_slider.dart';
+
 import 'package:ecommerce_app/componants/original_product_section.dart';
 import 'package:ecommerce_app/componants/featured_section.dart';
+
 import 'package:ecommerce_app/db/app_data.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
 import 'package:ecommerce_app/pages/category_products_list.dart';
@@ -13,22 +15,31 @@ import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
 import 'package:ecommerce_app/componants/navigation_drawer.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
-import 'package:sizer/sizer.dart';
+
+enum Options {
+  ALL,
+  HIGH_END,
+  BUDGET,
+  USED,
+  EARPHONES,
+  CHARGER,
+  FEATURED,
+  SORTED
+}
 
 Options categoryOption = Options.ALL;
 
 class HomePage extends StatefulWidget {
   static const String id = 'homepage';
+  //HomePage({this.switchSelection});
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  // TextEditingController _searchController = TextEditingController();
   int selectedIndex;
   List<CategoryOptions> optionsList = AppData.categoryOptionsList;
-//  Options categoryOption = Options.ALL;
 
   @override
   Widget build(BuildContext context) {
@@ -218,21 +229,21 @@ class _HomePageState extends State<HomePage> {
     if (optList[optIndex].caption == 'All') {
       categoryOption = Options.ALL;
     }
-    if (optList[optIndex].caption == 'phones') {
+    if (optList[optIndex].caption == 'Phones') {
       categoryOption = Options.HIGH_END;
     }
-    if (optList[optIndex].caption == 'Shoes') {
-      categoryOption = Options.SHOES;
+    if (optList[optIndex].caption == 'Budget') {
+      categoryOption = Options.BUDGET;
     }
-    if (optList[optIndex].caption == 'Men') {
-      categoryOption = Options.MEN;
+    if (optList[optIndex].caption == 'Used') {
+      categoryOption = Options.USED;
     }
-    if (optList[optIndex].caption == 'Women') {
-      categoryOption = Options.WOMEN;
+    if (optList[optIndex].caption == 'Earphones') {
+      categoryOption = Options.EARPHONES;
     }
 
-    if (optList[optIndex].caption == 'Jewelries') {
-      categoryOption = Options.JEWELRY;
+    if (optList[optIndex].caption == 'Chargers+') {
+      categoryOption = Options.CHARGER;
     }
   }
 

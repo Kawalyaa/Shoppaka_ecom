@@ -1,4 +1,3 @@
-import 'package:ecommerce_app/componants/category_option_detail.dart';
 import 'package:ecommerce_app/componants/featured_category.dart';
 import 'package:ecommerce_app/componants/jewelries_category.dart';
 import 'package:ecommerce_app/componants/men_category.dart';
@@ -23,40 +22,37 @@ class _CategoryProductsListState extends State<CategoryProductsList> {
     //var incomingOption = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-                height: 50,
-                width: 40,
-                child: Image.asset(
-                  'images/logos/shoplaLogo.png',
-                  fit: BoxFit.cover,
-                )),
-            Text(
-              'Shopla',
-              style: TextStyle(
-                  color: Colors.black54,
-                  fontWeight: FontWeight.w900,
-                  fontFamily: 'Poppins',
-                  fontSize: 24.0,
-                  fontStyle: FontStyle.italic),
-            ),
-          ],
+        appBar: AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                  height: 50,
+                  width: 40,
+                  child: Image.asset(
+                    'images/logos/shoplaLogo.png',
+                    fit: BoxFit.cover,
+                  )),
+              Text(
+                'Shopla',
+                style: TextStyle(
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w900,
+                    fontFamily: 'Poppins',
+                    fontSize: 24.0,
+                    fontStyle: FontStyle.italic),
+              ),
+            ],
+          ),
+          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(color: Colors.black54),
+          elevation: 0.0,
         ),
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.black54),
-        elevation: 0.0,
-      ),
-      body: _switchSelection(),
-    );
+        body: _switchSelection());
   }
 
   _switchSelection() {
     switch (categoryOption) {
-      //case Options.ALL:
-      // case Options.FEATURED:
       case Options.ALL:
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,14 +75,14 @@ class _CategoryProductsListState extends State<CategoryProductsList> {
         );
         break;
 
-      case Options.SHOES:
+      case Options.BUDGET:
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
               padding: EdgeInsets.all(15.0),
               child: Text(
-                'Shoes',
+                'Budget Phones',
                 style: TextStyle(
                     fontWeight: FontWeight.bold, color: Colors.black54),
               ),
@@ -100,14 +96,14 @@ class _CategoryProductsListState extends State<CategoryProductsList> {
           ],
         );
         break;
-      case Options.MEN:
+      case Options.USED:
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
               padding: EdgeInsets.all(15.0),
               child: Text(
-                'Men',
+                'Used SmartPhones',
                 style: TextStyle(
                     fontWeight: FontWeight.bold, color: Colors.black54),
               ),
@@ -120,14 +116,14 @@ class _CategoryProductsListState extends State<CategoryProductsList> {
           ],
         );
         break;
-      case Options.WOMEN:
+      case Options.EARPHONES:
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
               padding: EdgeInsets.all(15.0),
               child: Text(
-                'Women',
+                'Earphones',
                 style: TextStyle(
                     fontWeight: FontWeight.bold, color: Colors.black54),
               ),
@@ -160,14 +156,14 @@ class _CategoryProductsListState extends State<CategoryProductsList> {
           ],
         );
         break;
-      case Options.JEWELRY:
+      case Options.CHARGER:
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
               padding: EdgeInsets.all(15.0),
               child: Text(
-                'Jewelry',
+                'Chargers and more',
                 style: TextStyle(
                     fontWeight: FontWeight.bold, color: Colors.black54),
               ),
