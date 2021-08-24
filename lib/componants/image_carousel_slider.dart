@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/constants.dart';
 import 'package:ecommerce_app/model/image_card_model.dart';
+import 'package:ecommerce_app/pages/category_products_list.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce_app/db/app_data.dart';
@@ -62,12 +63,17 @@ class _ImageCarouselSliderState extends State<ImageCarouselSlider> {
     );
   }
 
-  Widget _singleCard({String image}) => Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0),
-            image: DecorationImage(
-              image: AssetImage(image),
-              fit: BoxFit.cover,
-            )),
+  Widget _singleCard({String image}) => GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, CategoryProductsList.id);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              image: DecorationImage(
+                image: AssetImage(image),
+                fit: BoxFit.cover,
+              )),
+        ),
       );
 }

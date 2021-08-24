@@ -174,22 +174,6 @@ class _ProdDetailsState extends State<ProdDetails> {
             child: ProductImageSlider(
               imageList: widget.productDetailsModel.productDetailsPicture,
             ),
-            // Container(
-            //   height: 300.0,
-            //   width: 200.0,
-            //   decoration: BoxDecoration(
-            //     color: Colors.white,
-            //   ),
-            //   child: Center(
-            //     child: FadeInImage.assetNetwork(
-            //         image: widget.productDetailsModel.productDetailsPicture[0],
-            //         placeholder: 'images/loading_gif/Spin-1s-200px.gif',
-            //         fit: BoxFit.cover,
-            //         imageErrorBuilder: (context, url, error) => Icon(
-            //               Icons.error,
-            //             )),
-            //   ),
-            // ),
           ),
 
           Padding(
