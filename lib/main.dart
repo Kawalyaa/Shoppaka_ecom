@@ -12,6 +12,7 @@ import 'package:ecommerce_app/pages/prod_detail.dart';
 import 'package:ecommerce_app/pages/reset_password_page.dart';
 import 'package:ecommerce_app/pages/reset_password_ready.dart';
 import 'package:ecommerce_app/pages/search_page.dart';
+import 'package:ecommerce_app/pages/second_login.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:ecommerce_app/provider/user.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -90,6 +91,7 @@ class MyApp extends StatelessWidget {
                   OrderList.id: (context) => OrderList(),
                   ResetPassword.id: (context) => ResetPassword(),
                   ResetPasswordReady.id: (context) => ResetPasswordReady(),
+                  SecondLogin.id: (context) => SecondLogin(),
                 },
                 theme: ThemeData(
                     inputDecorationTheme: InputDecorationTheme(

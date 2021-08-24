@@ -1,7 +1,7 @@
 import 'package:ecommerce_app/componants/round_button.dart';
 import 'package:ecommerce_app/pages/login.dart';
 import 'package:ecommerce_app/pages/reset_password_page.dart';
-import 'package:email_validator/email_validator.dart';
+import 'package:ecommerce_app/pages/second_login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +13,6 @@ class ResetPasswordReady extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _email = TextEditingController();
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -63,7 +61,7 @@ class ResetPasswordReady extends StatelessWidget {
               RoundedButton(
                   buttonText: 'Login',
                   onPressed: () {
-                    Navigator.pushNamed(context, Login.id);
+                    Navigator.pushNamed(context, SecondLogin.id);
                   }),
               SizedBox(
                 height: 20.0,
