@@ -219,7 +219,10 @@ class _MobileMoneyPayState extends State<MobileMoneyPay> {
                   if (formKey.currentState.validate()) {
                     if (_serviceProvider == ServiceProvider.AIRTEL ||
                         _serviceProvider == ServiceProvider.MTN) {
-                      _handelPaymentInitialization();
+                      _handelPaymentInitialization(
+                          totalAmount: args.totalAmount,
+                          orderedProducts: args.orderedProducts,
+                          pickupStation: args.pickupStation);
 
                       _airtelPhoneController.clear();
                       _mtnPhoneController.clear();
@@ -237,7 +240,8 @@ class _MobileMoneyPayState extends State<MobileMoneyPay> {
         ));
   }
 
-  _handelPaymentInitialization() async {
+  _handelPaymentInitialization(
+      {List orderedProducts, int totalAmount, pickupStation}) async {
     final flutterWave = Flutterwave.forUIPayment(
         acceptUSSDPayment: true,
         fullName: _userInfo[0].name,
@@ -249,7 +253,7 @@ class _MobileMoneyPayState extends State<MobileMoneyPay> {
         isDebugMode: false,
         currency: _ugCurrency,
         context: context,
-        amount: "500",
+        amount: totalAmount.toString(),
         acceptUgandaPayment: true,
         publicKey: 'FLWPUBK-515fba68c059b487d73e3368c46fc35f-X',
         encryptionKey: '45742576d0de5608b5801d26',
@@ -264,14 +268,15 @@ class _MobileMoneyPayState extends State<MobileMoneyPay> {
               userName: _userInfo[0].name,
               email: _userInfo[0].email,
               phone: _userInfo[0].phone,
-              ordersList: widget.orderedProducts,
+              ordersList: orderedProducts,
               paymentStatus: _response.data.status,
-              totalPrice: widget.totalAmount,
+              totalPrice: totalAmount,
               addressList: addressList,
               paymentMethod: "MobileMoney",
               deliveryMethod: widget.deliveryMethod,
-              pickupStation:
-                  widget.pickupStation != null ? _pickUpStationList() : null,
+              pickupStation: pickupStation != null
+                  ? _pickUpStationList(pickupStation)
+                  : null,
               context: context)
           .then((value) => value == true
               ? Navigator.pushReplacementNamed(context, PaymentSuccessful.id)
@@ -285,7 +290,7 @@ class _MobileMoneyPayState extends State<MobileMoneyPay> {
     }
   }
 
-  List _pickUpStationList() => widget.pickupStation
+  List _pickUpStationList(pickupStation) => pickupStation
       .map((station) => {
             'placeName': widget.pickupStation[0].placeName,
             'location': widget.pickupStation[0].location,
