@@ -1,5 +1,4 @@
 import 'package:ecommerce_app/componants/round_button.dart';
-import 'package:ecommerce_app/pages/login.dart';
 import 'package:ecommerce_app/pages/reset_password_page.dart';
 import 'package:ecommerce_app/pages/second_login.dart';
 import 'package:flutter/cupertino.dart';

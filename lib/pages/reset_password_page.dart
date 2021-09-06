@@ -87,7 +87,6 @@ class ResetPassword extends StatelessWidget {
                     buttonText: 'SEND',
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
-                        // TODO Check if email is from Shopla users list
                         _auth
                             .sendPasswordResetEmail(email: _email.text)
                             .whenComplete(

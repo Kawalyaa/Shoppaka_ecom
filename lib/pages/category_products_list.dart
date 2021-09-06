@@ -27,19 +27,19 @@ class _CategoryProductsListState extends State<CategoryProductsList> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                  height: 50,
-                  width: 40,
+                  height: 35,
+                  width: 35,
                   child: Image.asset(
-                    'images/logos/shoplaLogo.png',
+                    'images/logos/shopla6.png',
                     fit: BoxFit.cover,
                   )),
               Text(
                 'Shopla',
                 style: TextStyle(
-                    color: Colors.black54,
+                    color: Colors.black87,
                     fontWeight: FontWeight.w900,
                     fontFamily: 'Poppins',
-                    fontSize: 24.0,
+                    fontSize: 22.0,
                     fontStyle: FontStyle.italic),
               ),
             ],
