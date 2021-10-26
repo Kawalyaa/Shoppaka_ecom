@@ -1,6 +1,10 @@
-<img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/logos/shopla6.png " width="150" height="150"> 
+<img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/logos/shopla6.png " width="150" height="150">
 
-      #Shopla
+<pre>
+    # Shopla
+</pre>
+
+
 
 A new e-Commerce Flutter application that shows your order progress in time.
 
