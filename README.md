@@ -1,7 +1,7 @@
 <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/logos/shopla6.png " width="150" height="150">
 
 
-#          Shopla
+  - #          Shopla
 
 
 
