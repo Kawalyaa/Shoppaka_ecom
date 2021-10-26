@@ -10,11 +10,11 @@ The app is 90% complete
 
 Get the  **[Download Link](https://drive.google.com/file/d/1AbYXV5HPaWZalNhW7QukAheD9Nv54Is_/view?usp=sharing)**    to the app  apk in the release stage
 
-## Screen shots
+               ## Screen shots
 
 Splash             |  Login
 :-------------------------:|:-------------------------:
-![1](https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot1.jpg)
+![1]<img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot1.jpg"  width="400" height="790">)
  |  ![2](https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot2.jpg)
 
 Signup            |  Home
