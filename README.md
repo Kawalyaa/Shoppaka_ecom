@@ -40,10 +40,10 @@ Delivery             |  Payment
   |  <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot10.jpg " width="280" height="580">
 
 
-Summery             |  Order complete
+Summery             |                 Order complete
 :-------------------------:|:-------------------------:
 <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot11.jpg " width="280" height="580">
-  |  <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot12.jpg " width="280" height="580">
+    |            <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot12.jpg " width="280" height="580">
 
 
 Orders             |  
