@@ -6,7 +6,7 @@
 
 
 
-A new e-Commerce Flutter application that shows your order progress in time.
+A new e-Commerce Flutter application that tracks your order progress in time.
 
 The app is 90% complete
 
