@@ -14,7 +14,7 @@ The app is 90% complete
 
 Get the  **[Download Link](https://drive.google.com/file/d/1AbYXV5HPaWZalNhW7QukAheD9Nv54Is_/view?usp=sharing)**    to the app  apk in the release stage
 
-               ## Screen shots
+## Screen shots
 
 Splash              |  Login
 :-----------------------------:|:-------------------------:
