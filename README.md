@@ -14,7 +14,7 @@ Get the  **[Download Link](https://drive.google.com/file/d/1AbYXV5HPaWZalNhW7Quk
 
 Splash             |  Login
 :-------------------------:|:-------------------------:
-![1]<img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot1.jpg"  width="280" height="400">)
+![1]<img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot1.jpg"  width="280" height="600">)
  |  ![2](https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot2.jpg)
 
 Signup            |  Home
