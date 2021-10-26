@@ -16,30 +16,30 @@ Get the  **[Download Link](https://drive.google.com/file/d/1AbYXV5HPaWZalNhW7Quk
 
                ## Screen shots
 
-Splash             |  Login
+Splash              |  Login
 :-----------------------------:|:-------------------------:
 <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot1.jpg"  width="280" height="580">|   <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot2.jpg" width="280" height="580">
 
-Signup            |  Home
-:-------------------------:|:-------------------------:
+Signup             |  Home
+:-----------------------:|:-------------------------:
 <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot3.jpg " width="280" height="580">|    <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot4.jpg " width="280" height="580">
 
 
-Nav Drawer            |  Product Details
+Nav Drawer             |  Product Details
 :-------------------------:|:-------------------------:
 <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot5.jpg " width="280" height="580">|    <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot6.jpg " width="280" height="580">
 
 
-Cart             |  Address
+Cart              |  Address
 :-------------------------:|:-------------------------:
 <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot7.jpg " width="280" height="580">|    <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot8.jpg " width="280" height="580">
 
-Delivery             |  Payment
+Delivery              |  Payment
 :-------------------------:|:-------------------------:
 <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot9.jpg " width="280" height="580">|    <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot10.jpg " width="280" height="580">
 
 
-Summery             |                 Order complete
+Summery              |                 Order complete
 :-------------------------:|:-------------------------:
 <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot11.jpg " width="280" height="580">|     <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot12.jpg " width="280" height="580">
 
