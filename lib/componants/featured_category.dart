@@ -21,6 +21,7 @@ class _FeaturedCategoryState extends State<FeaturedCategory> {
     var favData = Provider.of<FavoriteList>(context);
 
     return GridView.builder(
+        physics: NeverScrollableScrollPhysics(),
         itemCount: featuredList.length,
         gridDelegate:
             SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),

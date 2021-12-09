@@ -1,9 +1,11 @@
 import 'dart:ui';
+import 'package:ecommerce_app/model/users.dart';
 import 'package:ecommerce_app/pages/pickup_station.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:flutter/painting.dart';
+import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import 'adress_book.dart';
@@ -14,12 +16,19 @@ enum Pay { MobileMoney, OnDelivery }
 class Checkout extends StatefulWidget {
   static const String id = 'checkout';
 
-  final String placeName;
-  final String location;
-  final String openingHours;
+  final double productPrice;
+  final String productName;
+  final String size;
+  final String quantity;
+  final String color;
   final int shippingFee;
   Checkout(
-      {this.placeName, this.location, this.openingHours, this.shippingFee});
+      {this.productPrice,
+      this.productName,
+      this.size,
+      this.shippingFee,
+      this.quantity,
+      this.color});
 
   @override
   _CheckoutState createState() => _CheckoutState();
@@ -33,9 +42,10 @@ class _CheckoutState extends State<Checkout>
   int initialPrice = 3264;
   int shippingFee = 7000;
   int shippingFee2 = 0;
-  int totalPrice;
+  double totalPrice;
   int index = 0;
   var result;
+  var addressDetails;
 
   @override
   void initState() {
@@ -102,6 +112,10 @@ class _CheckoutState extends State<Checkout>
   @override
   Widget build(BuildContext context) {
     _controller.addListener(handleTabSelection);
+    final Checkout args = ModalRoute.of(context).settings.arguments;
+
+    List<UserModel> _userInfo = Provider.of<List<UserModel>>(context);
+    List addressList = _userInfo[0].address;
 
     return Scaffold(
       appBar: AppBar(
@@ -131,9 +145,11 @@ class _CheckoutState extends State<Checkout>
         controller: _controller,
         physics: NeverScrollableScrollPhysics(),
         children: [
-          _deliveryInfoList(),
-          _paymentInfoList(),
-          _summeryInfoTab(),
+          _deliveryInfoList(
+              subtotal: args.productPrice, addressList: addressList),
+          _paymentInfoList(args.productPrice),
+          _summeryInfoTab(
+              subtotal: args.productPrice, addressList: addressList),
         ],
       ),
     );
@@ -141,10 +157,9 @@ class _CheckoutState extends State<Checkout>
 
   //################# Delivery Information ##############################
 
-  Widget _deliveryInfoList() {
-    totalPrice = selectedButton == Button.BUTTON1
-        ? initialPrice + shippingFee
-        : initialPrice;
+  Widget _deliveryInfoList({double subtotal, List addressList}) {
+    totalPrice =
+        selectedButton == Button.BUTTON1 ? subtotal + shippingFee : subtotal;
     return ListView(
       children: [
         Padding(
@@ -162,7 +177,9 @@ class _CheckoutState extends State<Checkout>
                     color: Colors.black54, fontWeight: FontWeight.bold),
               ),
               FlatButton(
-                onPressed: () => Navigator.pushNamed(context, AddressBook.id),
+                onPressed: () {
+                  _navigateToAddressBook(context);
+                },
                 child: Text(
                   'CHANGE',
                   style:
@@ -176,39 +193,90 @@ class _CheckoutState extends State<Checkout>
           child: Padding(
             padding: const EdgeInsets.only(
                 left: 8.0, right: 8.0, top: 20.0, bottom: 15.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Kawalya Andrew',
-                  style: TextStyle(color: Colors.black, fontSize: 18),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                _text(
-                  text: 'Kampala',
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
-                _text(
-                  text: 'Kampala Region',
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
-                _text(
-                  text: 'Central Business District',
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
-                _text(
-                  text: '0793231021',
-                )
-              ],
-            ),
+
+            ///Check if user has added address or selected address from address list
+            child: addressList == null
+                ? Center(
+                    child: FlatButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, AddressBook.id);
+                      },
+                      child: Text(
+                        'Add Address',
+                        style: TextStyle(
+                            color: kColorRed,
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  )
+                : addressDetails != null
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            addressDetails[0].name,
+                            style: TextStyle(color: Colors.black, fontSize: 18),
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          _text(
+                            text: addressDetails[0].town,
+                          ),
+                          SizedBox(
+                            height: 5.0,
+                          ),
+                          _text(
+                            text: addressDetails[0].region,
+                          ),
+                          SizedBox(
+                            height: 5.0,
+                          ),
+                          _text(
+                            text: addressDetails[0].address,
+                          ),
+                          SizedBox(
+                            height: 5.0,
+                          ),
+                          _text(
+                            text: addressDetails[0].phone,
+                          )
+                        ],
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            addressList[0]['name'],
+                            style: TextStyle(color: Colors.black, fontSize: 18),
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          _text(
+                            text: addressList[0]['town'],
+                          ),
+                          SizedBox(
+                            height: 5.0,
+                          ),
+                          _text(
+                            text: addressList[0]['region'],
+                          ),
+                          SizedBox(
+                            height: 5.0,
+                          ),
+                          _text(
+                            text: addressList[0]['address'],
+                          ),
+                          SizedBox(
+                            height: 5.0,
+                          ),
+                          _text(
+                            text: addressList[0]['phone'],
+                          )
+                        ],
+                      ),
           ),
         ),
         Padding(
@@ -349,100 +417,97 @@ class _CheckoutState extends State<Checkout>
                 ),
               ),
 
-              //###### Return Pickup Station from Pickup Station Page only if selected #####
+              ///######********Return Pickup Station from Pickup Station Page only if selected #####
 
-              selectedButton == Button.BUTTON3 && result!= null
+              result != null
                   ? Padding(
                       padding: const EdgeInsets.fromLTRB(8.0, 22.0, 8.0, 12.0),
-                      child: Flexible(
-                        child: Container(
-                          height: 315.0,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 10.0,
-                                  horizontal: 25.0,
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      result[0].placeName,
-                                      style: TextStyle(fontSize: 18.0),
-                                    ),
-                                    Text(
-                                      result[0].location,
-                                      style: TextStyle(
-                                          color: Colors.black54,
-                                          fontSize: 16.0),
-                                    ),
-                                    Text(
-                                      'Opening Hours',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black54,
-                                          fontSize: 18.0),
-                                    ),
-                                    Text(result[0].openingHours,
-                                        style: TextStyle(
-                                            color: Colors.black54,
-                                            fontSize: 16.0)),
-                                    Text(
-                                      'Shipping Fee',
-                                      style: TextStyle(
-                                        color: Colors.black54,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18.0,
-                                      ),
-                                    ),
-                                    SizedBox(height: 5.0),
-                                    Text(
-                                      'UGX ${result[0].shippingFee}',
-                                      style: TextStyle(
-                                          color: kColorRed,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18.0),
-                                    ),
-                                  ],
-                                ),
+                      child: Container(
+                        height: 315.0,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 10.0,
+                                horizontal: 25.0,
                               ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                child: Divider(
-                                  thickness: 1.0,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                              Center(
-                                child: FlatButton(
-                                  child: Text(
-                                    'CHANGE PICKUP STATION',
-                                    style: TextStyle(color: kColorRed),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    result[0].placeName,
+                                    style: TextStyle(fontSize: 18.0),
                                   ),
-                                  onPressed: () {
-                                    _navigateToPickupStation(context);
-                                  },
+                                  Text(
+                                    result[0].location,
+                                    style: TextStyle(
+                                        color: Colors.black54, fontSize: 16.0),
+                                  ),
+                                  Text(
+                                    'Opening Hours',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black54,
+                                        fontSize: 18.0),
+                                  ),
+                                  Text(result[0].openingHours,
+                                      style: TextStyle(
+                                          color: Colors.black54,
+                                          fontSize: 16.0)),
+                                  Text(
+                                    'Shipping Fee',
+                                    style: TextStyle(
+                                      color: Colors.black54,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18.0,
+                                    ),
+                                  ),
+                                  SizedBox(height: 5.0),
+                                  Text(
+                                    'UGX ${result[0].shippingFee}',
+                                    style: TextStyle(
+                                        color: kColorRed,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18.0),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              child: Divider(
+                                thickness: 1.0,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            Center(
+                              child: FlatButton(
+                                child: Text(
+                                  'CHANGE PICKUP STATION',
+                                  style: TextStyle(color: kColorRed),
                                 ),
-                              )
-                            ],
-                          ),
+                                onPressed: () {
+                                  _navigateToPickupStation(context);
+                                },
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     )
                   : Container(),
-              selectedButton == Button.BUTTON3 && result[0].placeName != null
+              result != null
                   ? Container()
                   : SizedBox(
                       child: Divider(
                         thickness: 2.0,
                       ),
                     ),
-              selectedButton == Button.BUTTON3 && result[0].placeName != null
+              result != null
                   ? Container()
                   : Padding(
                       padding: const EdgeInsets.only(
@@ -452,7 +517,7 @@ class _CheckoutState extends State<Checkout>
                       child: FlatButton(
                         onPressed: () {
                           _navigateToPickupStation(context);
-                          print(result[0].placeName);
+                          // print(result[0].placeName);
                         },
                         textColor: kColorRed,
                         child: Text(
@@ -471,7 +536,7 @@ class _CheckoutState extends State<Checkout>
               children: [
                 _costsTile(
                     leadingTxt: 'Subtotal',
-                    trailingTxt: 'UGX $initialPrice',
+                    trailingTxt: 'UGX $subtotal',
                     textColor: Colors.black),
                 _costsTile(
                     leadingTxt: 'Shipping',
@@ -543,7 +608,7 @@ class _CheckoutState extends State<Checkout>
 
 //################# Payment Information ##############################
 
-  _paymentInfoList() => ListView(
+  _paymentInfoList(double subtotal) => ListView(
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 14.0, top: 18.0, bottom: 10.0),
@@ -727,7 +792,7 @@ class _CheckoutState extends State<Checkout>
                   children: [
                     _costsTile(
                         leadingTxt: 'Subtotal',
-                        trailingTxt: 'UGX$initialPrice',
+                        trailingTxt: 'UGX$subtotal',
                         textColor: Colors.black),
                     _costsTile(
                         leadingTxt: 'Shipping', trailingTxt: 'UGX$shippingFee'),
@@ -767,7 +832,7 @@ class _CheckoutState extends State<Checkout>
 
   //################# Summery Information ##############################
 
-  _summeryInfoTab() => ListView(
+  _summeryInfoTab({double subtotal, addressList}) => ListView(
         children: [
           Padding(
             padding: EdgeInsets.only(left: 20.0, top: 25.0, bottom: 10.0),
@@ -791,7 +856,7 @@ class _CheckoutState extends State<Checkout>
                   children: [
                     _costsTile(
                         leadingTxt: 'Subtotal',
-                        trailingTxt: 'UGX$initialPrice',
+                        trailingTxt: 'UGX$subtotal',
                         textColor: Colors.black),
                     _costsTile(
                         leadingTxt: 'Shipping', trailingTxt: 'UGX$shippingFee'),
@@ -844,34 +909,90 @@ class _CheckoutState extends State<Checkout>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(
-                      'Kawalya Andrew',
-                      style: TextStyle(color: Colors.black, fontSize: 18),
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    _text(
-                      text: 'Kampala',
-                    ),
-                    SizedBox(
-                      height: 5.0,
-                    ),
-                    _text(
-                      text: 'Kampala Region',
-                    ),
-                    SizedBox(
-                      height: 5.0,
-                    ),
-                    _text(
-                      text: 'Central Business District',
-                    ),
-                    SizedBox(
-                      height: 5.0,
-                    ),
-                    _text(
-                      text: '0793231021',
-                    )
+                    addressList == null
+                        ? Center(
+                            child: FlatButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, AddressBook.id);
+                              },
+                              child: Text(
+                                'Add Address',
+                                style: TextStyle(
+                                    color: kColorRed,
+                                    fontSize: 25.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          )
+                        : addressDetails != null
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    addressDetails[0].name,
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 18),
+                                  ),
+                                  SizedBox(
+                                    height: 10.0,
+                                  ),
+                                  _text(
+                                    text: addressDetails[0].town,
+                                  ),
+                                  SizedBox(
+                                    height: 5.0,
+                                  ),
+                                  _text(
+                                    text: addressDetails[0].region,
+                                  ),
+                                  SizedBox(
+                                    height: 5.0,
+                                  ),
+                                  _text(
+                                    text: addressDetails[0].address,
+                                  ),
+                                  SizedBox(
+                                    height: 5.0,
+                                  ),
+                                  _text(
+                                    text: addressDetails[0].phone,
+                                  )
+                                ],
+                              )
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    addressList[0]['name'],
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 18),
+                                  ),
+                                  SizedBox(
+                                    height: 10.0,
+                                  ),
+                                  _text(
+                                    text: addressList[0]['town'],
+                                  ),
+                                  SizedBox(
+                                    height: 5.0,
+                                  ),
+                                  _text(
+                                    text: addressList[0]['region'],
+                                  ),
+                                  SizedBox(
+                                    height: 5.0,
+                                  ),
+                                  _text(
+                                    text: addressList[0]['address'],
+                                  ),
+                                  SizedBox(
+                                    height: 5.0,
+                                  ),
+                                  _text(
+                                    text: addressList[0]['phone'],
+                                  )
+                                ],
+                              ),
                   ],
                 ),
               ),
@@ -1064,5 +1185,9 @@ class _CheckoutState extends State<Checkout>
 
   _navigateToPickupStation(BuildContext context) async {
     result = await Navigator.pushNamed(context, PickupStation.id);
+  }
+
+  _navigateToAddressBook(BuildContext context) async {
+    addressDetails = await Navigator.pushNamed(context, AddressBook.id);
   }
 }

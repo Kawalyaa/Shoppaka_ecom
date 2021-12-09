@@ -38,6 +38,12 @@ class ProductProvider2 with ChangeNotifier {
     return totalPrice;
   }
 
+  CartModel getProductDetails() {
+    var item;
+    for (item in _cartProductList) {}
+    return item;
+  }
+
   void increaseQty(int index) {
     _cartProductList[index].qty++;
     notifyListeners();
