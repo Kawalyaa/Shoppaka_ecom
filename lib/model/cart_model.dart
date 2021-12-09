@@ -26,4 +26,33 @@ class CartModel {
     this.selectedSize,
     this.selectedColor,
   });
+
+  Map toJson() => {
+        'id': id,
+        'name': name,
+        'qty': 1,
+        'brand': brand,
+        'category': category,
+        'images': images,
+        'price': price,
+        'oldPrice': oldPrice,
+        'favorite': favorite,
+        'featured': featured,
+        'selectedSize': selectedSize,
+        'selectedColor': selectedColor,
+      };
+
+  CartModel.fromJson(Map json)
+      : id = json['id'],
+        name = json['name'],
+        qty = json['qty'],
+        brand = json['brand'],
+        category = json['category'],
+        images = json['images'],
+        price = json['price'],
+        oldPrice = json['oldPrice'],
+        favorite = json['favorite'],
+        featured = json['featured'],
+        selectedColor = json['selectedColor'],
+        selectedSize = json['selectedSize'];
 }
