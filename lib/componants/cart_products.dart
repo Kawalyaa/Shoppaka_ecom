@@ -1,5 +1,9 @@
+import 'package:ecommerce_app/model/cart_model.dart';
+import 'package:ecommerce_app/model/product2.dart';
+import 'package:ecommerce_app/provider/product_provider2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 class ShoppingCartProducts extends StatefulWidget {
   @override
@@ -7,35 +11,36 @@ class ShoppingCartProducts extends StatefulWidget {
 }
 
 class _ShoppingCartProductsState extends State<ShoppingCartProducts> {
-  var itemsAddedOnCart = [
-    {
-      'name': 'Blazer',
-      'picture': 'images/products/blazer.jpg',
-      'price': 85,
-      'color': 'brown',
-      'size': 'M',
-      'qty': 1
-    },
-    {
-      'name': 'Snikers',
-      'picture': 'images/products/shoes.jpg',
-      'price': 50,
-      'color': 'Siver',
-      'size': '6',
-      'qty': 2
-    }
-  ];
+//  var itemsAddedOnCart = [
+//    {
+//      'name': 'Blazer',
+//      'picture': 'images/products/blazer.jpg',
+//      'price': 85,
+//      'color': 'brown',
+//      'size': 'M',
+//      'qty': 1
+//    },
+//    {
+//      'name': 'Snikers',
+//      'picture': 'images/products/shoes.jpg',
+//      'price': 50,
+//      'color': 'Siver',
+//      'size': '6',
+//      'qty': 2
+//    }
+//  ];
   @override
   Widget build(BuildContext context) {
+    var getValue = Provider.of<ProductProvider2>(context);
+    List<CartModel> cartList = getValue.cartProductList;
     return ListView.builder(
-      itemCount: itemsAddedOnCart.length,
+      itemCount: cartList.length,
       itemBuilder: (context, index) => CartItems(
-        name: itemsAddedOnCart[index]['name'],
-        picture: itemsAddedOnCart[index]['picture'],
-        price: itemsAddedOnCart[index]['price'],
-        color: itemsAddedOnCart[index]['color'],
-        size: itemsAddedOnCart[index]['size'],
-        qty: itemsAddedOnCart[index]['qty'],
+        name: cartList[index].name,
+        picture: cartList[index].images[0],
+        price: cartList[index].price,
+        selectedSize: cartList[index].selectedSize,
+        selectedColor: cartList[index].selectedColor,
       ),
     );
   }
@@ -44,19 +49,19 @@ class _ShoppingCartProductsState extends State<ShoppingCartProducts> {
 class CartItems extends StatelessWidget {
   final String name;
   final String picture;
-  final String size;
-  final int price;
-  final int qty;
-  final String color;
+  final double price;
+  final String selectedColor;
+  final String selectedSize;
+  int quantity;
 
-  CartItems({
-    this.name,
-    this.picture,
-    this.size,
-    this.color,
-    this.price,
-    this.qty,
-  });
+  CartItems(
+      {this.name,
+      this.picture,
+      this.selectedColor,
+      this.price,
+      this.selectedSize,
+      this.quantity = 1});
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -65,7 +70,7 @@ class CartItems extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Image.asset(
+          Image.network(
             picture,
             width: 80.0,
             height: 80.0,
@@ -90,7 +95,7 @@ class CartItems extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Text(
-                      '$size',
+                      '$selectedSize',
                       style: TextStyle(color: Colors.red),
                     ),
                   ),
@@ -102,7 +107,10 @@ class CartItems extends StatelessWidget {
                   Text('Color :'),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text('$color', style: TextStyle(color: Colors.red)),
+                    child: Text(
+                      '$selectedColor',
+                      style: TextStyle(color: Colors.red),
+                    ),
                   ),
                 ],
               ),
@@ -130,7 +138,7 @@ class CartItems extends StatelessWidget {
                 onPressed: () {},
                 icon: Icon(Icons.arrow_drop_up),
               ),
-              Text('$qty'),
+              Text('$quantity'),
               IconButton(onPressed: () {}, icon: Icon(Icons.arrow_drop_down))
             ],
           )

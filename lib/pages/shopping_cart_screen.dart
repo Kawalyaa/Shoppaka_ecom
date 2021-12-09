@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/componants/cart_products.dart';
-import '../provider/product_provider.dart';
 
 class ShoppingCart extends StatefulWidget {
   static const String id = 'shoppingCart';
@@ -9,7 +8,6 @@ class ShoppingCart extends StatefulWidget {
 }
 
 class _ShoppingCartState extends State<ShoppingCart> {
-  AppProvider appProvider = AppProvider();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
