@@ -15,11 +15,6 @@ class ShoppingCart extends StatefulWidget {
 class _ShoppingCartState extends State<ShoppingCart> {
   @override
   Widget build(BuildContext context) {
-    //var data = Provider.of<ProductProvider2>(context);
-    //double totalPrice = data.getTotalPrice();
-
-    //List<CartModel> cartList = data.cartProductList;
-
     var getValue = Provider.of<ProductProvider2>(context);
 
     List<CartModel> cartList = getValue.cartProductList;
@@ -141,15 +136,9 @@ class _ShoppingCartState extends State<ShoppingCart> {
                 quantity: cartList[index].qty,
                 buttonUp: () {
                   getValue.increaseQty(index);
-                  //cartList[index].qty++;
-                  //assert(cartList[index].qty >= 0);
-                  //getValue.getTotalPrice();
                 },
-                buttonDown: () async {
-                  await getValue.decreaseQty(index);
-                  //assert(cartList[index].qty >= 0);
-                  //cartList[index].qty--;
-                  //getValue.getTotalPrice();
+                buttonDown: () {
+                  getValue.decreaseQty(index);
                 },
               ),
             ),

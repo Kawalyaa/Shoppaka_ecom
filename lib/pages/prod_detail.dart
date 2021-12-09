@@ -35,14 +35,14 @@ class ProdDetails extends StatefulWidget {
 }
 
 class _ProdDetailsState extends State<ProdDetails> {
-  String selectedSize;
-  String selectedColor;
-
   int currentSelectedSizeIndex;
   int currentSelectedColorIndex;
 
   List<SizeModel> sizeList;
   List<ColorModel> colorList;
+
+  String selectedSize;
+  String selectedColor;
 
   @override
   void initState() {
@@ -84,6 +84,7 @@ class _ProdDetailsState extends State<ProdDetails> {
   @override
   Widget build(BuildContext context) {
     var addToCart = Provider.of<ProductProvider2>(context);
+
     var uuid = Uuid();
     String prodId = uuid.v1();
 
@@ -208,8 +209,12 @@ class _ProdDetailsState extends State<ProdDetails> {
                         name: widget.productDetailsName,
                         brand: widget.productBrand,
                         price: widget.productDetailsPrice,
-                        selectedSize: selectedSize,
-                        selectedColor: selectedColor,
+                        selectedSize: selectedSize == null
+                            ? widget.productSizes[0]
+                            : selectedSize,
+                        selectedColor: selectedColor == null
+                            ? widget.productColors[0]
+                            : selectedColor,
                       ),
                     );
                   },

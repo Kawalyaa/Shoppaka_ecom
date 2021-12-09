@@ -1,5 +1,4 @@
-import 'dart:collection';
-
+import 'package:ecommerce_app/componants/auth.dart';
 import 'package:ecommerce_app/model/cart_model.dart';
 import 'package:flutter/material.dart';
 
@@ -11,13 +10,12 @@ class ProductProvider2 with ChangeNotifier {
 
   List get cartProductList => _cartProductList;
 
-  void addProducts(CartModel cartItem) {
+  addProducts(CartModel cartItem) {
     bool isPresent = false;
-
     if (_cartProductList.length > 0) {
-      for (int i = 0; i > _cartProductList.length; i++) {
-        if (_cartProductList[i].id == cartItem.id) {
-          increaseItemQuantity(cartItem);
+      for (int i = 0; i < _cartProductList.length; i++) {
+        if (_cartProductList[i].name == cartItem.name) {
+          _cartProductList[i].qty++;
           isPresent = true;
           break;
         } else {
@@ -30,7 +28,6 @@ class ProductProvider2 with ChangeNotifier {
     } else {
       _cartProductList.add(cartItem);
     }
-
     notifyListeners();
   }
 
@@ -43,6 +40,13 @@ class ProductProvider2 with ChangeNotifier {
     return totalPrice;
   }
 
+  void updateProduct(CartModel cartModel, int qty) {
+    int index = _cartProductList.indexWhere((i) => i.id == cartModel.id);
+
+    _cartProductList[index].qty = qty;
+    notifyListeners();
+  }
+
   void increaseQty(int index) {
     _cartProductList[index].qty++;
     notifyListeners();
@@ -50,15 +54,14 @@ class ProductProvider2 with ChangeNotifier {
 
   void decreaseQty(int index) {
     _cartProductList[index].qty--;
+    if (_cartProductList[index].qty < 1) {
+      _cartProductList[index].qty = 1;
+    }
     notifyListeners();
   }
 
   removeProduct(CartModel cartItem) {
     _cartProductList.remove(cartItem);
     notifyListeners();
-  }
-
-  void increaseItemQuantity(CartModel cartItem) {
-    cartItem.increaseQty();
   }
 }
