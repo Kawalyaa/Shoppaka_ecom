@@ -36,7 +36,6 @@ class UserProv with ChangeNotifier {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController name = TextEditingController();
-  TextEditingController phone = TextEditingController();
 
   UserProv() {
     init();
@@ -83,7 +82,6 @@ class UserProv with ChangeNotifier {
           id: result.user.uid,
           name: name.text.trim(),
           email: email.text.trim(),
-          phone: phone.text.trim(),
         );
 
         _status = Status.Authenticated;
@@ -110,7 +108,6 @@ class UserProv with ChangeNotifier {
     name.text = '';
     email.text = '';
     password.text = '';
-    phone.text = '';
   }
 
   Future<void> reloadUser() async {

@@ -6,14 +6,14 @@ class UserModel {
   static const PHONE = "phone";
   static const TOKEN = "token";
   static const PHOTO = 'photo';
-  static const DELIVERY = 'delivery';
+  static const ADDRESS = 'address';
 
   final String name;
   final String email;
   final String id;
   final String photo;
   final String phone;
-  final String delivery;
+  final List<String> address;
   final String token;
   UserModel(
       {this.id,
@@ -21,18 +21,18 @@ class UserModel {
       this.email,
       this.photo,
       this.phone,
-      this.delivery,
+      this.address,
       this.token});
 
   //Constructor expecting data from a snapshot
-  factory UserModel.fromSnapshot(Map snapshot) {
+  factory UserModel.fromSnapShot(Map data) {
     return UserModel(
-        id: snapshot[ID] ?? '',
-        name: snapshot[NAME] ?? '',
-        email: snapshot[EMAIL] ?? '',
-        photo: snapshot[PHOTO] ?? '',
-        phone: snapshot[PHONE] ?? '',
-        delivery: snapshot[DELIVERY] ?? '',
-        token: snapshot[TOKEN] ?? '');
+        id: data[ID] ?? '',
+        name: data[NAME] ?? '',
+        email: data[EMAIL] ?? '',
+        photo: data[PHOTO] ?? '',
+        phone: data[PHONE] ?? '',
+        address: data[ADDRESS] ?? [],
+        token: data[TOKEN] ?? '');
   }
 }

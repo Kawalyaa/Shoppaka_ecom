@@ -21,3 +21,27 @@ const kTextFieldDecoration = InputDecoration(
     borderSide: BorderSide(color: Colors.grey, width: 2.0),
   ),
 );
+
+const kVoucherInputDecoration = InputDecoration(
+  hintText: 'Your Voucher',
+  contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 50),
+  border: OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.black54),
+    borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(8.0), bottomLeft: Radius.circular(8.0)),
+  ),
+  focusedBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.black54, width: 2.0),
+    borderRadius: BorderRadius.only(
+      topLeft: Radius.circular(8.0),
+      bottomLeft: Radius.circular(8.0),
+    ),
+  ),
+  enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.black54, width: 1.0),
+    borderRadius: BorderRadius.only(
+      topLeft: Radius.circular(8.0),
+      bottomLeft: Radius.circular(8.0),
+    ),
+  ),
+);

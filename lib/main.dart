@@ -1,4 +1,6 @@
+import 'package:ecommerce_app/pages/adress_book.dart';
 import 'package:ecommerce_app/pages/favorites_page.dart';
+import 'package:ecommerce_app/pages/pickup_station.dart';
 import 'package:ecommerce_app/pages/prod_detail.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:ecommerce_app/provider/user.dart';
@@ -17,6 +19,9 @@ import 'componants/screen_controller.dart';
 import 'db/databse_services.dart';
 import 'model/product2.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
+
+import 'model/users.dart';
+import 'pages/add_new_address.dart';
 
 int initScreen;
 
@@ -40,6 +45,9 @@ class MyApp extends StatelessWidget {
           StreamProvider<List<Products2>>(
             create: (_) => DatabaseServices().getAllFireStoreProduct(),
           ),
+          StreamProvider<List<UserModel>>(
+            create: (_) => DatabaseServices().getUserInfo(),
+          ),
           ChangeNotifierProvider<ProductProvider2>(
             create: (_) => ProductProvider2(),
           ),
@@ -60,6 +68,9 @@ class MyApp extends StatelessWidget {
             WelcomeLoginOptions.id: (context) => WelcomeLoginOptions(),
             Favorites.id: (context) => Favorites(),
             Checkout.id: (context) => Checkout(),
+            PickupStation.id: (context) => PickupStation(),
+            AddressBook.id: (context) => AddressBook(),
+            AddNewAddress.id: (context) => AddNewAddress(),
           },
           theme: ThemeData(primaryColor: Color(0xFFFF0025)),
           home: initScreen == 0 || initScreen == null
