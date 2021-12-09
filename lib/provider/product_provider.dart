@@ -17,16 +17,7 @@ class AppProvider extends ChangeNotifier {
   //List get featuredProducts => _featuredProducts;
   List featuredProducts = [];
 
-//  Future<List<Product>> getFeaturedProducts() async {
-//    _featuredProducts = await _productServices.getFeaturedProducts();
-//    notifyListeners();
-//  }
 
-//  void myFeaturedProducts() async {
-//    final featuredProds = await _productServices.getFeaturedProducts();
-//    for (var featuredProd in featuredProds) {
-//      print(featuredProd.name);
-//    }
   void myFeatureProduct() async {
     var aFeatProds = await firestore.collection('Products').getDocuments();
     for (var singleProd in aFeatProds.documents) {
