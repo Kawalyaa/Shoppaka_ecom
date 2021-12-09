@@ -2,9 +2,9 @@ import 'package:ecommerce_app/model/product2.dart';
 
 class CategoryOptions {
   String imageLocation;
-  String imageCaption;
+  String caption;
   bool isSelected;
-  CategoryOptions({this.imageCaption, this.imageLocation, this.isSelected});
+  CategoryOptions({this.caption, this.imageLocation, this.isSelected});
 
   List<Products2> getCategory(
       List<Products2> productList, String categoryName) {

@@ -1,30 +1,48 @@
 import 'package:ecommerce_app/model/categary_options.dart';
-import 'package:ecommerce_app/model/product2.dart';
+import 'package:ecommerce_app/model/image_card_model.dart';
 
 class AppData {
-  static List<CategoryOptions> categoryOptionList = [
+  static List<CategoryOptions> categoryOptionsList = [
     CategoryOptions(
-      imageCaption: 'All',
+      caption: 'All',
     ),
     CategoryOptions(
-      imageLocation: 'images/category_icons/shoes.png',
-      imageCaption: 'Shoes',
+      imageLocation: 'images/categories_icons/shoe-icon.jpg',
+      caption: 'Shoes',
     ),
     CategoryOptions(
-      imageLocation: 'images/category_icons/jeans.png',
-      imageCaption: 'Men',
+      imageLocation: 'images/categories_icons/men-trouser.png',
+      caption: 'Men',
     ),
     CategoryOptions(
-      imageLocation: 'images/category_icons/dress.png',
-      imageCaption: 'Women',
+      imageLocation: 'images/categories_icons/dress.jpg',
+      caption: 'Women',
     ),
     CategoryOptions(
-      imageLocation: 'images/category_icons/iphone.png',
-      imageCaption: 'Tech',
+      imageLocation: 'images/categories_icons/iphone.png',
+      caption: 'Tech',
     ),
     CategoryOptions(
-      imageLocation: 'images/category_icons/necklace.png',
-      imageCaption: 'Jewelries',
+      imageLocation: 'images/categories_icons/jewelry.jpeg',
+      caption: 'Jewelries',
+    ),
+  ];
+
+  static List<ImageCardModel> imageCardList = [
+    ImageCardModel(
+      imageLink: 'images/carousel/carouselbanner0001.jpg',
+    ),
+    ImageCardModel(
+      imageLink: 'images/carousel/carouselbanner2.jpg',
+    ),
+    ImageCardModel(
+      imageLink: 'images/carousel/carouselbanner3.jpg',
+    ),
+    ImageCardModel(
+      imageLink: 'images/carousel/carouselbanner4.png',
+    ),
+    ImageCardModel(
+      imageLink: 'images/carousel/carouselbanner5.png',
     ),
   ];
 }

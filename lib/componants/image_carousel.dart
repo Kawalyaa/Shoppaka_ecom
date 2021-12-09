@@ -9,11 +9,11 @@ class ImageCarousel extends StatelessWidget {
       child: Carousel(
         boxFit: BoxFit.cover,
         images: [
-          AssetImage('images/carousel/accessories.jpg'),
-          AssetImage('images/carousel/blazer.jpg'),
-          AssetImage('images/carousel/fashion1.jpg'),
-          AssetImage('images/carousel/fashion2.jpg'),
-          AssetImage('images/carousel/polka.jpg'),
+//          AssetImage('images/carousel/accessories.jpg'),
+//          AssetImage('images/carousel/blazer.jpg'),
+//          AssetImage('images/carousel/fashion1.jpg'),
+//          AssetImage('images/carousel/fashion2.jpg'),
+//          AssetImage('images/carousel/polka.jpg'),
         ],
         autoplay: true,
         animationCurve: Curves.fastOutSlowIn,
