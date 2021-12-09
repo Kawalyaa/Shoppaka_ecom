@@ -14,10 +14,10 @@ class FeaturedCategory extends StatefulWidget {
 class _FeaturedCategoryState extends State<FeaturedCategory> {
   @override
   Widget build(BuildContext context) {
-    List<Products2> featuredProds = Provider.of<List<Products2>>(context);
+    List<Products2> allProds = Provider.of<List<Products2>>(context);
     bool featured = true;
     List<Products2> featuredList =
-        CategoryOptions().getFeaturedProd(featuredProds, featured);
+        CategoryOptions().getFeaturedProd(allProds, featured);
     var favData = Provider.of<FavoriteList>(context);
 
     return GridView.builder(
@@ -52,6 +52,9 @@ class _FeaturedCategoryState extends State<FeaturedCategory> {
               oldPrice: featuredList[index].oldPrice,
               sizes: featuredList[index].sizes,
               colors: featuredList[index].colors,
+              category: featuredList[index].category,
+              similarProduct: CategoryOptions()
+                  .getCategory(allProds, featuredList[index].category),
             ));
   }
 }

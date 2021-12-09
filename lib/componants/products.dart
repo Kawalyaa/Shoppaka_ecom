@@ -14,10 +14,10 @@ class _ProductsState extends State<Products> {
   bool myFav = false;
   @override
   Widget build(BuildContext context) {
-    List<Products2> featuredProds = Provider.of<List<Products2>>(context);
+    List<Products2> allProds = Provider.of<List<Products2>>(context);
     var favData = Provider.of<FavoriteList>(context);
 
-    return featuredProds == null
+    return allProds == null
         ? Center(
             child: Container(
               height: 200.0,
@@ -25,32 +25,33 @@ class _ProductsState extends State<Products> {
             ),
           )
         : GridView.builder(
-            itemCount: featuredProds.length,
+            itemCount: allProds.length,
             gridDelegate:
                 SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
             itemBuilder: (context, int index) => SingleProduct(
-              name: featuredProds[index].name,
-              price: featuredProds[index].price,
-              oldPrice: featuredProds[index].oldPrice,
-              images: featuredProds[index].images,
-              sizes: featuredProds[index].sizes,
-              colors: featuredProds[index].colors,
-              isFavorite: featuredProds[index].favorite,
+              name: allProds[index].name,
+              price: allProds[index].price,
+              oldPrice: allProds[index].oldPrice,
+              images: allProds[index].images,
+              sizes: allProds[index].sizes,
+              colors: allProds[index].colors,
+              isFavorite: allProds[index].favorite,
+              category: allProds[index].category,
               toggleFavorite: () {
-                featuredProds[index].favorite = !featuredProds[index].favorite;
+                allProds[index].favorite = !allProds[index].favorite;
 
                 //===Add or Remove  Favorite======
-                featuredProds[index].favorite
+                allProds[index].favorite
                     ? favData.addToFavorite(Products2(
-                        name: featuredProds[index].name,
-                        images: featuredProds[index].images,
-                        price: featuredProds[index].price,
-                        oldPrice: featuredProds[index].oldPrice,
-                        favorite: featuredProds[index].favorite,
-                        brand: featuredProds[index].brand,
-                        sizes: featuredProds[index].sizes,
-                        colors: featuredProds[index].colors))
-                    : favData.removeFavorite(featuredProds[index].name);
+                        name: allProds[index].name,
+                        images: allProds[index].images,
+                        price: allProds[index].price,
+                        oldPrice: allProds[index].oldPrice,
+                        favorite: allProds[index].favorite,
+                        brand: allProds[index].brand,
+                        sizes: allProds[index].sizes,
+                        colors: allProds[index].colors))
+                    : favData.removeFavorite(allProds[index].name);
               },
             ),
           );

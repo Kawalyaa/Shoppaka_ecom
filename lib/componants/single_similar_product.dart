@@ -1,7 +1,8 @@
+import 'package:ecommerce_app/componants/similar_prod_detail.dart';
 import 'package:ecommerce_app/pages/prod_detail.dart';
 import 'package:flutter/material.dart';
 
-class SingleProduct extends StatelessWidget {
+class SimilarSingleProduct extends StatelessWidget {
   final String id;
   final String name;
   final String brand;
@@ -12,12 +13,12 @@ class SingleProduct extends StatelessWidget {
   final int quantity;
   final List colors;
   final List sizes;
-  final List similarProduct;
   final bool isFavorite;
   final bool featured;
   final Function toggleFavorite;
+  final List similarProduct;
 
-  SingleProduct(
+  SimilarSingleProduct(
       {this.id,
       this.name,
       this.brand,
@@ -70,22 +71,21 @@ class SingleProduct extends StatelessWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => ProdDetails(
-                      productDetailsName: name,
-                      productDetailsOldPrice: oldPrice,
-                      productDetailsPicture: images,
-                      productDetailsPrice: price,
-                      productBrand: brand,
-                      productColors: colors,
-                      productSizes: sizes,
-                      isFavorite: isFavorite,
-                      category: category,
-                      similarProd: similarProduct,
-                    ),
+                        productDetailsName: name,
+                        productDetailsOldPrice: oldPrice,
+                        productDetailsPicture: images,
+                        productDetailsPrice: price,
+                        productBrand: brand,
+                        productColors: colors,
+                        productSizes: sizes,
+                        isFavorite: isFavorite,
+                        category: category,
+                        similarProd: similarProduct),
                   ),
                 );
               },
               child: Hero(
-                tag: name,
+                tag: Text('name1'),
                 child: Container(
                   height: 100.0,
                   width: 100.0,
@@ -113,21 +113,22 @@ class SingleProduct extends StatelessWidget {
                 bottom: 5.0,
               ),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      '\$$oldPrice',
-                      style: TextStyle(decoration: TextDecoration.lineThrough),
-                    ),
-                    SizedBox(
-                      width: 15.0,
-                    ),
-                    Text(
-                      '\$$price',
-                      style: TextStyle(
-                          color: Colors.red, fontWeight: FontWeight.bold),
-                    ),
-                  ]),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    '\$$oldPrice',
+                    style: TextStyle(decoration: TextDecoration.lineThrough),
+                  ),
+                  SizedBox(
+                    width: 15.0,
+                  ),
+                  Text(
+                    '\$$price',
+                    style: TextStyle(
+                        color: Colors.red, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
