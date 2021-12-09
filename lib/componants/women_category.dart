@@ -34,6 +34,8 @@ class _WomenCategoryState extends State<WomenCategory> {
               sizes: womenCategoryList[index].sizes,
               isFavorite: womenCategoryList[index].favorite,
               category: womenCategoryList[index].category,
+              similarProduct: CategoryOptions()
+                  .getCategory(allProds, womenCategoryList[index].category),
               toggleFavorite: () {
                 setState(() {
                   //===toggle favorite=====

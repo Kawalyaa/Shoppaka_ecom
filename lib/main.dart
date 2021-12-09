@@ -7,6 +7,7 @@ import './pages/login.dart';
 import './pages/home_page.dart';
 import './pages/shopping_cart_screen.dart';
 import './pages/signup.dart';
+import'./pages/checkout_page.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerce_app/provider/user_provider.dart';
 
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
             ShoppingCart.id: (context) => ShoppingCart(),
             WelcomeLoginOptions.id: (context) => WelcomeLoginOptions(),
             Favorites.id: (context) => Favorites(),
+            Checkout.id:(context)=>Checkout(),
           },
           theme: ThemeData(primaryColor: Color(0xFFFF0025)),
           home: ScreenController(),

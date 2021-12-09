@@ -34,6 +34,8 @@ class _TechCategoryState extends State<TechCategory> {
               sizes: techCategoryList[index].sizes,
               isFavorite: techCategoryList[index].favorite,
               category: techCategoryList[index].category,
+              similarProduct: CategoryOptions()
+                  .getCategory(allProds, techCategoryList[index].category),
               toggleFavorite: () {
                 setState(() {
                   //===toggle favorite=====

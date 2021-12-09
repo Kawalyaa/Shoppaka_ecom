@@ -52,6 +52,8 @@ class _ShoesCategoryState extends State<ShoesCategory> {
               sizes: shoesList[index].sizes,
               colors: shoesList[index].colors,
               category: shoesList[index].category,
+              similarProduct: CategoryOptions()
+                  .getCategory(allProds, shoesList[index].category),
             ));
   }
 }

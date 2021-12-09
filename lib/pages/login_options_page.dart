@@ -1,10 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-//import 'package:ecommerce_app/componants/auth.dart';
 import 'package:ecommerce_app/pages/home_page.dart';
 import 'package:flutter/rendering.dart';
-//import 'package:shared_preferences/shared_preferences.dart';
 import 'login.dart';
 import 'package:ecommerce_app/componants/round_button.dart';
 import 'signup.dart';
@@ -49,72 +47,73 @@ class _WelcomeLoginOptionsState extends State<WelcomeLoginOptions> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.transparent,
-          image: DecorationImage(
-              image: AssetImage('images/fashionHome.jpg'), fit: BoxFit.cover),
-        ),
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-            //color: Colors.white,
-            gradient: LinearGradient(
-              begin: Alignment.bottomRight,
-              end: Alignment.topCenter,
-              colors: [
-                Colors.black.withOpacity(0.9),
-                Colors.black.withOpacity(0.5),
-              ],
-            ),
+      body: Stack(
+        children: [
+          Image.asset(
+            'images/fashionHome.jpg',
+            fit: BoxFit.fill,
+            height: double.infinity,
+            width: double.infinity,
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'Welcome to Shopla',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.white.withOpacity(0.8),
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 50.0,
-                ),
-                RoundedButton(
-                    buttonText: 'SIGN IN',
-                    onPressed: () => Navigator.pushNamed(context, Login.id)),
-                SizedBox(
-                  height: 20.0,
-                ),
-                RoundedButton(
-                    buttonText: 'CREATE AN ACCOUNT',
-                    onPressed: () => Navigator.pushNamed(context, SignUp.id)),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Text(
-                  'or',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: _signInButton(),
-                ),
-              ],
+          Container(
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+              //color: Colors.white,
+              gradient: LinearGradient(
+                begin: Alignment.bottomRight,
+                end: Alignment.topCenter,
+                colors: [
+                  Colors.black.withOpacity(0.9),
+                  Colors.black.withOpacity(0.5),
+                ],
+              ),
             ),
-          ),
-        ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Welcome to Shopla',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white.withOpacity(0.8),
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 50.0,
+                  ),
+                  RoundedButton(
+                      buttonText: 'SIGN IN',
+                      onPressed: () => Navigator.pushNamed(context, Login.id)),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  RoundedButton(
+                      buttonText: 'CREATE AN ACCOUNT',
+                      onPressed: () => Navigator.pushNamed(context, SignUp.id)),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Text(
+                    'or',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: _signInButton(),
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
