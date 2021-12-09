@@ -1,13 +1,97 @@
-import 'package:flutter/material.dart';
+import 'dart:developer';
 
-class Loading extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: CircularProgressIndicator(),
+import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+
+Widget loading() => Container(
+      height: 40.0,
+      width: 50.0,
+      color: Colors.white,
+      child: SpinKitFadingCircle(
+        color: Color(0xFFFF0025),
+        size: 30.0,
       ),
     );
-  }
+
+//showAlertDialog(BuildContext context, String message) {
+//  // set up the button
+//  Widget okButton = FlatButton(
+//    child: Text("OK"),
+//    onPressed: () {},
+//  );
+//
+//// set up the AlertDialog
+//  AlertDialog alert = AlertDialog(
+//    title: Text("Alert"),
+//    content: Text(message),
+//    actions: [
+//      okButton,
+//    ],
+//  );
+//
+//// show the dialog
+//  showDialog(
+//    context: context,
+//    builder: (BuildContext context) {
+//      return alert;
+//    },
+//  );
+//}
+
+//helper method to show progress
+ProgressDialog progressDialog;
+
+showProgress(BuildContext context, String message, bool isDismissible) async {
+  progressDialog = new ProgressDialog(context,
+      type: ProgressDialogType.Normal, isDismissible: isDismissible);
+  progressDialog.style(
+      message: message,
+      borderRadius: 10.0,
+      backgroundColor: Colors.white,
+      progressWidget: Container(
+          padding: EdgeInsets.all(8.0),
+          child: SpinKitFadingCircle(
+            color: Color(0xFFFF0025),
+            size: 30.0,
+          )),
+      elevation: 10.0,
+      insetAnimCurve: Curves.easeInOut,
+      messageTextStyle: TextStyle(
+          color: Colors.black54, fontSize: 19.0, fontWeight: FontWeight.w600));
+  await progressDialog.show();
+}
+
+updateProgress(String message) {
+  progressDialog.update(message: message);
+}
+
+hideProgress() async {
+  await progressDialog.hide();
+}
+
+//helper method to show alert dialog
+showAlertDialog(BuildContext context, String title, String content) {
+  // set up the AlertDialog
+  Widget okButton = FlatButton(
+    child: Text("OK"),
+    onPressed: () {
+      Navigator.pop(context);
+    },
+  );
+  AlertDialog alert = AlertDialog(
+    title: Text(title),
+    content: Text(content),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }

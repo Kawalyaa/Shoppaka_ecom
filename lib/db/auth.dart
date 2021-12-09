@@ -2,21 +2,21 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 abstract class BaseAuth {
-  Future<FirebaseUser> googleSignIn();
+  Future<User> googleSignIn();
 }
 
 class Auth implements BaseAuth {
-  FirebaseUser firebaseUser;
+  User firebaseUser;
   @override
-  Future<FirebaseUser> googleSignIn() async {
+  Future<User> googleSignIn() async {
     FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     final GoogleSignIn googleSignIn = GoogleSignIn();
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
     final GoogleSignInAuthentication googleAuth =
         await googleSignInAccount.authentication;
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
+    final AuthCredential credential = GoogleAuthProvider.credential(
         idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
-    AuthResult authResult = await firebaseAuth.signInWithCredential(credential);
+    var authResult = await firebaseAuth.signInWithCredential(credential);
     try {
       firebaseUser = authResult.user;
     } catch (e) {

@@ -22,27 +22,21 @@ class _WelcomeLoginOptionsState extends State<WelcomeLoginOptions> {
   Auth auth = Auth();
   UserServices userServices = UserServices();
 
-  @override
-  void initState() {
-    super.initState();
-    isSignedIn();
-  }
-
-  void isSignedIn() async {
-    //===Sign in for google====
-    //SharedPreferences preferences = await SharedPreferences.getInstance();
-//    isLoggedIn = await googleSignIn.isSignedIn();
-
-    //====Sign in for email and password====
-    FirebaseUser user = await _auth.currentUser();
-
-    if (isLoggedIn || user != null) {
-      Navigator.pushNamed(context, HomePage.id);
-    }
-//    setState(() {
-//      loading = false;
-//    });
-  }
+//  @override
+//  void initState() {
+//    super.initState();
+//    isSignedIn();
+//  }
+//
+//  void isSignedIn() async {
+//
+//    FirebaseUser user = await _auth.currentUser();
+//
+//    if (isLoggedIn || user != null) {
+//      Navigator.pushNamed(context, HomePage.id);
+//    }
+//
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,13 +115,13 @@ class _WelcomeLoginOptionsState extends State<WelcomeLoginOptions> {
   Widget _signInButton() => OutlineButton(
         splashColor: Colors.grey,
         onPressed: () async {
-          FirebaseUser user = await auth.googleSignIn();
-          FirebaseUser currentUser = await _auth.currentUser();
+          User user = await auth.googleSignIn();
+          User currentUser = _auth.currentUser;
           //create user if does not exit
           if (currentUser == null) {
             userServices.createUser({
               'name': user.displayName,
-              'photo': user.photoUrl,
+              'photo': user.photoURL,
               'email': user.email,
               'userId': user.uid
             });
