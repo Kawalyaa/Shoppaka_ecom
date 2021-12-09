@@ -1,4 +1,6 @@
 import 'package:ecommerce_app/app_data/app_data.dart';
+import 'package:ecommerce_app/componants/featured_category.dart';
+import 'package:ecommerce_app/componants/shoes_category.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
 import 'package:flutter/material.dart';
@@ -96,8 +98,17 @@ class _HomePageState extends State<HomePage> {
           ImageCarousel(), //Image carousel
 
           Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text('Categories'),
+            padding: EdgeInsets.only(
+              left: 8.0,
+              top: 20,
+            ),
+            child: Text(
+              'Categories',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black54,
+              ),
+            ),
           ),
 
           //Horizontal list view
@@ -116,28 +127,106 @@ class _HomePageState extends State<HomePage> {
                   onSelected: () {
                     setState(() {
                       selectedIndex = index;
+
+                      _selectedOption(optionsList, index);
                     });
                   },
                 );
               },
             ),
           ),
-          //======HorizontalList(), //Horizontal list
-
-          Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Text('Recent Products'),
-          ),
-
-          //Grid view
-          Container(
-            height: 320,
-            child: Products(),
-          )
-
-          //Horizontal ListView
+          _productOptions(),
         ],
       ),
     );
+  }
+
+  _productOptions() {
+    switch (categoryOption) {
+      case Options.FEATURED:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(15.0),
+              child: Text(
+                'Featured Products',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.black54),
+              ),
+            ),
+            //Grid view
+            Container(
+              height: 320,
+              child: FeaturedCategory(),
+            ),
+          ],
+        );
+        break;
+
+      case Options.ALL:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(15.0),
+              child: Text(
+                'All Products',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.black54),
+              ),
+            ),
+            //Grid view
+            Container(
+              height: 320,
+              child: Products(),
+            ),
+          ],
+        );
+        break;
+      case Options.SHOES:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(15.0),
+              child: Text(
+                'Shoes',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.black54),
+              ),
+            ),
+            //Grid view
+            Container(
+              height: 320,
+              child: ShoesCategory(),
+            ),
+          ],
+        );
+        break;
+      default:
+        return Container();
+    }
+  }
+
+  void _selectedOption(List<CategoryOptions> optList, int optIndex) {
+    if (optList[optIndex].imageCaption == 'All') {
+      categoryOption = Options.ALL;
+    }
+    if (optList[optIndex].imageCaption == 'Shoes') {
+      categoryOption = Options.SHOES;
+    }
+    if (optList[optIndex].imageCaption == 'Men') {
+      categoryOption = Options.MEN;
+    }
+    if (optList[optIndex].imageCaption == 'Women') {
+      categoryOption = Options.WOMEN;
+    }
+    if (optList[optIndex].imageCaption == 'Tech') {
+      categoryOption = Options.TECH;
+    }
+    if (optList[optIndex].imageCaption == 'Jewelries') {
+      categoryOption = Options.JEWELRY;
+    }
   }
 }

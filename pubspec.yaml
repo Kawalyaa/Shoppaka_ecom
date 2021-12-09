@@ -62,7 +62,7 @@ flutter:
   assets:
    - images/products/
    - images/carousel/
-   - images/
+   - images/category_icons/
    - images/cart/
 
   # An image asset can refer to one or more resolution-specific "variants", see

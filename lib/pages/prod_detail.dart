@@ -1,7 +1,9 @@
 import 'package:ecommerce_app/model/cart_model.dart';
 import 'package:ecommerce_app/model/color_model.dart';
+import 'package:ecommerce_app/model/product2.dart';
 import 'package:ecommerce_app/model/size_model.dart';
 import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
+import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -87,6 +89,7 @@ class _ProdDetailsState extends State<ProdDetails> {
   Widget build(BuildContext context) {
     var providerData = Provider.of<ProductProvider2>(context);
     List<CartModel> cartList = providerData.cartProductList;
+    var favData = Provider.of<FavoriteList>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -246,6 +249,18 @@ class _ProdDetailsState extends State<ProdDetails> {
                   onTap: () {
                     setState(() {
                       widget.isFavorite = !widget.isFavorite;
+
+                      widget.isFavorite
+                          ? favData.addToFavorite(Products2(
+                              name: widget.productDetailsName,
+                              images: widget.productDetailsPicture,
+                              price: widget.productDetailsPrice,
+                              oldPrice: widget.productDetailsOldPrice,
+                              favorite: widget.isFavorite,
+                              brand: widget.productBrand,
+                              sizes: widget.productSizes,
+                              colors: widget.productColors))
+                          : favData.removeFavorite(widget.productDetailsName);
                     });
                   },
                   child: Icon(
