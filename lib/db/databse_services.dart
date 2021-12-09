@@ -13,6 +13,8 @@ class DatabaseServices {
   String _collection2 = 'users';
   String _userId = 'id';
 
+  List<UserModel> resultsList;
+
   Stream<List<Products2>> getAllFireStoreProduct() =>
       _firestore.collection(collection).snapshots().map((snaps) => snaps.docs
           .map((snap) => Products2.fromSnapShot(snap.data()))

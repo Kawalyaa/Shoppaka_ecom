@@ -36,6 +36,22 @@ class UserServices {
     });
   }
 
+  Future<bool> updateAddress(Map values) async {
+    User _user = _auth.currentUser;
+    try {
+      await FirebaseFirestore.instance
+          .collection(_collections)
+          .doc(_user.uid)
+          .update({
+        "address": FieldValue.arrayUnion([values])
+      });
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
   void addDeviceToken(String token, String userId) => FirebaseFirestore.instance
       .collection(_collections)
       .doc(userId)

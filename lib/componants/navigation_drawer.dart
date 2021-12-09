@@ -1,4 +1,3 @@
-import 'package:ecommerce_app/model/users.dart';
 import 'package:ecommerce_app/pages/favorites_page.dart';
 import 'package:ecommerce_app/provider/user.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +7,12 @@ import 'package:ecommerce_app/pages/login.dart';
 import 'package:ecommerce_app/services/user_services.dart';
 
 class NavigationDrawer extends StatefulWidget {
+  final String name;
+  final List address;
+  final String email;
+  final String photo;
+  NavigationDrawer({this.name, this.address, this.photo, this.email});
+
   @override
   _NavigationDrawerState createState() => _NavigationDrawerState();
 }
@@ -18,27 +23,26 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
   @override
   Widget build(BuildContext context) {
     UserProv authState = Provider.of<UserProv>(context);
-    List<UserModel> userInfo = Provider.of<List<UserModel>>(context);
 
     return Drawer(
       child: ListView(
         children: <Widget>[
           //Header
           UserAccountsDrawerHeader(
-            accountName: Text(userInfo[0].name ?? ''),
-            accountEmail: Text(userInfo[0].email ?? ''),
+            accountName: Text(widget.name ?? ''),
+            accountEmail: Text(widget.email ?? ''),
             currentAccountPicture: GestureDetector(
               onTap: () async {
                 await _userServices.uploadImage();
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(50.0),
-                child: userInfo[0].photo == ''
+                child: widget.photo == ''
                     ? Container(
                         color: Color(0xFF5A0031),
                         child: Center(
                           child: Text(
-                            userInfo[0].name[0],
+                            widget.name[0],
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -49,10 +53,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                     : FadeInImage.assetNetwork(
                         fit: BoxFit.cover,
                         placeholder: 'images/loading_gif/Spin-1s-200px.gif',
-                        image: userInfo[0].photo
-
-//
-                        ),
+                        image: widget.photo),
               ),
             ),
           ),
