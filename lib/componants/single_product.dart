@@ -18,10 +18,12 @@ class SingleProduct extends StatelessWidget {
   final bool featured;
   final Function toggleFavorite;
   final Widget placeholder;
+  final heroTag;
 
   SingleProduct(
       {this.id,
       this.name,
+      this.heroTag,
       this.brand,
       this.category,
       this.images,
@@ -37,18 +39,10 @@ class SingleProduct extends StatelessWidget {
       this.similarProduct});
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 6.0, right: 6.0, bottom: 5.0),
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.0),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  spreadRadius: 3.0,
-                  blurRadius: 5.0),
-            ],
-            color: Colors.white),
+    //var _time = DateTime.now().toString();
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 8.0),
         child: Column(
           children: <Widget>[
             Padding(
@@ -68,12 +62,12 @@ class SingleProduct extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                //print(sizes);
                 //passing the values of the product to the productDetails page
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => ProdDetails(
                       productDetailsName: name,
+                      heroTag: name,
                       productDetailsOldPrice: oldPrice,
                       productDetailsPicture: images,
                       productDetailsPrice: price,
@@ -88,10 +82,10 @@ class SingleProduct extends StatelessWidget {
                 );
               },
               child: Hero(
-                tag: name,
+                tag: heroTag,
                 child: Container(
-                  height: 100.0,
-                  width: 100.0,
+                  height: MediaQuery.of(context).size.height / 6.2,
+                  width: MediaQuery.of(context).size.height / 5.6,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
@@ -113,26 +107,22 @@ class SingleProduct extends StatelessWidget {
             SizedBox(
               height: 5.0,
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: 5.0,
-              ),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      '\$$oldPrice',
-                      style: TextStyle(decoration: TextDecoration.lineThrough),
-                    ),
-                    SizedBox(
-                      width: 15.0,
-                    ),
-                    Text(
-                      '\$$price',
-                      style: TextStyle(
-                          color: Colors.red, fontWeight: FontWeight.bold),
-                    ),
-                  ]),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  '\$$oldPrice',
+                  style: TextStyle(decoration: TextDecoration.lineThrough),
+                ),
+                SizedBox(
+                  width: 15.0,
+                ),
+                Text(
+                  '\$$price',
+                  style:
+                      TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
           ],
         ),

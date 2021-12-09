@@ -8,6 +8,7 @@ class SimilarSingleProduct extends StatelessWidget {
   final String id;
   final String name;
   final String brand;
+  final String heroTag;
   final String category;
   final List images;
   final double price;
@@ -24,6 +25,7 @@ class SimilarSingleProduct extends StatelessWidget {
   SimilarSingleProduct(
       {this.id,
       this.name,
+      this.heroTag,
       this.brand,
       this.category,
       this.images,
@@ -75,6 +77,7 @@ class SimilarSingleProduct extends StatelessWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => ProdDetails(
+                        heroTag: 'name2',
                         productDetailsName: name,
                         productDetailsOldPrice: oldPrice,
                         productDetailsPicture: images,
@@ -89,7 +92,7 @@ class SimilarSingleProduct extends StatelessWidget {
                 );
               },
               child: Hero(
-                tag: Text('name1'),
+                tag: Text('name2'),
                 child: Container(
                   height: 100.0,
                   width: 100.0,
@@ -142,18 +145,3 @@ class SimilarSingleProduct extends StatelessWidget {
     );
   }
 }
-
-//Image.network(
-//images[0],
-//fit: BoxFit.cover,
-//frameBuilder:
-//(context, child, frame, wasSynchronouslyLoaded) {
-//if (wasSynchronouslyLoaded) {
-//return child;
-//}
-//return AnimatedSwitcher(
-//duration: Duration(milliseconds: 500),
-//child: frame != null ? child : placeholder,
-//);
-//},
-//),
