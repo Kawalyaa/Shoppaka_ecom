@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecommerce_app/model/users.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -28,23 +27,11 @@ class UserServices {
   }
 
   void updateUserData(Map<String, dynamic> values, String userId) async {
-    var snapShots =
-        FirebaseFirestore.instance.collection(collections).doc(userId).get();
-    await snapShots.then((value) {
-      value.reference.update(values);
-    });
-//    FirebaseFirestore.instance
-//        .collection(collections)
-//        .doc(userId)
-//        .update(values);
+    FirebaseFirestore.instance
+        .collection(collections)
+        .doc(userId)
+        .update(values);
   }
-
-//  Future<UserModel> getUserById(String id) => FirebaseFirestore.instance
-//      .collection(collections)
-//      .doc(id)
-//      .get()
-//      .then((doc) =>
-//      UserModel.fromSnapshot(doc));
 
   void addDeviceToken(String token, String userId) => FirebaseFirestore.instance
       .collection(collections)
@@ -72,13 +59,6 @@ class UserServices {
                 .doc(user.uid)
                 .update({"photo": photoUrl});
           }));
-      //Update user data
-//      updateUserData({"photo": downloadUrl}, userId);
-//      FirebaseFirestore.instance
-//          .collection(collections)
-//          .doc(userId)
-//          .set({"photo": downloadUrl});
-//      return downloadUrl.toString();
     }
   }
 }

@@ -1,19 +1,11 @@
-import 'package:ecommerce_app/componants/alart_dialogue.dart';
 import 'package:ecommerce_app/componants/loading.dart';
-import 'package:ecommerce_app/componants/screen_controller.dart';
 import 'package:ecommerce_app/pages/home_page.dart';
 import 'package:ecommerce_app/pages/signup.dart';
-import 'package:ecommerce_app/provider/app_state_provider.dart';
 import 'package:ecommerce_app/provider/user.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ecommerce_app/constants.dart';
 import 'package:ecommerce_app/componants/round_button.dart';
-import 'package:flutter/services.dart';
-import '../db/users.dart';
-import '../provider/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
@@ -177,17 +169,3 @@ class _LoginState extends State<Login> {
     );
   }
 }
-
-//if (authProvider.formKey.currentState.validate()) {
-//if (!await authProvider.signIn()) {
-//_key.currentState.showSnackBar(
-//SnackBar(
-//content: Text('Login Failed'),
-//),
-//);
-//return;
-//} else {
-//authProvider.clearController();
-//Navigator.pushReplacementNamed(
-//context, HomePage.id);
-//}
