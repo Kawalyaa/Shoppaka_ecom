@@ -1,11 +1,15 @@
+import 'package:ecommerce_app/app_data/app_data.dart';
+import 'package:ecommerce_app/model/categary_options.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/componants/products.dart';
-import 'package:ecommerce_app/componants/horizontal_listview.dart';
+import 'package:ecommerce_app/componants/category_option_detail.dart';
 import 'package:ecommerce_app/componants/image_carousel.dart';
 import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
 import 'package:ecommerce_app/componants/navigation_drawer.dart';
 import 'package:provider/provider.dart';
+
+import '../constants.dart';
 
 class HomePage extends StatefulWidget {
   static const String id = 'homepage';
@@ -15,6 +19,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   TextEditingController _searchController = TextEditingController();
+  int selectedIndex;
+  List<CategoryOptions> optionsList = AppData.categoryOptionList;
+  Options categoryOption = Options.FEATURED;
 
   @override
   Widget build(BuildContext context) {
@@ -41,28 +48,39 @@ class _HomePageState extends State<HomePage> {
             ),
             onPressed: () {},
           ),
+          SizedBox(
+            width: 5,
+          ),
           InkWell(
             onTap: () {
               Navigator.pushNamed(context, ShoppingCart.id);
             },
             child: Stack(children: <Widget>[
-              IconButton(
-                icon: Icon(
-                  Icons.shopping_cart,
+              Padding(
+                padding: const EdgeInsets.only(right: 6.0),
+                child: Container(
+                  child: Center(
+                    child: Icon(
+                      Icons.shopping_cart,
+                    ),
+                  ),
                 ),
-                onPressed: null,
               ),
               Positioned(
-                top: 2,
+                top: 4,
                 right: 2,
                 child: cartList.isNotEmpty
                     ? Container(
-                        padding: EdgeInsets.all(3.0),
+                        height: 18.0,
+                        width: 18.0,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50.0),
-                            color: Colors.red),
-                        child: Text(
-                            '${cartList.length > 0 ? cartList.length : null}'),
+                            shape: BoxShape.circle, color: kColorRed),
+                        child: Center(
+                          child: Text(
+                            '${cartList.length}',
+                            style: TextStyle(fontSize: 12.0),
+                          ),
+                        ),
                       )
                     : Container(),
               )
@@ -82,7 +100,29 @@ class _HomePageState extends State<HomePage> {
             child: Text('Categories'),
           ),
 
-          HorizontalList(), //Horizontal list
+          //Horizontal list view
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 10),
+            width: MediaQuery.of(context).size.width,
+            height: 80.0,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: optionsList.length,
+              itemBuilder: (context, int index) {
+                return SelectCategory(
+                  imageCaption: optionsList[index].imageCaption,
+                  imageLocation: optionsList[index].imageLocation,
+                  isSelected: selectedIndex == index,
+                  onSelected: () {
+                    setState(() {
+                      selectedIndex = index;
+                    });
+                  },
+                );
+              },
+            ),
+          ),
+          //======HorizontalList(), //Horizontal list
 
           Padding(
             padding: EdgeInsets.all(20.0),

@@ -5,11 +5,9 @@ import 'package:flutter/material.dart';
 class ProductProvider2 with ChangeNotifier {
   List<CartModel> _cartProductList = [];
 
-  double _quantity = 1;
-  double get quantity => _quantity;
+  List<CartModel> get cartProductList => _cartProductList;
 
-  List get cartProductList => _cartProductList;
-
+  //add items if not present n if present just increase the qty
   addProducts(CartModel cartItem) {
     bool isPresent = false;
     if (_cartProductList.length > 0) {
@@ -17,12 +15,12 @@ class ProductProvider2 with ChangeNotifier {
         if (_cartProductList[i].name == cartItem.name) {
           _cartProductList[i].qty++;
           isPresent = true;
-          break;
         } else {
           isPresent = false;
         }
       }
       if (!isPresent) {
+        //if item not present or at the block where isPresent is false
         _cartProductList.add(cartItem);
       }
     } else {
@@ -40,13 +38,6 @@ class ProductProvider2 with ChangeNotifier {
     return totalPrice;
   }
 
-  void updateProduct(CartModel cartModel, int qty) {
-    int index = _cartProductList.indexWhere((i) => i.id == cartModel.id);
-
-    _cartProductList[index].qty = qty;
-    notifyListeners();
-  }
-
   void increaseQty(int index) {
     _cartProductList[index].qty++;
     notifyListeners();
@@ -60,8 +51,8 @@ class ProductProvider2 with ChangeNotifier {
     notifyListeners();
   }
 
-  removeProduct(CartModel cartItem) {
-    _cartProductList.remove(cartItem);
+  removeProduct(int itemIndex) {
+    _cartProductList.removeAt(itemIndex);
     notifyListeners();
   }
 }
