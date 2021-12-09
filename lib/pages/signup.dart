@@ -1,18 +1,11 @@
 import 'package:ecommerce_app/componants/loading.dart';
-import 'package:ecommerce_app/componants/screen_controller.dart';
 import 'package:ecommerce_app/pages/home_page.dart';
-import 'package:ecommerce_app/provider/app_state_provider.dart';
 import 'package:ecommerce_app/provider/user.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ecommerce_app/constants.dart';
 import 'package:ecommerce_app/componants/round_button.dart';
-//import 'package:flutter/services.dart';
-//import '../db/users.dart';
 import 'package:provider/provider.dart';
-import 'package:ecommerce_app/componants/alart_dialogue.dart';
 
 class SignUp extends StatefulWidget {
   static const String id = 'signup';
@@ -21,21 +14,10 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-//  final FirebaseAuth _auth = FirebaseAuth.instance;
-//  UserUpdateInfo userUpdatedInfo = UserUpdateInfo();
-  //final _formKey = GlobalKey<FormState>(debugLabel: '_SignUpState');
-  //final _key = GlobalKey<ScaffoldState>();
-
-  //final _key = GlobalKey<ScaffoldState>();
-  //TextEditingController _name = TextEditingController();
-  //TextEditingController _email = TextEditingController();
-  //TextEditingController _password = TextEditingController();
   bool _toggleVisibility = true;
 
   @override
   Widget build(BuildContext context) {
-    //final user = Provider.of<UserProvider>(context);
-    //final _user = Provider.of<ApplicationState>(context);
     UserProv authProvider = Provider.of<UserProv>(context);
     return Scaffold(
       key: authProvider.key2,

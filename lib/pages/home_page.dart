@@ -37,23 +37,6 @@ class _HomePageState extends State<HomePage> {
   String _photoUrl;
   String _userId;
 
-//  @override
-//  void initState() {
-//    super.initState();
-//    getUserInfo();
-//  }
-
-//  void getUserInfo() async {
-//    String userId = FirebaseAuth.instance.currentUser.uid;
-//    var userDetails = await _userServices.getUserById(userId);
-//    setState(() {
-//      _userName = userDetails.name;
-//      _userEmail = userDetails.email;
-//      _photoUrl = userDetails.photo;
-//      _userId = userDetails.id;
-//    });
-//  }
-
   @override
   Widget build(BuildContext context) {
     var data = Provider.of<ProductProvider2>(context);

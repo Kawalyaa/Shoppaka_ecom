@@ -140,38 +140,3 @@ class SingleProduct extends StatelessWidget {
     );
   }
 }
-
-//Container(
-//height: 100.0,
-//width: 100.0,
-//decoration: BoxDecoration(
-//color: Colors.grey,
-//image: DecorationImage(
-//image: NetworkImage(images[0]), fit: BoxFit.cover),
-//),
-//),
-
-//AnimatedSwitcher(
-//duration: const Duration(milliseconds: 500),
-//child: frame != null ? child : placeholder,
-//);
-
-//
-//Image.network(
-//images[0],
-//fit: BoxFit.cover,
-//loadingBuilder: (context, child, loadingProgress) {
-//if (loadingProgress == null) {
-//return child;
-//} else {
-//return Center(
-//child: CircularProgressIndicator(
-//value: loadingProgress.expectedTotalBytes != null
-//? loadingProgress.cumulativeBytesLoaded /
-//loadingProgress.expectedTotalBytes
-//    : null,
-//),
-//);
-//}
-//},
-//),
