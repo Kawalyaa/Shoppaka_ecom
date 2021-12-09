@@ -4,10 +4,13 @@ import 'package:ecommerce_app/provider/app_state_provider.dart';
 import 'package:ecommerce_app/provider/user.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerce_app/provider/user_provider.dart';
 import 'package:ecommerce_app/db/users.dart';
 import 'package:ecommerce_app/pages/login.dart';
+import 'dart:io';
+import 'package:ecommerce_app/services/user_services.dart';
 
 class NavigationDrawer extends StatefulWidget {
   @override
@@ -15,32 +18,55 @@ class NavigationDrawer extends StatefulWidget {
 }
 
 class _NavigationDrawerState extends State<NavigationDrawer> {
+  UserServices _userServices = UserServices();
+  final ImagePicker _imagePicker = ImagePicker();
   String _userName;
   String _userEmail;
+  File _image;
+  String _photoLink;
+
+  Future chooseImage() async {
+    //await ImagePicker.pickImage(source: null)
+    final pickedFile = await _imagePicker.getImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print("No image selected");
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     //UserServices _userServices = UserServices();
     UserProv authState = Provider.of<UserProv>(context);
+    var userInfo = authState.userModel;
+    //reload = authState.reloadUser();
 
     return Drawer(
       child: ListView(
         children: <Widget>[
           //Header
           UserAccountsDrawerHeader(
-            accountName: Text("authState.user.displayName"),
-            accountEmail: Text("authState.user.email"),
+            accountName: Text(userInfo.name),
+            accountEmail: Text(userInfo.email),
             currentAccountPicture: GestureDetector(
+              onTap: () async {
+                chooseImage();
+                _photoLink =
+                    await _userServices.uploadUserPhoto(_image, userInfo.id);
+                authState.updateUserData({"photo": _photoLink});
+              },
               child: CircleAvatar(
-                backgroundColor: Colors.grey,
-                child: Icon(
-                  Icons.person,
-                  color: Colors.white,
-                ),
+                backgroundColor: _photoLink == null ? Colors.grey : null,
+                child: _photoLink != null
+                    ? NetworkImage(_photoLink)
+                    : Icon(Icons.person),
               ),
             ),
-            decoration: BoxDecoration(color: Colors.black54),
           ),
+
           //Body
           InkWell(
             onTap: () {},

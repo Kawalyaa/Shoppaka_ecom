@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerce_app/provider/user_provider.dart';
 import 'package:ecommerce_app/pages/splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class ScreenController extends StatelessWidget {
   static const String id = 'ScreenColler';
@@ -21,7 +22,8 @@ class ScreenController extends StatelessWidget {
         return TheSplashScreen();
       case Status.Unauthenticated:
         return Login();
-      //case Status.Authenticating:
+      case Status.Authenticating:
+      // return Login()
       case Status.Authenticated:
         return HomePage();
       default:
