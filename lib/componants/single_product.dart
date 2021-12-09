@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/model/product_details_model.dart';
 import 'package:ecommerce_app/pages/prod_detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -66,17 +67,19 @@ class SingleProduct extends StatelessWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => ProdDetails(
-                      productDetailsName: name,
-                      heroTag: name,
-                      productDetailsOldPrice: oldPrice,
-                      productDetailsPicture: images,
-                      productDetailsPrice: price,
-                      productBrand: brand,
-                      productColors: colors,
-                      productSizes: sizes,
-                      isFavorite: isFavorite,
-                      category: category,
-                      similarProd: similarProduct,
+                      productDetailsModel: ProductDetailsModel(
+                        productDetailsName: name,
+                        heroTag: name,
+                        productDetailsOldPrice: oldPrice,
+                        productDetailsPicture: images,
+                        productDetailsPrice: price,
+                        productBrand: brand,
+                        productColors: colors,
+                        productSizes: sizes,
+                        isFavorite: isFavorite,
+                        category: category,
+                        similarProd: similarProduct,
+                      ),
                     ),
                   ),
                 );
@@ -111,14 +114,14 @@ class SingleProduct extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  '\$$oldPrice',
+                  'UGX$oldPrice',
                   style: TextStyle(decoration: TextDecoration.lineThrough),
                 ),
                 SizedBox(
-                  width: 15.0,
+                  width: 10.0,
                 ),
                 Text(
-                  '\$$price',
+                  'UGX$price',
                   style:
                       TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
                 ),

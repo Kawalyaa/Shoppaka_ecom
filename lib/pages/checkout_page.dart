@@ -23,9 +23,7 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../constants.dart';
-import '../constants.dart';
 import 'adress_book.dart';
-import 'mobile_money_payment.dart';
 
 enum Button { BUTTON1, BUTTON2, BUTTON3 }
 enum Pay { MobileMoney, OnDelivery }
@@ -75,9 +73,8 @@ class _CheckoutState extends State<Checkout>
 
   var _response;
   List _cartListData;
+  List addressList;
 
-  String _collection = 'orders';
-  FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
@@ -148,7 +145,7 @@ class _CheckoutState extends State<Checkout>
     final Checkout args = ModalRoute.of(context).settings.arguments;
 
     _userInfo = Provider.of<List<UserModel>>(context);
-    List addressList = _userInfo[0].address;
+    addressList = _userInfo[0].address;
 
     cartData = Provider.of<ProductProvider2>(context);
     List<CartModel> _cartList = cartData.cartProductList;
@@ -565,6 +562,9 @@ class _CheckoutState extends State<Checkout>
                       ),
                       child: FlatButton(
                         onPressed: () {
+                          setState(() {
+                            selectedButton = Button.BUTTON3;
+                          });
                           _navigateToPickupStation(context);
                           // print(result[0].placeName);
                         },
@@ -618,9 +618,10 @@ class _CheckoutState extends State<Checkout>
                       child: InkWell(
                         onTap: () {
                           if (selectedButton == Button.BUTTON3 &&
-                              result == null) {
-                            showAlertDialog(
-                                context, 'Error', 'No Pickup Station Selected');
+                                  result == null ||
+                              addressList == null) {
+                            showAlertDialog(context, 'Error',
+                                'No Pickup Station Selected\nOr Address is missing');
                           } else {
                             setState(() {
                               index = 1;
@@ -1228,25 +1229,29 @@ class _CheckoutState extends State<Checkout>
 
                 ///Add orders to the fire
                 _ordersServices.createOrders(
-                    userName: _userInfo[0].name,
-                    email: _userInfo[0].email,
-                    phone: addressList[0]['phone'],
-                    ordersList: orderedItemsList(),
-                    paymentStatus: _response,
-                    totalPrice: totalPrice,
-                    paymentMethod: "MobileMoney");
+                  userName: _userInfo[0].name,
+                  email: _userInfo[0].email,
+                  phone: addressList[0]['phone'],
+                  ordersList: orderedItemsList(),
+                  paymentStatus: _response,
+                  totalPrice: totalPrice,
+                  paymentMethod: "MobileMoney",
+                  pickupStation: result != null ? pickUpStationList() : null,
+                );
 
                 cartData.removeAllCartProducts();
               } else {
                 ///Add orders to the fire
                 _ordersServices.createOrders(
-                    userName: _userInfo[0].name,
-                    email: _userInfo[0].email,
-                    phone: addressList[0]['phone'],
-                    ordersList: orderedItemsList(),
-                    paymentStatus: _response,
-                    totalPrice: totalPrice,
-                    paymentMethod: "CashOnDelivery");
+                  userName: _userInfo[0].name,
+                  email: _userInfo[0].email,
+                  phone: addressList[0]['phone'],
+                  ordersList: orderedItemsList(),
+                  paymentStatus: _response,
+                  totalPrice: totalPrice,
+                  paymentMethod: "CashOnDelivery",
+                  pickupStation: result != null ? pickUpStationList() : null,
+                );
                 cartData.removeAllCartProducts();
 
                 Navigator.pushReplacementNamed(context, PaymentSuccessful.id);
@@ -1322,6 +1327,13 @@ class _CheckoutState extends State<Checkout>
             'price': item.price,
             'selectedSize': item.selectedSize,
             'selectedColor': item.selectedColor,
+          })
+      .toList();
+
+  List pickUpStationList() => result
+      .map((station) => {
+            'placeName': result[0].placeName,
+            'location': result[0].location,
           })
       .toList();
 }

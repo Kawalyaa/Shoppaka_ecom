@@ -13,6 +13,7 @@ class OrdersServices {
       String email,
       String phone,
       List ordersList,
+      List pickupStation,
       double totalPrice,
       String paymentMethod,
       String paymentStatus}) async {
@@ -23,7 +24,8 @@ class OrdersServices {
       'ordersList': ordersList,
       'paymentStatus': paymentStatus ?? '',
       'totalPrice': totalPrice,
-      'paymentMethod': paymentMethod
+      'paymentMethod': paymentMethod,
+      'pickupStation': pickupStation
     });
   }
 
