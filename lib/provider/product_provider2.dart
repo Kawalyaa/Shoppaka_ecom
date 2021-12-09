@@ -1,11 +1,19 @@
 import 'package:ecommerce_app/componants/auth.dart';
 import 'package:ecommerce_app/model/cart_model.dart';
+import 'package:ecommerce_app/model/product2.dart';
 import 'package:flutter/material.dart';
 
 class ProductProvider2 with ChangeNotifier {
   List<CartModel> _cartProductList = [];
 
   List<CartModel> get cartProductList => _cartProductList;
+
+  List<Products2> search(String terms, List products) {
+    return products
+        .where((product) =>
+            product.name.toLowerCase().contains(terms.toLowerCase()))
+        .toList();
+  }
 
   //add items if not present n if present just increase the qty
   addProducts(CartModel cartItem) {

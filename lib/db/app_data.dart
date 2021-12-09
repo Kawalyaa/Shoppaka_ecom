@@ -1,7 +1,7 @@
 import 'package:ecommerce_app/model/categary_options.dart';
 import 'package:ecommerce_app/model/image_card_model.dart';
 
-class AppData {
+class AppData<T> {
   static List<CategoryOptions> categoryOptionsList = [
     CategoryOptions(
       caption: 'All',

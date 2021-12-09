@@ -4,20 +4,23 @@ import 'package:ecommerce_app/componants/featured_section.dart';
 import 'package:ecommerce_app/db/app_data.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
 import 'package:ecommerce_app/model/users.dart';
+import 'package:ecommerce_app/pages/category_products_list.dart';
+import 'package:ecommerce_app/pages/search_page.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/componants/category_option_detail.dart';
-import 'package:ecommerce_app/componants/image_carousel.dart';
 import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
 import 'package:ecommerce_app/componants/navigation_drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-
 import '../constants.dart';
+
+Options categoryOption = Options.ALL;
 
 class HomePage extends StatefulWidget {
   static const String id = 'homepage';
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -26,7 +29,7 @@ class _HomePageState extends State<HomePage> {
   // TextEditingController _searchController = TextEditingController();
   int selectedIndex;
   List<CategoryOptions> optionsList = AppData.categoryOptionsList;
-  Options categoryOption = Options.FEATURED;
+//  Options categoryOption = Options.ALL;
 
   @override
   Widget build(BuildContext context) {
@@ -36,24 +39,39 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Shopla',
-          style: TextStyle(
-              color: Colors.black54,
-              fontWeight: FontWeight.w900,
-              fontFamily: 'Poppins',
-              fontSize: 24.0,
-              fontStyle: FontStyle.italic),
+        title: Padding(
+          padding: const EdgeInsets.only(bottom: 10, top: 10),
+          child: Row(
+            children: [
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, ProductSearch.id);
+                  },
+                  child: Container(
+                    height: 35,
+                    decoration: BoxDecoration(
+                        color: Colors.blueGrey[50],
+                        borderRadius: BorderRadius.circular(20)),
+                    child: TextField(
+                      enabled: false,
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: Colors.black45,
+                          ),
+                          hintText: 'Search',
+                          border: InputBorder.none),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
         actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.search,
-            ),
-            onPressed: () {},
-          ),
           SizedBox(
             width: 5,
           ),
@@ -137,8 +155,14 @@ class _HomePageState extends State<HomePage> {
                   imageLocation: optionsList[index].imageLocation,
                   isSelected: selectedIndex == index,
                   onSelected: () {
+                    Navigator.pushNamed(context, CategoryProductsList.id,
+                        arguments: categoryOption);
+
                     setState(() {
                       selectedIndex = index;
+
+                      ///When pressed should Navigate with 'categoryOption'
+                      //TODO USE PROVIDER FOR  'categoryOption'
 
                       _selectedOption(optionsList, index);
                     });
@@ -349,3 +373,13 @@ class _HomePageState extends State<HomePage> {
     }
   }
 }
+
+//Text(
+//'Shopla',
+//style: TextStyle(
+//color: Colors.black54,
+//fontWeight: FontWeight.w900,
+//fontFamily: 'Poppins',
+//fontSize: 24.0,
+//fontStyle: FontStyle.italic),
+//)

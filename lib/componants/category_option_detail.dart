@@ -19,7 +19,7 @@ class SelectCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
       child: InkWell(
         onTap: onSelected,
         child: Container(
@@ -41,21 +41,25 @@ class SelectCategory extends StatelessWidget {
                       height: 80,
                       width: 45,
                       decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage(imageLocation),
-                              fit: BoxFit.cover)))
+                        image: DecorationImage(
+                            image: AssetImage(imageLocation),
+                            fit: BoxFit.cover),
+                      ),
+                    )
                   : SizedBox(),
               SizedBox(
                 width: 3.0,
               ),
               Container(
-                child: Text(
-                  caption,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 15.0,
-                  ),
-                ),
+                child: caption != null
+                    ? Text(
+                        caption,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 15.0,
+                        ),
+                      )
+                    : SizedBox(),
               )
             ],
           ),
