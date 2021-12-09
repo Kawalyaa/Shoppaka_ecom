@@ -62,7 +62,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
 
     List userName = _userInfo[0].name.split(" ");
     _firstUserName = userName[0];
-    _lastUserName = userName[1];
+    _lastUserName = userName.length == 1 ? 'null' : userName[1];
 
     List<String> _townFilter() {
       switch (_selectedRegion) {
@@ -418,28 +418,3 @@ class _AddNewAddressState extends State<AddNewAddress> {
     );
   }
 }
-
-//Padding(
-//padding: EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),
-//child: Container(
-//// margin: EdgeInsets.only(left: 2, right: 20),
-//child: TextField(
-//decoration: InputDecoration(
-//hintText: 'District/Town/Area',
-//// icon: Icon(Icons.star),
-//suffixIcon: Padding(
-//padding: const EdgeInsets.only(
-//left: 20.0, top: 20.0, bottom: 5.0, right: 2.0),
-//child: Row(
-//children: [
-//Text(
-//'*',
-//style: TextStyle(fontSize: 18),
-//),
-//],
-//),
-//),
-//),
-//),
-//),
-//),

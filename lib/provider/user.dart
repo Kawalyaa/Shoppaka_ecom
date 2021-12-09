@@ -25,14 +25,19 @@ class UserProv with ChangeNotifier {
   UserModel get userModel => _userModel;
 
   //Public variables
+  final formKeyLogin = GlobalKey<FormState>();
   final formKey = GlobalKey<FormState>();
-  final formKey2 = GlobalKey<FormState>();
-  final key = GlobalKey<ScaffoldState>();
-  final key2 = GlobalKey<ScaffoldState>();
+//  final formKey2 = GlobalKey<FormState>();
+  //final key = GlobalKey<ScaffoldState>();
+  //final key2 = GlobalKey<ScaffoldState>();
 
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
-  TextEditingController name = TextEditingController();
+//  TextEditingController email = TextEditingController();
+//  TextEditingController password = TextEditingController();
+//  TextEditingController name = TextEditingController();
+//
+//  // TextEditingController email2 = TextEditingController();
+//  TextEditingController password2 = TextEditingController();
+//  TextEditingController name2 = TextEditingController();
 
   UserProv() {
     init();
@@ -49,12 +54,14 @@ class UserProv with ChangeNotifier {
     });
   }
 
-  Future<bool> signIn() async {
+  Future<bool> signIn({var email, var password}) async {
     try {
       _status = Status.Authenticating;
-      notifyListeners();
+
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: email.text.trim(), password: password.text.trim());
+      _status = Status.Authenticated;
+      notifyListeners();
 
       return true;
     } catch (e) {
@@ -65,10 +72,9 @@ class UserProv with ChangeNotifier {
     }
   }
 
-  Future<bool> signUp() async {
+  Future<bool> signUp({var email, var password, var name}) async {
     try {
       _status = Status.Authenticating;
-      notifyListeners();
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: email.text.trim(), password: password.text.trim())
@@ -81,11 +87,13 @@ class UserProv with ChangeNotifier {
           email: email.text.trim(),
         );
 
-        _status = Status.Authenticated;
+        // _status = Status.Authenticated;
         await prefs.setString(ID, result.user.uid);
         await prefs.setBool(LOGGED_IN, true);
         // hideProgress();
       });
+      _status = Status.Authenticated;
+      notifyListeners();
       return true;
     } on FirebaseAuthException catch (error) {
 //      hideProgress();
@@ -101,14 +109,14 @@ class UserProv with ChangeNotifier {
     notifyListeners();
   }
 
-  void clearController() {
+  void clearController({var email, var password, var name}) {
     name.text = '';
     email.text = '';
     password.text = '';
   }
 
   Future<void> reloadUser() async {
-    //************ _userModel = await _userServices.getUserById(user.uid);
+    await FirebaseAuth.instance.currentUser.reload();
     notifyListeners();
   }
 

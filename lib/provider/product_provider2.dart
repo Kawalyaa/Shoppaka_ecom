@@ -105,4 +105,10 @@ class ProductProvider2 with ChangeNotifier {
     updateSharedPreferences();
     notifyListeners();
   }
+
+  removeAllCartProducts() {
+    _cartProductList.clear();
+    updateSharedPreferences();
+    notifyListeners();
+  }
 }

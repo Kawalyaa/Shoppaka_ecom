@@ -41,33 +41,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Padding(
           padding: const EdgeInsets.only(bottom: 10, top: 10),
-          child: Row(
-            children: [
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, ProductSearch.id);
-                  },
-                  child: Container(
-                    height: 35,
-                    decoration: BoxDecoration(
-                        color: Colors.blueGrey[50],
-                        borderRadius: BorderRadius.circular(20)),
-                    child: TextField(
-                      enabled: false,
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.search,
-                            color: Colors.black45,
-                          ),
-                          hintText: 'Search',
-                          border: InputBorder.none),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          child: _searchBar(),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -384,14 +358,33 @@ class _HomePageState extends State<HomePage> {
       categoryOption = Options.JEWELRY;
     }
   }
-}
 
-//Text(
-//'Shopla',
-//style: TextStyle(
-//color: Colors.black54,
-//fontWeight: FontWeight.w900,
-//fontFamily: 'Poppins',
-//fontSize: 24.0,
-//fontStyle: FontStyle.italic),
-//)
+  _searchBar() => Row(
+        children: [
+          Expanded(
+            child: InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, ProductSearch.id);
+              },
+              child: Container(
+                height: 39,
+                decoration: BoxDecoration(
+                    color: Colors.blueGrey[50],
+                    borderRadius: BorderRadius.circular(20)),
+                child: TextField(
+                  textAlign: TextAlign.left,
+                  enabled: false,
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Colors.black45,
+                      ),
+                      hintText: 'Search',
+                      border: InputBorder.none),
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+}

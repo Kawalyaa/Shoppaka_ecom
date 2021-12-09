@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:ecommerce_app/constants.dart';
 import 'package:ecommerce_app/componants/round_button.dart';
 import 'package:provider/provider.dart';
+import 'package:email_validator/email_validator.dart';
 
 class SignUp extends StatefulWidget {
   static const String id = 'signup';
@@ -14,13 +15,28 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  bool _toggleVisibility = true;
+  bool _obscureText = true;
+
+  final _formKey2 = GlobalKey<FormState>();
+
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+  final TextEditingController _name = TextEditingController();
+  final _key2 = GlobalKey<ScaffoldState>();
+
+  void _toggleVisibility() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     UserProv authProvider = Provider.of<UserProv>(context);
+    //TextEditingController _email2 = TextEditingController();
+
     return Scaffold(
-      key: authProvider.key2,
+      key: _key2,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -41,14 +57,14 @@ class _SignUpState extends State<SignUp> {
               height: 30.0,
             ),
             Form(
-              key: authProvider.formKey2,
+              key: _formKey2,
               child: Column(
                 children: <Widget>[
                   SizedBox(
                     height: 15.0,
                   ),
                   TextFormField(
-                    controller: authProvider.name,
+                    controller: _name,
                     style: TextStyle(fontSize: 18.0, color: Colors.black),
                     textAlign: TextAlign.center,
                     decoration: kTextFieldDecoration.copyWith(
@@ -65,44 +81,31 @@ class _SignUpState extends State<SignUp> {
                     height: 15.0,
                   ),
                   TextFormField(
-                    controller: authProvider.email,
+                    controller: _email,
                     style: TextStyle(fontSize: 18.0, color: Colors.black),
                     textAlign: TextAlign.center,
                     decoration: kTextFieldDecoration.copyWith(
                       hintText: 'Enter email',
                     ),
-                    validator: (value) {
-                      if (value.isNotEmpty) {
-                        Pattern pattern =
-                            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                        RegExp regExp = RegExp(pattern);
-                        if (!regExp.hasMatch(value))
-                          return ('The email is invalid');
-                      } else {
-                        return ('Please provide email');
-                      }
-                      return null;
-                    },
+                    validator: (value) => EmailValidator.validate(value.trim())
+                        ? null
+                        : "Valid Email is required",
                   ),
                   SizedBox(
                     height: 15.0,
                   ),
                   TextFormField(
-                    controller: authProvider.password,
+                    controller: _password,
                     style: TextStyle(fontSize: 18.0, color: Colors.black),
                     textAlign: TextAlign.center,
-                    obscureText: _toggleVisibility,
+                    obscureText: _obscureText,
                     decoration: kTextFieldDecoration.copyWith(
                       hintText: 'Enter password',
                       suffixIcon: IconButton(
                         onPressed: () {
-                          setState(
-                            () {
-                              _toggleVisibility = !_toggleVisibility;
-                            },
-                          );
+                          _toggleVisibility();
                         },
-                        icon: _toggleVisibility
+                        icon: _obscureText
                             ? Icon(
                                 Icons.visibility_off,
                                 color: Colors.grey,
@@ -131,20 +134,22 @@ class _SignUpState extends State<SignUp> {
                 buttonText: 'Sign up',
                 onPressed: () async {
                   //await Firebase.initializeApp();
-                  if (authProvider.formKey2.currentState.validate()) {
+                  if (_formKey2.currentState.validate()) {
                     showProgress(context, 'Creating new account...', false);
-                    if (!await authProvider.signUp()) {
+                    if (!await authProvider.signUp(
+                        name: _name, email: _email, password: _password)) {
                       hideProgress();
 
-                      showAlertDialog(context, "Error", "SignUp Failed");
+                      showAlertDialog(context, "Error",
+                          "SignUp Failed \n\nEmail already in use");
+                      hideProgress();
 
                       return;
-                    } else {
-                      hideProgress();
-                      authProvider.clearController();
-                      authProvider.reloadUser();
-                      Navigator.pushReplacementNamed(context, HomePage.id);
                     }
+                    hideProgress();
+                    //authProvider.clearController();
+                    authProvider.reloadUser();
+                    Navigator.pushReplacementNamed(context, HomePage.id);
                   } //validateForm();
                 })
           ],
