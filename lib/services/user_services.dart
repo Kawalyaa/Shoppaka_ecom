@@ -1,11 +1,13 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/model/users.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UserServices {
   Reference storage = FirebaseStorage.instance.ref();
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
   String collections = 'users';
   void createUser(
@@ -13,8 +15,8 @@ class UserServices {
       String name,
       String email,
       String phone,
-      String photo = 'No photo',
-      String delivery = 'Not set'}) {
+      String photo,
+      String delivery}) {
     FirebaseFirestore.instance.collection(collections).doc(id).set({
       "id": id,
       "name": name,
@@ -25,18 +27,24 @@ class UserServices {
     });
   }
 
-  void updateUserData(Map<String, dynamic> values) {
-    FirebaseFirestore.instance
-        .collection(collections)
-        .doc(values['id'])
-        .update(values);
+  void updateUserData(Map<String, dynamic> values, String userId) async {
+    var snapShots =
+        FirebaseFirestore.instance.collection(collections).doc(userId).get();
+    await snapShots.then((value) {
+      value.reference.update(values);
+    });
+//    FirebaseFirestore.instance
+//        .collection(collections)
+//        .doc(userId)
+//        .update(values);
   }
 
-  Future<UserModel> getUserById(String id) => FirebaseFirestore.instance
-      .collection(collections)
-      .doc(id)
-      .get()
-      .then((doc) => UserModel.fromSnapshot(doc));
+//  Future<UserModel> getUserById(String id) => FirebaseFirestore.instance
+//      .collection(collections)
+//      .doc(id)
+//      .get()
+//      .then((doc) =>
+//      UserModel.fromSnapshot(doc));
 
   void addDeviceToken(String token, String userId) => FirebaseFirestore.instance
       .collection(collections)
@@ -48,5 +56,29 @@ class UserServices {
     UploadTask task = ref.putFile(image);
     var downloadUrl = await task.whenComplete(() => ref.getDownloadURL());
     return downloadUrl.toString();
+  }
+
+  Future uploadImage() async {
+    User user = _auth.currentUser;
+    var image = await ImagePicker().getImage(source: ImageSource.gallery);
+    File pickedImage = File(image.path);
+    if (pickedImage != null) {
+      Reference ref = storage.child("images/${user.uid}.png");
+      UploadTask task = ref.putFile(pickedImage);
+      await task.whenComplete(() => ref.getDownloadURL().then((photoUrl) {
+            // imageUrl = photoUrl;
+            FirebaseFirestore.instance
+                .collection(collections)
+                .doc(user.uid)
+                .update({"photo": photoUrl});
+          }));
+      //Update user data
+//      updateUserData({"photo": downloadUrl}, userId);
+//      FirebaseFirestore.instance
+//          .collection(collections)
+//          .doc(userId)
+//          .set({"photo": downloadUrl});
+//      return downloadUrl.toString();
+    }
   }
 }

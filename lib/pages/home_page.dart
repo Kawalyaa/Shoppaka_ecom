@@ -7,6 +7,8 @@ import 'package:ecommerce_app/componants/tech_category.dart';
 import 'package:ecommerce_app/componants/women_category.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
+import 'package:ecommerce_app/services/user_services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/componants/products.dart';
 import 'package:ecommerce_app/componants/category_option_detail.dart';
@@ -29,6 +31,28 @@ class _HomePageState extends State<HomePage> {
   int selectedIndex;
   List<CategoryOptions> optionsList = AppData.categoryOptionList;
   Options categoryOption = Options.FEATURED;
+  UserServices _userServices = UserServices();
+  String _userName;
+  String _userEmail;
+  String _photoUrl;
+  String _userId;
+
+//  @override
+//  void initState() {
+//    super.initState();
+//    getUserInfo();
+//  }
+
+//  void getUserInfo() async {
+//    String userId = FirebaseAuth.instance.currentUser.uid;
+//    var userDetails = await _userServices.getUserById(userId);
+//    setState(() {
+//      _userName = userDetails.name;
+//      _userEmail = userDetails.email;
+//      _photoUrl = userDetails.photo;
+//      _userId = userDetails.id;
+//    });
+//  }
 
   @override
   Widget build(BuildContext context) {

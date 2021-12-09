@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/model/users.dart';
 import 'package:ecommerce_app/pages/favorites_page.dart';
 import 'package:ecommerce_app/pages/prod_detail.dart';
 import 'package:ecommerce_app/pages/splash_screen.dart';
@@ -45,7 +46,10 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider<FavoriteList>(
             create: (_) => FavoriteList(),
-          )
+          ),
+//          StreamProvider<List<UserModel>>(
+//            create: (_) => DatabaseServices().getUserInfo(),
+//          )
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
