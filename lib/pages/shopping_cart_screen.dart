@@ -22,7 +22,6 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
     List<CartModel> cartList = getValue.cartProductList;
     double totalPrice = getValue.getTotalPrice();
-    var _prodDetails = getValue.getProductDetails();
 
     return cartList.length == 0
         ? Scaffold(

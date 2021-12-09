@@ -11,6 +11,8 @@ class AddressCard extends StatelessWidget {
   final String address;
   final String phone;
   final String defaultAddress;
+  final Function editCallback;
+  final Function selectedAddressCallback;
 
   AddressCard(
       {this.name,
@@ -18,7 +20,9 @@ class AddressCard extends StatelessWidget {
       this.town,
       this.address,
       this.phone,
-      this.defaultAddress});
+      this.defaultAddress,
+      this.editCallback,
+      this.selectedAddressCallback});
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +46,7 @@ class AddressCard extends StatelessWidget {
                         style: TextStyle(color: Colors.black, fontSize: 16.0),
                       ),
                       FlatButton(
-                        onPressed: () =>
-                            Navigator.pushNamed(context, AddNewAddress.id),
+                        onPressed: editCallback,
                         child: Text(
                           'Edit',
                           style: TextStyle(color: kColorRed),
@@ -98,7 +101,7 @@ class AddressCard extends StatelessWidget {
             Center(
               child: FlatButton(
                 onPressed: () {
-                  //Sending information back on pop
+                  ///Send data back on pop()
                   Navigator.pop(context, [
                     AddressDetailsModel(
                         name: name,

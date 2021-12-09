@@ -36,14 +36,30 @@ class UserServices {
     });
   }
 
-  Future<bool> updateAddress(Map values) async {
+  Future<bool> editAddress(Map values) async {
     User _user = _auth.currentUser;
     try {
       await FirebaseFirestore.instance
           .collection(_collections)
           .doc(_user.uid)
           .update({
-        "address": FieldValue.arrayUnion([values])
+        "address": [values]
+      });
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> editAddress2(Map values) async {
+    User _user = _auth.currentUser;
+    try {
+      await FirebaseFirestore.instance
+          .collection(_collections)
+          .doc(_user.uid)
+          .update({
+        "address2": [values]
       });
       return true;
     } catch (e) {

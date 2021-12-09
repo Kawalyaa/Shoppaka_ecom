@@ -19,7 +19,7 @@ class ProductsModel {
   final images;
   final double price;
   final double oldPrice;
-  final int quantity;
+  int quantity;
   final List colors;
   final List sizes;
   bool favorite;

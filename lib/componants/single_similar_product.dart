@@ -1,4 +1,3 @@
-import 'package:ecommerce_app/componants/similar_prod_detail.dart';
 import 'package:ecommerce_app/pages/prod_detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

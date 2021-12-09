@@ -1,12 +1,18 @@
 import 'dart:ui';
+import 'package:ecommerce_app/componants/shipment_details.dart';
+import 'package:ecommerce_app/constants.dart';
+import 'package:ecommerce_app/model/cart_model.dart';
 import 'package:ecommerce_app/model/users.dart';
 import 'package:ecommerce_app/pages/pickup_station.dart';
+import 'package:ecommerce_app/provider/product_provider2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:flutter/painting.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../constants.dart';
 import '../constants.dart';
 import 'adress_book.dart';
 
@@ -39,8 +45,9 @@ class _CheckoutState extends State<Checkout>
   TabController _controller;
   Button selectedButton = Button.BUTTON1;
   Pay payMethod = Pay.MobileMoney;
-  int initialPrice = 3264;
+  //int initialPrice = 3264;
   int shippingFee = 7000;
+  int extraFee = 1000;
   int shippingFee2 = 0;
   double totalPrice;
   int index = 0;
@@ -117,6 +124,9 @@ class _CheckoutState extends State<Checkout>
     List<UserModel> _userInfo = Provider.of<List<UserModel>>(context);
     List addressList = _userInfo[0].address;
 
+    var cartData = Provider.of<ProductProvider2>(context);
+    List<CartModel> _cartList = cartData.cartProductList;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -149,7 +159,9 @@ class _CheckoutState extends State<Checkout>
               subtotal: args.productPrice, addressList: addressList),
           _paymentInfoList(args.productPrice),
           _summeryInfoTab(
-              subtotal: args.productPrice, addressList: addressList),
+              subtotal: args.productPrice,
+              addressList: addressList,
+              cartList: _cartList),
         ],
       ),
     );
@@ -158,8 +170,11 @@ class _CheckoutState extends State<Checkout>
   //################# Delivery Information ##############################
 
   Widget _deliveryInfoList({double subtotal, List addressList}) {
-    totalPrice =
-        selectedButton == Button.BUTTON1 ? subtotal + shippingFee : subtotal;
+    totalPrice = selectedButton == Button.BUTTON1
+        ? subtotal + shippingFee + extraFee
+        : selectedButton == Button.BUTTON2
+            ? subtotal + shippingFee
+            : subtotal;
     return ListView(
       children: [
         Padding(
@@ -193,23 +208,27 @@ class _CheckoutState extends State<Checkout>
           child: Padding(
             padding: const EdgeInsets.only(
                 left: 8.0, right: 8.0, top: 20.0, bottom: 15.0),
-
-            ///Check if user has added address or selected address from address list
-            child: addressList == null
+            child: addressList == null || addressList.isEmpty
                 ? Center(
-                    child: FlatButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, AddressBook.id);
-                      },
-                      child: Text(
-                        'Add Address',
-                        style: TextStyle(
-                            color: kColorRed,
-                            fontSize: 25.0,
-                            fontWeight: FontWeight.bold),
+                    child: Container(
+                      decoration:
+                          BoxDecoration(border: Border.all(color: kColorRed)),
+                      child: FlatButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, AddressBook.id);
+                        },
+                        child: Text(
+                          'Add Address',
+                          style: TextStyle(
+                              color: kColorRed,
+                              fontSize: 25.0,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                   )
+
+                ///Get address manual provided from pop()
                 : addressDetails != null
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -244,6 +263,8 @@ class _CheckoutState extends State<Checkout>
                           )
                         ],
                       )
+
+                    ///Provide address automatically if available
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -306,7 +327,7 @@ class _CheckoutState extends State<Checkout>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Starndard Shipping',
+                    'Express Shipping',
                     style: TextStyle(color: Colors.black, fontSize: 18),
                   ),
                   SizedBox(
@@ -314,7 +335,7 @@ class _CheckoutState extends State<Checkout>
                   ),
                   _text(
                       text:
-                          'Delivered between Tuesday 5 Jan and Tuesday 12 Jan'),
+                          'Delivered today on ${_returnDate(DateTime.now())} if ordered before 4pm'),
                   SizedBox(
                     height: 5.0,
                   ),
@@ -353,7 +374,7 @@ class _CheckoutState extends State<Checkout>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Express Shipping',
+                    'Starndard Shipping',
                     style: TextStyle(color: Colors.black, fontSize: 18),
                   ),
                   SizedBox(
@@ -361,7 +382,7 @@ class _CheckoutState extends State<Checkout>
                   ),
                   _text(
                       text:
-                          'Delivered between Tuesday 5 Jan and Tuesday 12 Jan'),
+                          'Delivered between ${_returnDate(DateTime.now().add(Duration(days: 1)))} and ${_returnDate(DateTime.now().add(Duration(days: 3)))}'),
                   SizedBox(
                     height: 5.0,
                   ),
@@ -409,9 +430,8 @@ class _CheckoutState extends State<Checkout>
                         height: 10.0,
                       ),
                       _text(
-                        text:
-                            'Available between Tuesday Jan and Tuesday 12 Jan with Cheaper Local Delivery Fees',
-                      ),
+                          text:
+                              'Available between ${_returnDate(DateTime.now().add(Duration(days: 1)))} and ${_returnDate(DateTime.now().add(Duration(days: 3)))}'),
                     ],
                   ),
                 ),
@@ -540,14 +560,13 @@ class _CheckoutState extends State<Checkout>
                     textColor: Colors.black),
                 _costsTile(
                     leadingTxt: 'Shipping',
-                    trailingTxt: selectedButton == Button.BUTTON1
-                        ? 'UGX $shippingFee'
-                        : 'UGX $shippingFee2',
+                    trailingTxt: selectedButton == Button.BUTTON3
+                        ? 'UGX$shippingFee2'
+                        : selectedButton == Button.BUTTON1
+                            ? 'UGX${shippingFee + extraFee}'
+                            : 'UGX$shippingFee',
                     textColor:
-                        selectedButton == Button.BUTTON2 ? Colors.green : null),
-                _costsTile(
-                    leadingTxt: 'International Customs Fee',
-                    trailingTxt: 'UGX 29126'),
+                        selectedButton == Button.BUTTON3 ? Colors.green : null),
                 Divider(
                   thickness: 2.0,
                 ),
@@ -795,10 +814,12 @@ class _CheckoutState extends State<Checkout>
                         trailingTxt: 'UGX$subtotal',
                         textColor: Colors.black),
                     _costsTile(
-                        leadingTxt: 'Shipping', trailingTxt: 'UGX$shippingFee'),
-                    _costsTile(
-                        leadingTxt: 'Internation Customs Fee',
-                        trailingTxt: 'UGX 29126'),
+                        leadingTxt: 'Shipping',
+                        trailingTxt: selectedButton == Button.BUTTON3
+                            ? 'UGX$shippingFee2'
+                            : selectedButton == Button.BUTTON1
+                                ? 'UGX${shippingFee + 1000}'
+                                : 'UGX$shippingFee'),
                     SizedBox(
                       child: Divider(
                         thickness: 2.0,
@@ -832,7 +853,8 @@ class _CheckoutState extends State<Checkout>
 
   //################# Summery Information ##############################
 
-  _summeryInfoTab({double subtotal, addressList}) => ListView(
+  _summeryInfoTab({double subtotal, List addressList, List cartList}) =>
+      ListView(
         children: [
           Padding(
             padding: EdgeInsets.only(left: 20.0, top: 25.0, bottom: 10.0),
@@ -859,10 +881,12 @@ class _CheckoutState extends State<Checkout>
                         trailingTxt: 'UGX$subtotal',
                         textColor: Colors.black),
                     _costsTile(
-                        leadingTxt: 'Shipping', trailingTxt: 'UGX$shippingFee'),
-                    _costsTile(
-                        leadingTxt: 'Internation Customs Fee',
-                        trailingTxt: 'UGX 29126'),
+                        leadingTxt: 'Shipping',
+                        trailingTxt: selectedButton == Button.BUTTON3
+                            ? 'UGX$shippingFee2'
+                            : selectedButton == Button.BUTTON1
+                                ? 'UGX${shippingFee + 1000}'
+                                : 'UGX$shippingFee'),
                     SizedBox(
                       child: Divider(
                         thickness: 1.0,
@@ -888,7 +912,9 @@ class _CheckoutState extends State<Checkout>
                   ),
                 ),
                 FlatButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _navigateToAddressBook(context);
+                  },
                   child: Text(
                     'CHANGE',
                     style: TextStyle(
@@ -909,21 +935,28 @@ class _CheckoutState extends State<Checkout>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    addressList == null
+                    //if no address provided
+                    addressList == null || addressList.isEmpty
                         ? Center(
-                            child: FlatButton(
-                              onPressed: () {
-                                Navigator.pushNamed(context, AddressBook.id);
-                              },
-                              child: Text(
-                                'Add Address',
-                                style: TextStyle(
-                                    color: kColorRed,
-                                    fontSize: 25.0,
-                                    fontWeight: FontWeight.bold),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: kColorRed)),
+                              child: FlatButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, AddressBook.id);
+                                },
+                                child: Text(
+                                  'Add Address',
+                                  style: TextStyle(
+                                      color: kColorRed,
+                                      fontSize: 25.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ),
                           )
+
+                        ///Get address manual provided from pop()
                         : addressDetails != null
                             ? Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -959,6 +992,8 @@ class _CheckoutState extends State<Checkout>
                                   )
                                 ],
                               )
+
+                            ///Get address automatically
                             : Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -1011,7 +1046,12 @@ class _CheckoutState extends State<Checkout>
                   ),
                 ),
                 FlatButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      index = 0;
+                      _controller.animateTo(0);
+                    });
+                  },
                   child: Text(
                     'CHANGE',
                     style: TextStyle(
@@ -1031,14 +1071,22 @@ class _CheckoutState extends State<Checkout>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Standard Shipping',
+                      selectedButton == Button.BUTTON1
+                          ? 'Express Shipping'
+                          : selectedButton == Button.BUTTON2
+                              ? 'Standard Shipping'
+                              : 'PickupStation',
                       style: TextStyle(color: Colors.black, fontSize: 18),
                     ),
                     SizedBox(
                       height: 10.0,
                     ),
                     _text(
-                      text: 'Delivered between Friday 22 and Tuesday 16 Feb',
+                      text: selectedButton == Button.BUTTON1
+                          ? 'Delivered today ${_returnDate(DateTime.now())} if ordered before 4pm'
+                          : selectedButton == Button.BUTTON3
+                              ? 'Ready for pickup between ${_returnDate(DateTime.now().add(Duration(days: 1)))}  and ${_returnDate(DateTime.now().add(Duration(days: 3)))}'
+                              : 'Delivered between ${_returnDate(DateTime.now().add(Duration(days: 1)))}  and ${_returnDate(DateTime.now().add(Duration(days: 3)))}',
                     ),
                   ],
                 ),
@@ -1063,51 +1111,20 @@ class _CheckoutState extends State<Checkout>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    _text(text: 'PACKAGE 1 OF 2', fontWeight: FontWeight.bold),
-                    SizedBox(
-                      height: 15.0,
+                  children: List.generate(
+                    cartList.length,
+                    (index) => ShipmentDetails(
+                      index: index,
+                      packageNumber: cartList.length,
+                      itemNumber: cartList[index].qty,
+                      itemDetails: cartList[index].name,
+                      deliveryDate: selectedButton == Button.BUTTON1
+                          ? 'Delivered today ${_returnDate(DateTime.now())} if ordered before 4pm'
+                          : selectedButton == Button.BUTTON3
+                              ? 'Ready for pickup between ${_returnDate(DateTime.now().add(Duration(days: 1)))}  and ${_returnDate(DateTime.now().add(Duration(days: 3)))}'
+                              : 'Delivered between ${_returnDate(DateTime.now().add(Duration(days: 1)))}  and ${_returnDate(DateTime.now().add(Duration(days: 3)))}',
                     ),
-                    Row(
-                      children: [
-                        _text(text: '1 x', fontWeight: FontWeight.bold),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        _text(text: 'Mini Pillow Speaker-White', fontSize: 16)
-                      ],
-                    ),
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    _text(
-                        text:
-                            'Fulfilled by:Allwinshop88 \nDelivered between 10 Feb and Wednesday 17 Feb'),
-                    SizedBox(
-                      child: Divider(
-                        thickness: 1.0,
-                      ),
-                    ),
-                    _text(text: 'PACKAGE 2 OF 2', fontWeight: FontWeight.bold),
-                    SizedBox(
-                      height: 15.0,
-                    ),
-                    Row(
-                      children: [
-                        _text(text: '1 x', fontWeight: FontWeight.bold),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        _text(text: 'Orange Soda-2 Liters', fontSize: 16)
-                      ],
-                    ),
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    _text(
-                        text:
-                            'Fulfilled by:Shopla \nDelivered between Saturday 23 Jan and Tuesday 26 Jan'),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -1125,7 +1142,12 @@ class _CheckoutState extends State<Checkout>
                   ),
                 ),
                 FlatButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      index = 1;
+                      _controller.animateTo(1);
+                    });
+                  },
                   child: Text(
                     'CHANGE',
                     style: TextStyle(
@@ -1141,7 +1163,9 @@ class _CheckoutState extends State<Checkout>
               child: Padding(
                 padding: EdgeInsets.all(10.0),
                 child: _text(
-                    text: 'Mobile Money-AIRTEL / MTN',
+                    text: payMethod == Pay.MobileMoney
+                        ? 'Mobile Money-AIRTEL / MTN'
+                        : 'Pay On Delivery',
                     fontSize: 18,
                     color: Colors.black),
               ),
@@ -1153,6 +1177,8 @@ class _CheckoutState extends State<Checkout>
               height: 45.0,
               minWidth: double.infinity,
               color: kColorRed,
+              //TODO COMPLETE THIS SECTION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+              ///Delete item from the cart --->Success page ---> send data to order history
               onPressed: () {},
               textColor: Colors.white,
               shape: RoundedRectangleBorder(
@@ -1186,6 +1212,8 @@ class _CheckoutState extends State<Checkout>
   _navigateToPickupStation(BuildContext context) async {
     result = await Navigator.pushNamed(context, PickupStation.id);
   }
+
+  String _returnDate(DateTime dateTime) => DateFormat.MMMEd().format(dateTime);
 
   _navigateToAddressBook(BuildContext context) async {
     addressDetails = await Navigator.pushNamed(context, AddressBook.id);

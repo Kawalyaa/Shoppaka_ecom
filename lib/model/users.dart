@@ -7,6 +7,7 @@ class UserModel {
   static const TOKEN = "token";
   static const PHOTO = 'photo';
   static const ADDRESS = 'address';
+  static const ADDRESS2 = 'address2';
 
   final String name;
   final String email;
@@ -14,6 +15,7 @@ class UserModel {
   final String photo;
   final String phone;
   final List address;
+  final List address2;
   final String token;
   UserModel(
       {this.id,
@@ -22,6 +24,7 @@ class UserModel {
       this.photo,
       this.phone,
       this.address,
+      this.address2,
       this.token});
 
   //Constructor expecting data from a snapshot
@@ -33,6 +36,7 @@ class UserModel {
         photo: data[PHOTO] ?? '',
         phone: data[PHONE] ?? '',
         address: data[ADDRESS] ?? [],
+        address2: data[ADDRESS2] ?? [],
         token: data[TOKEN] ?? '');
   }
 }

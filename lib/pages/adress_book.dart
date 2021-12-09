@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/componants/addres_card.dart';
 import 'package:ecommerce_app/model/users.dart';
+import 'package:ecommerce_app/pages/add_new_address2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -14,11 +15,12 @@ class AddressBook extends StatelessWidget {
   Widget build(BuildContext context) {
     List<UserModel> _userInfo = Provider.of<List<UserModel>>(context);
     List addressList = _userInfo[0].address;
+    List addressList2 = _userInfo[0].address2;
 
     //List firstTwo = addressList.sublist(0, 2);
 
     ///make only one item in a list equals to true
-    addressList[1]['default'] = false;
+    // addressList[1]['default'] = false;
 
     ///List addressBook = [];
     return Scaffold(
@@ -45,16 +47,41 @@ class AddressBook extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
             ),
-            Container(
-              child: addressList == null
-                  ? Container(
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    )
-                  : Column(
+
+            ///Address 1
+            addressList.isEmpty
+                ? Card(
+                    color: Colors.white,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircleAvatar(
+                          radius: 10.0,
+                          backgroundColor: kColorRed,
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.white,
+                            size: 18.0,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                        FlatButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, AddNewAddress.id);
+                            },
+                            child: Text(
+                              'ADD NEW ADDRESS',
+                              style: TextStyle(color: kColorRed),
+                            ))
+                      ],
+                    ),
+                  )
+                : Container(
+                    child: Column(
                       children: List.generate(
-                        2,
+                        addressList.length,
                         (index) => AddressCard(
                           name: addressList[index]['name'],
                           region: addressList[index]['region'],
@@ -64,10 +91,36 @@ class AddressBook extends StatelessWidget {
                           defaultAddress: !addressList[index]['default']
                               ? ''
                               : 'Default Address',
+                          editCallback: () =>
+                              Navigator.pushNamed(context, AddNewAddress.id),
+                        ),
+                      ),
+                    ),
+                  ),
+
+            ///Address 2
+            Container(
+              child: addressList2 == null
+                  ? Container()
+                  : Column(
+                      children: List.generate(
+                        addressList2.length,
+                        (index) => AddressCard(
+                          name: addressList2[index]['name'],
+                          region: addressList2[index]['region'],
+                          town: addressList2[index]['town'],
+                          address: addressList2[index]['address'],
+                          phone: addressList2[index]['phone'],
+                          defaultAddress: !addressList2[index]['default']
+                              ? ''
+                              : 'Default Address',
+                          editCallback: () =>
+                              Navigator.pushNamed(context, AddAddress2.id),
                         ),
                       ),
                     ),
             ),
+
             Card(
               color: Colors.white,
               child: Row(
@@ -87,10 +140,10 @@ class AddressBook extends StatelessWidget {
                   ),
                   FlatButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, AddNewAddress.id);
+                        Navigator.pushNamed(context, AddAddress2.id);
                       },
                       child: Text(
-                        'ADD NEW ADDRESS',
+                        'ADD NEW ADDRESS2',
                         style: TextStyle(color: kColorRed),
                       ))
                 ],

@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/model/products_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ecommerce_app/constants.dart';
@@ -12,16 +13,16 @@ class CartItems extends StatelessWidget {
   final Function buttonUp;
   final Function buttonDown;
   final Function deleteItem;
-  int quantity;
+  final int quantity;
 
   CartItems(
       {this.id,
       this.name,
+      this.quantity,
       this.picture,
       this.selectedColor,
       this.price,
       this.selectedSize,
-      this.quantity,
       this.buttonUp,
       this.buttonDown,
       this.deleteItem});
@@ -32,7 +33,7 @@ class CartItems extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(5.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Image.network(
               picture,
@@ -42,8 +43,8 @@ class CartItems extends StatelessWidget {
             SizedBox(
               width: 20.0,
             ),
+
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
                   '$name',
@@ -52,33 +53,42 @@ class CartItems extends StatelessWidget {
                 SizedBox(
                   height: 8.0,
                 ),
-                Row(
-                  children: <Widget>[
-                    //******Size section******
-                    Text('Size :'),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Text(
-                        '$selectedSize',
-                        style: TextStyle(color: kColorRed),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 5.0,
-                    ),
 
-                    //*****Color section*******
-                    Text('Color :'),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        '$selectedColor',
+                //******Size section******
+                RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                    children: [
+                      TextSpan(text: 'Size :'),
+                      TextSpan(
+                        text: '$selectedSize',
                         style: TextStyle(color: kColorRed),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
 
+                SizedBox(
+                  height: 5.0,
+                ),
+
+                //*****Color section*******
+                RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                    children: [
+                      TextSpan(text: 'Color : '),
+                      TextSpan(
+                        text: '$selectedColor',
+                        style: TextStyle(color: kColorRed),
+                      ),
+                    ],
+                  ),
+                ),
                 //******Price Section******
                 Padding(
                   padding: EdgeInsets.all(4.0),
@@ -92,9 +102,11 @@ class CartItems extends StatelessWidget {
                 ),
               ],
             ),
+
             SizedBox(
-              width: 10.0,
+              width: 15.0,
             ),
+
             //*******Icon Button section*****
             Column(
               children: <Widget>[
@@ -117,9 +129,7 @@ class CartItems extends StatelessWidget {
             ),
             Container(
               height: 100,
-              //color: Colors.cyan,
               child: Column(
-                //crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   InkWell(
