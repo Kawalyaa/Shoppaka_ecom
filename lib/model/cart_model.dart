@@ -3,29 +3,37 @@ class CartModel {
   final String name;
   final String brand;
   final String category;
-  final images;
+  final List images;
   final double price;
   final double oldPrice;
-  final int quantity;
   final bool favorite;
   final bool featured;
   final String selectedSize;
   final String selectedColor;
-  final int qty;
+  int qty;
+
+  void increaseQty() {
+    assert(!(qty < 0));
+    qty++;
+  }
+
+  void deductQty() {
+    assert(!(qty < 0));
+    qty--;
+  }
 
   CartModel({
     this.id,
     this.name,
+    this.qty = 1,
     this.brand,
     this.category,
     this.images,
     this.price,
     this.oldPrice,
-    this.quantity,
     this.favorite,
     this.featured,
     this.selectedSize,
     this.selectedColor,
-    this.qty,
   });
 }

@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/pages/home_page.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class ProdDetails extends StatefulWidget {
   static const String id = 'productDetails';
@@ -83,6 +84,9 @@ class _ProdDetailsState extends State<ProdDetails> {
   @override
   Widget build(BuildContext context) {
     var addToCart = Provider.of<ProductProvider2>(context);
+    var uuid = Uuid();
+    String prodId = uuid.v1();
+
     return Scaffold(
       appBar: AppBar(
         title: InkWell(
@@ -199,12 +203,14 @@ class _ProdDetailsState extends State<ProdDetails> {
                   onPressed: () {
                     addToCart.addProducts(
                       CartModel(
-                          images: widget.productDetailsPicture,
-                          name: widget.productDetailsName,
-                          brand: widget.productBrand,
-                          price: widget.productDetailsPrice,
-                          selectedSize: selectedSize,
-                          selectedColor: selectedColor),
+                        id: prodId,
+                        images: widget.productDetailsPicture,
+                        name: widget.productDetailsName,
+                        brand: widget.productBrand,
+                        price: widget.productDetailsPrice,
+                        selectedSize: selectedSize,
+                        selectedColor: selectedColor,
+                      ),
                     );
                   },
                   icon: Icon(

@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/model/product2.dart';
+import 'package:ecommerce_app/provider/product_provider2.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/componants/products.dart';
 import 'package:ecommerce_app/componants/horizontal_listview.dart';
@@ -18,7 +18,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var aList = Provider.of<List<Products2>>(context);
+    var data = Provider.of<ProductProvider2>(context);
+    List cartList = data.cartProductList;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -39,27 +41,33 @@ class _HomePageState extends State<HomePage> {
             ),
             onPressed: () {},
           ),
-          Stack(children: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.shopping_cart,
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, ShoppingCart.id);
+            },
+            child: Stack(children: <Widget>[
+              IconButton(
+                icon: Icon(
+                  Icons.shopping_cart,
+                ),
+                onPressed: null,
               ),
-              onPressed: () {
-                Navigator.pushNamed(context, ShoppingCart.id);
-              },
-            ),
-            Positioned(
-              top: 2,
-              right: 2,
-              child: Container(
-                padding: EdgeInsets.all(3.0),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50.0),
-                    color: Colors.red),
-                child: Text('10'),
-              ),
-            )
-          ])
+              Positioned(
+                top: 2,
+                right: 2,
+                child: cartList.isNotEmpty
+                    ? Container(
+                        padding: EdgeInsets.all(3.0),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50.0),
+                            color: Colors.red),
+                        child: Text(
+                            '${cartList.length > 0 ? cartList.length : null}'),
+                      )
+                    : Container(),
+              )
+            ]),
+          )
         ],
         iconTheme: IconThemeData(color: Colors.black54),
         elevation: 0.0,
@@ -80,12 +88,7 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.all(20.0),
             child: Text('Recent Products'),
           ),
-          Padding(
-            padding: const EdgeInsets.all(2.0),
-            child: aList == null
-                ? CircularProgressIndicator()
-                : Text(aList.length.toString()),
-          ),
+
           //Grid view
           Container(
             height: 320,
