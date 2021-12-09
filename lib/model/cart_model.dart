@@ -55,4 +55,21 @@ class CartModel {
         featured = json['featured'],
         selectedColor = json['selectedColor'],
         selectedSize = json['selectedSize'];
+
+
+  Map<String,dynamic> toMap()=>{
+    'id': id,
+    'name': name,
+    'qty': 1,
+    'brand': brand,
+    'category': category,
+    'images': images,
+    'price': price,
+    'oldPrice': oldPrice,
+    'favorite': favorite,
+    'featured': featured,
+    'selectedSize': selectedSize,
+    'selectedColor': selectedColor,
+  };
+
 }
