@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/componants/category_option_detail.dart';
+import 'package:ecommerce_app/componants/featured_category.dart';
 import 'package:ecommerce_app/componants/jewelries_category.dart';
 import 'package:ecommerce_app/componants/men_category.dart';
 import 'package:ecommerce_app/componants/products.dart';
@@ -22,26 +23,28 @@ class _CategoryProductsListState extends State<CategoryProductsList> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            'shopla',
-            style: TextStyle(
-              color: Colors.black54,
-              fontWeight: FontWeight.w900,
-              fontFamily: 'Poppins',
-              fontSize: 24.0,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+                height: 50,
+                width: 40,
+                child: Image.asset(
+                  'images/logos/shoplaLogo.png',
+                  fit: BoxFit.cover,
+                )),
+            Text(
+              'Shopla',
+              style: TextStyle(
+                  color: Colors.black54,
+                  fontWeight: FontWeight.w900,
+                  fontFamily: 'Poppins',
+                  fontSize: 24.0,
+                  fontStyle: FontStyle.italic),
             ),
-          ),
+          ],
         ),
         backgroundColor: Colors.white,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              // appProvider.myFeatureProduct();
-            },
-          )
-        ],
         iconTheme: IconThemeData(color: Colors.black54),
         elevation: 0.0,
       ),
@@ -51,8 +54,8 @@ class _CategoryProductsListState extends State<CategoryProductsList> {
 
   _switchSelection() {
     switch (categoryOption) {
-      case Options.ALL:
-      case Options.FEATURED:
+      //case Options.ALL:
+      // case Options.FEATURED:
       case Options.ALL:
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,7 +113,7 @@ class _CategoryProductsListState extends State<CategoryProductsList> {
             ),
             //Grid view
             Container(
-              height: 320,
+              height: MediaQuery.of(context).size.height - 130,
               child: MenCategory(),
             ),
           ],
@@ -130,7 +133,7 @@ class _CategoryProductsListState extends State<CategoryProductsList> {
             ),
             //Grid view
             Container(
-              height: 320,
+              height: MediaQuery.of(context).size.height - 130,
               child: WomenCategory(),
             ),
           ],
@@ -150,7 +153,7 @@ class _CategoryProductsListState extends State<CategoryProductsList> {
             ),
             //Grid view
             Container(
-              height: 320,
+              height: MediaQuery.of(context).size.height - 130,
               child: TechCategory(),
             ),
           ],
@@ -170,8 +173,48 @@ class _CategoryProductsListState extends State<CategoryProductsList> {
             ),
             //Grid view
             Container(
-              height: 320,
+              height: MediaQuery.of(context).size.height - 130,
               child: JewelriesCategory(),
+            ),
+          ],
+        );
+        break;
+      case Options.FEATURED:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(15.0),
+              child: Text(
+                'Featured Products',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.black54),
+              ),
+            ),
+            //Grid view
+            Container(
+              height: MediaQuery.of(context).size.height - 130,
+              child: FeaturedCategory(),
+            ),
+          ],
+        );
+        break;
+      case Options.SORTED:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(15.0),
+              child: Text(
+                'Original Products',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.black54),
+              ),
+            ),
+            //Grid view
+            Container(
+              height: MediaQuery.of(context).size.height - 130,
+              child: Products(),
             ),
           ],
         );

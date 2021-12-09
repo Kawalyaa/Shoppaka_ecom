@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/model/product2.dart';
+import 'package:ecommerce_app/model/products_model.dart';
 import 'package:flutter/cupertino.dart';
 
 class CategoryOptions {
@@ -7,9 +7,9 @@ class CategoryOptions {
   bool isSelected;
   CategoryOptions({this.caption, this.imageLocation, this.isSelected});
 
-  List<Products2> getCategory(
-      List<Products2> productList, String categoryName) {
-    List<Products2> categoryList = [];
+  List<ProductsModel> getCategory(
+      List<ProductsModel> productList, String categoryName) {
+    List<ProductsModel> categoryList = [];
     try {
       categoryList = productList
           .where((products2) => products2.category.contains(categoryName))
@@ -19,9 +19,9 @@ class CategoryOptions {
     return categoryList;
   }
 
-  List<Products2> getFeaturedProd(
-      List<Products2> productList, bool isFeatured) {
-    List<Products2> featuredList = [];
+  List<ProductsModel> getFeaturedProd(
+      List<ProductsModel> productList, bool isFeatured) {
+    List<ProductsModel> featuredList = [];
     try {
       featuredList = productList
           .where((products2) => products2.featured == isFeatured)

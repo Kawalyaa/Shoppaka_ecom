@@ -337,7 +337,13 @@ class _HomePageState extends State<HomePage> {
           //Grid view
           Container(
             height: MediaQuery.of(context).size.height / 1.3,
-            child: FeaturedSection(),
+            child: FeaturedSection(
+              featuredCallback: () {
+                categoryOption = Options.FEATURED;
+                Navigator.pushNamed(context, CategoryProductsList.id,
+                    arguments: categoryOption);
+              },
+            ),
           ),
         ],
       );
@@ -347,7 +353,13 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           Container(
             height: MediaQuery.of(context).size.height / 1.3,
-            child: OriginalProductSection(),
+            child: OriginalProductSection(
+              orignProdCallback: () {
+                categoryOption = Options.SORTED;
+                Navigator.pushNamed(context, CategoryProductsList.id,
+                    arguments: categoryOption);
+              },
+            ),
           ),
         ],
       );

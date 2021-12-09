@@ -1,6 +1,6 @@
 import 'package:ecommerce_app/componants/auth.dart';
 import 'package:ecommerce_app/model/cart_model.dart';
-import 'package:ecommerce_app/model/product2.dart';
+import 'package:ecommerce_app/model/products_model.dart';
 import 'package:flutter/material.dart';
 
 class ProductProvider2 with ChangeNotifier {
@@ -8,7 +8,7 @@ class ProductProvider2 with ChangeNotifier {
 
   List<CartModel> get cartProductList => _cartProductList;
 
-  List<Products2> search(String terms, List products) {
+  List<ProductsModel> search(String terms, List products) {
     return products
         .where((product) =>
             product.name.toLowerCase().contains(terms.toLowerCase()))

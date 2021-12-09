@@ -21,7 +21,7 @@ import 'package:provider/provider.dart';
 
 import 'componants/screen_controller.dart';
 import 'db/databse_services.dart';
-import 'model/product2.dart';
+import 'model/products_model.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
 
 import 'model/users.dart';
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<UserProv>(
             create: (_) => UserProv(),
           ),
-          StreamProvider<List<Products2>>(
+          StreamProvider<List<ProductsModel>>(
             create: (_) => DatabaseServices().getAllFireStoreProduct(),
           ),
           StreamProvider<List<UserModel>>(

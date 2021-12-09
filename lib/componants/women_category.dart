@@ -1,6 +1,6 @@
 import 'package:ecommerce_app/componants/single_product.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
-import 'package:ecommerce_app/model/product2.dart';
+import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,9 +13,9 @@ class WomenCategory extends StatefulWidget {
 class _WomenCategoryState extends State<WomenCategory> {
   @override
   Widget build(BuildContext context) {
-    List<Products2> allProds = Provider.of<List<Products2>>(context);
+    List<ProductsModel> allProds = Provider.of<List<ProductsModel>>(context);
     String womenCategory = 'Women';
-    List<Products2> womenCategoryList =
+    List<ProductsModel> womenCategoryList =
         CategoryOptions().getCategory(allProds, womenCategory);
 
     var favData = Provider.of<FavoriteList>(context);
@@ -44,7 +44,7 @@ class _WomenCategoryState extends State<WomenCategory> {
 
                   //===Add or Remove  Favorite======
                   womenCategoryList[index].favorite
-                      ? favData.addToFavorite(Products2(
+                      ? favData.addToFavorite(ProductsModel(
                           name: womenCategoryList[index].name,
                           images: womenCategoryList[index].images,
                           price: womenCategoryList[index].price,

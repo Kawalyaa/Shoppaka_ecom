@@ -1,11 +1,11 @@
-import 'package:ecommerce_app/model/product2.dart';
+import 'package:ecommerce_app/model/products_model.dart';
 import 'package:flutter/material.dart';
 
 class FavoriteList with ChangeNotifier {
-  List<Products2> _favoriteList = [];
-  List<Products2> get favoriteList => _favoriteList;
+  List<ProductsModel> _favoriteList = [];
+  List<ProductsModel> get favoriteList => _favoriteList;
 
-  void addToFavorite(Products2 products2) {
+  void addToFavorite(ProductsModel products2) {
     bool isPresent = false;
 
     if (_favoriteList.length > 0) {

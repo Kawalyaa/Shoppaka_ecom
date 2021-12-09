@@ -1,4 +1,4 @@
-class Products2 {
+class ProductsModel {
   static const ID = 'id';
   static const NAME = 'name';
   static const PRICE = 'price';
@@ -25,7 +25,7 @@ class Products2 {
   bool favorite;
   final bool featured;
 
-  Products2({
+  ProductsModel({
     this.id,
     this.name,
     this.brand,
@@ -40,8 +40,8 @@ class Products2 {
     this.featured,
   });
 
-  factory Products2.fromSnapShot(Map data) {
-    return Products2(
+  factory ProductsModel.fromSnapShot(Map data) {
+    return ProductsModel(
       id: data[ID] ?? '',
       name: data[NAME] ?? '',
       brand: data[BRAND] ?? '',

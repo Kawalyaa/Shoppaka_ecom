@@ -1,7 +1,7 @@
 import 'package:ecommerce_app/componants/search_text_field.dart';
 import 'package:ecommerce_app/componants/single_product.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
-import 'package:ecommerce_app/model/product2.dart';
+import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
 import 'package:flutter/cupertino.dart';
@@ -50,7 +50,7 @@ class _ProductSearchState extends State<ProductSearch> {
 
   @override
   Widget build(BuildContext context) {
-    List<Products2> allProds = Provider.of<List<Products2>>(context);
+    List<ProductsModel> allProds = Provider.of<List<ProductsModel>>(context);
     var data = Provider.of<ProductProvider2>(context);
     final List searchResult = data.search(_terms, allProds);
 
@@ -81,7 +81,7 @@ class _ProductSearchState extends State<ProductSearch> {
                                   //===Add or Remove  Favorite======
 
                                   searchResult[index].favorite
-                                      ? favData.addToFavorite(Products2(
+                                      ? favData.addToFavorite(ProductsModel(
                                           name: searchResult[index].name,
                                           images: searchResult[index].images,
                                           price: searchResult[index].price,

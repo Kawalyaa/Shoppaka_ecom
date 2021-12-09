@@ -1,6 +1,6 @@
 import 'package:ecommerce_app/componants/single_product.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
-import 'package:ecommerce_app/model/product2.dart';
+import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class FeaturedSection extends StatefulWidget {
+  final Function featuredCallback;
+  FeaturedSection({this.featuredCallback});
   @override
   _FeaturedSectionState createState() => _FeaturedSectionState();
 }
@@ -15,9 +17,9 @@ class FeaturedSection extends StatefulWidget {
 class _FeaturedSectionState extends State<FeaturedSection> {
   @override
   Widget build(BuildContext context) {
-    List<Products2> allProds = Provider.of<List<Products2>>(context);
+    List<ProductsModel> allProds = Provider.of<List<ProductsModel>>(context);
     bool featured = true;
-    List<Products2> featuredList =
+    List<ProductsModel> featuredList =
         CategoryOptions().getFeaturedProd(allProds, featured);
     var favData = Provider.of<FavoriteList>(context);
 
@@ -46,7 +48,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: widget.featuredCallback,
                     child: Container(
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -98,7 +100,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
                               //===Add or Remove  Favorite======
 
                               featuredList[index].favorite
-                                  ? favData.addToFavorite(Products2(
+                                  ? favData.addToFavorite(ProductsModel(
                                       name: featuredList[index].name,
                                       images: featuredList[index].images,
                                       price: featuredList[index].price,

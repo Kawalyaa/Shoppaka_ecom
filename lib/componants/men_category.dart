@@ -1,6 +1,6 @@
 import 'package:ecommerce_app/componants/single_product.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
-import 'package:ecommerce_app/model/product2.dart';
+import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,9 +13,9 @@ class MenCategory extends StatefulWidget {
 class _MenCategoryState extends State<MenCategory> {
   @override
   Widget build(BuildContext context) {
-    List<Products2> allProds = Provider.of<List<Products2>>(context);
+    List<ProductsModel> allProds = Provider.of<List<ProductsModel>>(context);
     String menCategory = 'Men';
-    List<Products2> menCategoryList =
+    List<ProductsModel> menCategoryList =
         CategoryOptions().getCategory(allProds, menCategory);
 
     var favData = Provider.of<FavoriteList>(context);
@@ -42,7 +42,7 @@ class _MenCategoryState extends State<MenCategory> {
 
                   //===Add or Remove  Favorite======
                   menCategoryList[index].favorite
-                      ? favData.addToFavorite(Products2(
+                      ? favData.addToFavorite(ProductsModel(
                           name: menCategoryList[index].name,
                           images: menCategoryList[index].images,
                           price: menCategoryList[index].price,
