@@ -3,6 +3,7 @@ import 'package:ecommerce_app/pages/add_new_address2.dart';
 import 'package:ecommerce_app/pages/adress_book.dart';
 import 'package:ecommerce_app/pages/category_products_list.dart';
 import 'package:ecommerce_app/pages/favorites_page.dart';
+import 'package:ecommerce_app/pages/mobile_money_payment.dart';
 import 'package:ecommerce_app/pages/pickup_station.dart';
 import 'package:ecommerce_app/pages/prod_detail.dart';
 import 'package:ecommerce_app/pages/search_page.dart';
@@ -82,7 +83,8 @@ class MyApp extends StatelessWidget {
             AddNewAddress.id: (context) => AddNewAddress(),
             CategoryProductsList.id: (context) => CategoryProductsList(),
             ProductSearch.id: (context) => ProductSearch(),
-            AddAddress2.id: (context) => AddAddress2()
+            AddAddress2.id: (context) => AddAddress2(),
+            MobileMoneyPay.id: (context) => MobileMoneyPay()
           },
           theme: ThemeData(
               primaryColor: kColorRed, textSelectionHandleColor: kColorRed),
