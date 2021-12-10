@@ -4,6 +4,7 @@ import 'package:ecommerce_app/model/favorites_model.dart';
 import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 
 class TechCategory extends StatefulWidget {
@@ -15,17 +16,19 @@ class _TechCategoryState extends State<TechCategory> {
   @override
   Widget build(BuildContext context) {
     List<ProductsModel> allProds = Provider.of<List<ProductsModel>>(context);
-    String techCategory = 'Tech';
+    String techCategory = 'phones';
     List<ProductsModel> techCategoryList =
         CategoryOptions().getCategory(allProds, techCategory);
 
     var favData = Provider.of<FavoritesProvider>(context);
 
-    return GridView.builder(
+    return StaggeredGridView.countBuilder(
+      crossAxisCount: 2,
+      padding: EdgeInsets.all(10),
       itemCount: techCategoryList.length,
-      gridDelegate:
-          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+      staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
       itemBuilder: (context, int index) => SingleProduct(
+        heroTag: techCategoryList[index].id,
         name: techCategoryList[index].name,
         images: techCategoryList[index].images,
         price: techCategoryList[index].price,

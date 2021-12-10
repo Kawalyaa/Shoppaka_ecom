@@ -7,6 +7,10 @@ class AppData<T> {
       caption: 'All',
     ),
     CategoryOptions(
+      imageLocation: 'images/categories_icons/iphone.png',
+      caption: 'phones',
+    ),
+    CategoryOptions(
       imageLocation: 'images/categories_icons/shoe-icon.jpg',
       caption: 'Shoes',
     ),
@@ -17,10 +21,6 @@ class AppData<T> {
     CategoryOptions(
       imageLocation: 'images/categories_icons/dress.jpg',
       caption: 'Women',
-    ),
-    CategoryOptions(
-      imageLocation: 'images/categories_icons/iphone.png',
-      caption: 'Tech',
     ),
     CategoryOptions(
       imageLocation: 'images/categories_icons/jewelry.jpeg',

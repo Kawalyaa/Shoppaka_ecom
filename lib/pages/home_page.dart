@@ -1,10 +1,8 @@
 import 'package:ecommerce_app/componants/image_carousel_slider.dart';
-import 'package:ecommerce_app/componants/loading.dart';
 import 'package:ecommerce_app/componants/original_product_section.dart';
 import 'package:ecommerce_app/componants/featured_section.dart';
 import 'package:ecommerce_app/db/app_data.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
-import 'package:ecommerce_app/model/users.dart';
 import 'package:ecommerce_app/pages/category_products_list.dart';
 import 'package:ecommerce_app/pages/search_page.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
@@ -14,7 +12,6 @@ import 'package:ecommerce_app/componants/category_option_detail.dart';
 import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
 import 'package:ecommerce_app/componants/navigation_drawer.dart';
 import 'package:provider/provider.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 import '../constants.dart';
 
 Options categoryOption = Options.ALL;
@@ -88,13 +85,7 @@ class _HomePageState extends State<HomePage> {
         iconTheme: IconThemeData(color: Colors.black54),
         elevation: 0.0,
       ),
-      drawer: NavigationDrawer(
-          // userInfo: userInfo,
-          // name: userInfo[0].name,
-          // address: userInfo[0].address,
-          // photo: userInfo[0].photo,
-          // email: userInfo[0].email,
-          ), //Navigation drawer
+      drawer: NavigationDrawer(), //Navigation drawer
       body: ListView(
         children: <Widget>[
           ImageCarouselSlider(),
@@ -138,7 +129,6 @@ class _HomePageState extends State<HomePage> {
               },
             ),
           ),
-          _swapDeals(),
           _productList1(),
 
           _productList2(),
@@ -146,65 +136,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-  _swapDeals() => Container(
-        //height: 85,
-        width: MediaQuery.of(context).size.width,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'For Your Interests',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  interestsContainer(
-                      text: 'Swap for grade A',
-                      colors: Color(0xffD1DAEE),
-                      textColor: Color(0xff527EA5),
-                      imageLink: 'images/interests/laptop.jpg'),
-                  SizedBox(
-                    width: 6.0,
-                  ),
-                  interestsContainer(
-                      text: 'Your swap deals',
-                      colors: Color(0xffCED2F2),
-                      textColor: Color(0xff625BC0),
-                      imageLink: 'images/interests/laptop2.jpeg'),
-                ],
-              ),
-              SizedBox(
-                height: 6.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  interestsContainer(
-                      text: 'Pay in installments',
-                      colors: Color(0xffC9F1ED),
-                      textColor: Color(0xff39A9AF),
-                      imageLink: 'images/interests/laptop3.jpeg'),
-                  SizedBox(
-                    width: 6.0,
-                  ),
-                  interestsContainer(
-                      text: 'Swap for grade B',
-                      colors: Color(0xffFCEAC9),
-                      textColor: Color(0xffAD8245),
-                      imageLink: 'images/interests/speaker.jpg'),
-                ],
-              )
-            ],
-          ),
-        ),
-      );
 
   Expanded interestsContainer(
       {Color colors, String text, Color textColor, var imageLink}) {
@@ -253,56 +184,6 @@ class _HomePageState extends State<HomePage> {
   _productList1() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Stack(
-                children: [
-                  Container(
-                    height: 50,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30.0),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage('images/banners/banner3.png'),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    height: 50,
-                    width: MediaQuery.of(context).size.width,
-                  ),
-                  SizedBox(
-                    height: 50.0,
-                    child: RotateAnimatedTextKit(
-                        repeatForever: true,
-                        text: ["Friendly Prices", "Top Brands", "Best Offers"],
-                        textStyle: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.w900,
-                            shadows: [
-                              Shadow(
-                                blurRadius: 8.0,
-                                color: Colors.black,
-                                offset: Offset(5.0, 5.0),
-                              ),
-                              Shadow(
-                                blurRadius: 8.0,
-                                color: kColorRed,
-                                offset: Offset(5.0, 5.0),
-                              ),
-                            ],
-                            fontFamily: "Horizon",
-                            color: Colors.white),
-                        textAlign: TextAlign.start),
-                  )
-                ],
-              )),
-          //Grid view
           Container(
             height: MediaQuery.of(context).size.height / 1.2,
             child: FeaturedSection(
@@ -336,6 +217,9 @@ class _HomePageState extends State<HomePage> {
     if (optList[optIndex].caption == 'All') {
       categoryOption = Options.ALL;
     }
+    if (optList[optIndex].caption == 'phones') {
+      categoryOption = Options.HIGH_END;
+    }
     if (optList[optIndex].caption == 'Shoes') {
       categoryOption = Options.SHOES;
     }
@@ -345,9 +229,7 @@ class _HomePageState extends State<HomePage> {
     if (optList[optIndex].caption == 'Women') {
       categoryOption = Options.WOMEN;
     }
-    if (optList[optIndex].caption == 'Tech') {
-      categoryOption = Options.TECH;
-    }
+
     if (optList[optIndex].caption == 'Jewelries') {
       categoryOption = Options.JEWELRY;
     }
