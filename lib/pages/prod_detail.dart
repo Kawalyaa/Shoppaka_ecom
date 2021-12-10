@@ -4,6 +4,7 @@ import 'package:ecommerce_app/model/color_model.dart';
 import 'package:ecommerce_app/model/product_details_model.dart';
 import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/model/size_model.dart';
+import 'package:ecommerce_app/pages/order_list_page.dart';
 import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
@@ -238,10 +239,12 @@ class _ProdDetailsState extends State<ProdDetails> {
                       minWidth: 200.0,
                       height: 42.0,
                       onPressed: () {
+                        Navigator.pushNamed(context, OrderList.id);
+
                         ///>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                        apiUser.createApiUser();
-                        apiUser.generateApiKey();
-                        apiUser.generateJwtToken2();
+                        // apiUser.createApiUser();
+                        // apiUser.generateApiKey();
+                        // apiUser.generateJwtToken2();
                         providerData.addProducts(
                           CartModel(
                             images: widget

@@ -1233,25 +1233,8 @@ class _CheckoutState extends State<Checkout>
                       totalAmount: totalPrice,
                       pickupStation: result,
                     ));
-                // _handelPaymentInitialization();
-
-                ///Add orders to the fire
-                // _ordersServices.createOrders(
-                //   userName: _userInfo[0].name,
-                //   email: _userInfo[0].email,
-                //   phone: addressList[0]['phone'],
-                //   ordersList: orderedItemsList(),
-                //   paymentStatus: _response,
-                //   totalPrice: totalPrice,
-                //   paymentMethod: "MobileMoney",
-                //   pickupStation: result != null ? pickUpStationList() : null,
-                //   context: context
-                // );
-
-                // cartData.removeAllCartProducts();
               } else {
                 ///Add orders to the fire
-                ///TODO use then(), make createOrders a bool
                 _ordersServices
                     .createOrders(
                         userName: _userInfo[0].name,
@@ -1341,6 +1324,7 @@ class _CheckoutState extends State<Checkout>
 
   List orderedItemsList() => _cartListData
       .map((item) => {
+            'image': item.images[0],
             'name': item.name,
             'qty': item.qty,
             'price': item.price,

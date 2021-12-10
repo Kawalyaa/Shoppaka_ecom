@@ -4,12 +4,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:uuid/uuid.dart';
 import 'package:ecommerce_app/componants/loading.dart';
+import 'dart:math';
 
 class OrdersServices {
   final String collection = "orderz";
   final _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   String ref = 'orders';
+
+  String orderNumber() {
+    //Generate a 6 digit random number
+    var rNum = Random().nextDouble() * 100000;
+    while (rNum < 100000) {
+      rNum *= 10;
+    }
+    return rNum.round().toString();
+  }
 
   Future<bool> createOrders({
     String userName,
@@ -25,6 +35,7 @@ class OrdersServices {
     try {
       showProgress(context, 'Submitting order...', true);
       await _firestore.collection('allOrders').add({
+        'id': _auth.currentUser.uid,
         'userName': userName,
         'phone': phone,
         'email': email,
@@ -32,7 +43,10 @@ class OrdersServices {
         'paymentStatus': paymentStatus ?? '',
         'totalPrice': totalPrice,
         'paymentMethod': paymentMethod,
-        'pickupStation': pickupStation
+        'pickupStation': pickupStation,
+        'orderNumber': orderNumber(),
+        'orderStatus': 'sorting',
+        'deliveryDate': ''
       });
       //Navigator.pushReplacementNamed(context, PaymentSuccessful.id);
       hideProgress();
