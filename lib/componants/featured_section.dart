@@ -55,7 +55,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
                           borderRadius: BorderRadius.circular(5)),
                       child: Padding(
                         padding: EdgeInsets.all(5),
-                        child: Text('Veiw All'),
+                        child: Text('View All'),
                       ),
                     ),
                   ),
@@ -67,7 +67,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
         Positioned(
           top: size.height / 10,
           child: Container(
-            height: size.height / 1.6,
+            height: size.height / 1.4,
             padding: EdgeInsets.only(left: 2, right: 2),
             width: size.width,
             child: Card(
@@ -77,7 +77,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
               child: StaggeredGridView.countBuilder(
                 crossAxisCount: 2,
                 padding: EdgeInsets.all(10),
-                itemCount: 3,
+                itemCount: 4,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   return featuredList.isEmpty
@@ -91,6 +91,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
                           name: featuredList[index].name,
                           brand: featuredList[index].brand,
                           heroTag: featuredList[index].name,
+                          color: featuredList[index].color,
                           isFavorite: featuredList[index].favorite,
                           toggleFavorite: () {
                             setState(() {
@@ -108,6 +109,11 @@ class _FeaturedSectionState extends State<FeaturedSection> {
                                       favorite: featuredList[index].favorite,
                                       brand: featuredList[index].brand,
                                       category: featuredList[index].category,
+                                      color: featuredList[index].color,
+                                      description:
+                                          featuredList[index].description,
+                                      keyFeatures:
+                                          featuredList[index].keyFeatures,
                                       selectedSize: featuredList[index].sizes,
                                       selectedColor:
                                           featuredList[index].colors))
@@ -122,6 +128,8 @@ class _FeaturedSectionState extends State<FeaturedSection> {
                           category: featuredList[index].category,
                           similarProduct: CategoryOptions().getCategory(
                               allProds, featuredList[index].category),
+                          description: featuredList[index].description,
+                          keyFeatures: featuredList[index].keyFeatures,
                         );
                 },
                 staggeredTileBuilder: (int index) => StaggeredTile.fit(1),

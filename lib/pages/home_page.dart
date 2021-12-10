@@ -140,6 +140,7 @@ class _HomePageState extends State<HomePage> {
           ),
           _swapDeals(),
           _productList1(),
+
           _productList2(),
         ],
       ),
@@ -303,7 +304,7 @@ class _HomePageState extends State<HomePage> {
               )),
           //Grid view
           Container(
-            height: MediaQuery.of(context).size.height / 1.3,
+            height: MediaQuery.of(context).size.height / 1.2,
             child: FeaturedSection(
               featuredCallback: () {
                 categoryOption = Options.FEATURED;
@@ -319,7 +320,7 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            height: MediaQuery.of(context).size.height / 1.3,
+            height: MediaQuery.of(context).size.height / 1.2,
             child: OriginalProductSection(
               orignProdCallback: () {
                 categoryOption = Options.SORTED;

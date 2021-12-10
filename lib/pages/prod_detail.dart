@@ -37,8 +37,11 @@ class _ProdDetailsState extends State<ProdDetails> {
   String selectedColor;
 
   List<ProductsModel> similarProdList;
+  bool descHeight = false;
 
   //bool isFavorite;
+  var _controller = ScrollController();
+  var physics;
 
   @override
   void initState() {
@@ -50,7 +53,6 @@ class _ProdDetailsState extends State<ProdDetails> {
   populateSizeListData() {
     sizeList = <SizeModel>[];
     //converting widget.productSizes into SizeModel to resolve onTap issues
-
     widget.productDetailsModel.productSizes
         .map((item) => sizeList.add(SizeModel(sizeName: item)))
         .toList();
@@ -62,18 +64,32 @@ class _ProdDetailsState extends State<ProdDetails> {
     colorList = <ColorModel>[];
 
     widget.productDetailsModel.productColors.map((item) {
-      if (item == 'red') {
-        colorList.add(ColorModel(colorName: kColorRed));
+      switch (item) {
+        case 'red':
+          colorList.add(ColorModel(colorName: kColorRed));
+          break;
+        case 'white':
+          colorList.add(ColorModel(colorName: Colors.white));
+          break;
+        case 'black':
+          colorList.add(ColorModel(colorName: Colors.black));
+          break;
+        case 'brown':
+          colorList.add(ColorModel(colorName: Colors.brown));
       }
-      if (item == 'white') {
-        colorList.add(ColorModel(colorName: Colors.white));
-      }
-      if (item == 'black') {
-        colorList.add(ColorModel(colorName: Colors.black));
-      }
-      if (item == 'brown') {
-        colorList.add(ColorModel(colorName: Colors.brown));
-      }
+
+      // if (item == 'red') {
+      //   colorList.add(ColorModel(colorName: kColorRed));
+      // }
+      // if (item == 'white') {
+      //   colorList.add(ColorModel(colorName: Colors.white));
+      // }
+      // if (item == 'black') {
+      //   colorList.add(ColorModel(colorName: Colors.black));
+      // }
+      // if (item == 'brown') {
+      //   colorList.add(ColorModel(colorName: Colors.brown));
+      // }
     }).toList();
   }
 
@@ -85,6 +101,12 @@ class _ProdDetailsState extends State<ProdDetails> {
 
     List<ProductsModel> similarProdList =
         widget.productDetailsModel.similarProd;
+
+    _controller.addListener(() {
+      if (_controller.position.atEdge) {
+        physics = const NeverScrollableScrollPhysics();
+      }
+    });
 
     //========Create a List method that get products depending on the category======
 
@@ -245,12 +267,21 @@ class _ProdDetailsState extends State<ProdDetails> {
                             brand: widget.productDetailsModel.productBrand,
                             price:
                                 widget.productDetailsModel.productDetailsPrice,
-                            selectedSize: selectedSize == null
-                                ? widget.productDetailsModel.productSizes[0]
-                                : selectedSize,
-                            selectedColor: selectedColor == null
-                                ? widget.productDetailsModel.productColors[0]
-                                : selectedColor,
+                            selectedSize: selectedSize == null &&
+                                    widget.productDetailsModel.productSizes
+                                        .isEmpty
+                                ? 'No Size'
+                                : selectedSize == null
+                                    ? widget.productDetailsModel.productSizes[0]
+                                    : selectedSize,
+                            selectedColor: selectedColor == null &&
+                                    widget.productDetailsModel.productColors
+                                        .isEmpty
+                                ? widget.productDetailsModel.color
+                                : selectedColor == null
+                                    ? widget
+                                        .productDetailsModel.productColors[0]
+                                    : selectedColor,
                           ),
                         );
                       },
@@ -308,86 +339,97 @@ class _ProdDetailsState extends State<ProdDetails> {
           SizedBox(
             height: 15.0,
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(left: 8.0, top: 5.0, bottom: 15.0),
-                  child: Text(
-                    'Available Sizes',
-                    style:
-                        TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+          widget.productDetailsModel.productSizes.isEmpty
+              ? Container()
+              : Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding:
+                            EdgeInsets.only(left: 8.0, top: 5.0, bottom: 15.0),
+                        child: Text(
+                          'Available Sizes',
+                          style: TextStyle(
+                              fontSize: 14.0, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+
+                      //index and   int currentSelectedIndex are used to make 1 selection at ago
+                      Container(
+                        height: 50.0,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: sizeList.length,
+                            itemBuilder: (context, int index) {
+                              return _sizeCard(
+                                  aSize: sizeList[index].sizeName,
+                                  isSelected: currentSelectedSizeIndex == index,
+                                  toggleIsSelected: () {
+                                    setState(() {
+                                      currentSelectedSizeIndex = index;
+                                      selectedSize = sizeList[index].sizeName;
+                                    });
+                                  });
+                            }),
+                      ),
+                    ],
                   ),
                 ),
-
-                //index and   int currentSelectedIndex are used to make 1 selection at ago
-                Container(
-                  height: 50.0,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: sizeList.length,
-                      itemBuilder: (context, int index) {
-                        return _sizeCard(
-                            aSize: sizeList[index].sizeName,
-                            isSelected: currentSelectedSizeIndex == index,
-                            toggleIsSelected: () {
-                              setState(() {
-                                currentSelectedSizeIndex = index;
-                                selectedSize = sizeList[index].sizeName;
-                              });
-                            });
-                      }),
-                ),
-              ],
-            ),
-          ),
           SizedBox(
             height: 15.0,
           ),
           //=======Color Options Section===========
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(left: 8.0, top: 5.0, bottom: 5.0),
-                  child: Text(
-                    'Colors',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          widget.productDetailsModel.productColors.isEmpty
+              ? Container()
+              : Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding:
+                            EdgeInsets.only(left: 8.0, top: 5.0, bottom: 5.0),
+                        child: Text(
+                          'Colors',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 14),
+                        ),
+                      ),
+                      Container(
+                        height: 50.0,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: colorList.length,
+                            itemBuilder: (context, int index) => _colorCard(
+                                color: colorList[index].colorName,
+                                isSelected: currentSelectedColorIndex == index,
+                                toggleIsSelected: () {
+                                  setState(() {
+                                    currentSelectedColorIndex = index;
+                                    if (colorList[index].colorName ==
+                                        kColorRed) {
+                                      selectedColor = 'red';
+                                    }
+                                    if (colorList[index].colorName ==
+                                        Colors.black) {
+                                      selectedColor = 'black';
+                                    }
+                                    if (colorList[index].colorName ==
+                                        Colors.white) {
+                                      selectedColor = 'white';
+                                    }
+                                    if (colorList[index].colorName ==
+                                        Colors.brown) {
+                                      selectedColor = 'brown';
+                                    }
+                                  });
+                                })),
+                      ),
+                    ],
                   ),
                 ),
-                Container(
-                  height: 50.0,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: colorList.length,
-                      itemBuilder: (context, int index) => _colorCard(
-                          color: colorList[index].colorName,
-                          isSelected: currentSelectedColorIndex == index,
-                          toggleIsSelected: () {
-                            setState(() {
-                              currentSelectedColorIndex = index;
-                              if (colorList[index].colorName == kColorRed) {
-                                selectedColor = 'red';
-                              }
-                              if (colorList[index].colorName == Colors.black) {
-                                selectedColor = 'black';
-                              }
-                              if (colorList[index].colorName == Colors.white) {
-                                selectedColor = 'white';
-                              }
-                              if (colorList[index].colorName == Colors.brown) {
-                                selectedColor = 'browm';
-                              }
-                            });
-                          })),
-                ),
-              ],
-            ),
-          ),
 
           Divider(),
           Padding(
@@ -402,32 +444,107 @@ class _ProdDetailsState extends State<ProdDetails> {
                     child: ListTile(
                       contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
                       onTap: () {
-                        Navigator.pushNamed(context, Description.id);
+                        setState(() {
+                          descHeight = !descHeight;
+                        });
                       },
                       leading: Text(
                         'Description',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 18.0),
                       ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios_sharp,
-                        color: Colors.black,
-                      ),
+                      trailing: !descHeight
+                          ? Text(
+                              'More',
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.5),
+                            )
+                          : Text(
+                              'Less',
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.5),
+                            ),
                     ),
                   ),
                   Divider(),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10.0),
-                    height: 60.0,
-                    width: double.infinity,
-                    child: ListView(
-                      physics: const NeverScrollableScrollPhysics(),
-                      children: [
-                        Text(
-                            'The latest fashion trending in town.This fashion is fitting and classic for both the youth and elders,they are strong and with colors that can not be breached'),
-                      ],
-                    ),
-                  )
+                  !descHeight
+                      ? Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10.0),
+                          height: 60.0,
+                          width: double.infinity,
+                          child: widget.productDetailsModel.description.isEmpty
+                              ? ListView(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  children: [
+                                    Text(
+                                        'The latest fashion trending in town.This fashion is fitting and classic for both the youth and elders,they are strong and with colors that can not be breached'),
+                                  ],
+                                )
+                              : ListView(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  children: _description()
+                                  //TODO if color is unique make a default color list empty & use a different list
+                                  ),
+                        )
+                      : widget.productDetailsModel.keyFeatures.isEmpty
+                          ? Card(
+                              elevation: 0,
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
+                                    Text(
+                                        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
+                                    Text(
+                                        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
+                                    Text(
+                                        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+                                  ],
+                                ),
+                              ),
+                            )
+                          : Card(
+                              elevation: 0,
+                              // height: 400,
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Card(
+                                        elevation: 0,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: _description(),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Text(
+                                        'Key Features',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Card(
+                                        elevation: 0,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: _keyFeatures(),
+                                        ),
+                                      ),
+                                    ]),
+                              ),
+                            )
                 ],
               ),
             ),
@@ -438,52 +555,44 @@ class _ProdDetailsState extends State<ProdDetails> {
           ///specify only web review
 
           Divider(),
-          Row(
-            children: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               Padding(
                 padding: EdgeInsets.fromLTRB(16.0, 5.0, 5.0, 5.0),
-                child: Text(
-                  'Name:',
+                child: _specs(
+                  text1: 'Brand',
+                  text2: widget.productDetailsModel.productBrand,
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(5.0),
-                child: Text(widget.productDetailsModel.productDetailsName,
-                    style: TextStyle(color: Colors.black54)),
+                padding: EdgeInsets.fromLTRB(16.0, 5.0, 5.0, 5.0),
+                child: _specs(
+                    text1: 'Name',
+                    text2: widget.productDetailsModel.productDetailsName),
+              ),
+              widget.productDetailsModel.color == ''
+                  ? Padding(
+                      padding: EdgeInsets.fromLTRB(16.0, 5.0, 5.0, 5.0),
+                      child: _specs(
+                          text1: 'Color',
+                          text2: selectedColor == null
+                              ? widget.productDetailsModel.productColors[0]
+                              : selectedColor),
+                    )
+                  : Padding(
+                      padding: EdgeInsets.fromLTRB(16.0, 5.0, 5.0, 5.0),
+                      child: _specs(
+                          text1: 'Color',
+                          text2: widget.productDetailsModel.color),
+                    ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(16.0, 5.0, 5.0, 5.0),
+                child: _specs(text1: 'Condition', text2: 'New'),
               ),
             ],
           ),
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.fromLTRB(16.0, 5.0, 5.0, 5.0),
-                child: Text(
-                  'Brand:',
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(5.0),
-                child: Text('${widget.productDetailsModel.productBrand}',
-                    style: TextStyle(color: Colors.black54)),
-              )
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.fromLTRB(16.0, 5.0, 5.0, 5.0),
-                child: Text(
-                  'Condition:',
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(
-                  (5.0),
-                ),
-                child: Text('New', style: TextStyle(color: Colors.black54)),
-              )
-            ],
-          ),
+
           //******SIMILAR PRODUCTS*******
           Divider(),
           Padding(
@@ -510,6 +619,9 @@ class _ProdDetailsState extends State<ProdDetails> {
                           brand: similarProdList[index].brand,
                           colors: similarProdList[index].colors,
                           sizes: similarProdList[index].sizes,
+                          color: similarProdList[index].color,
+                          description: similarProdList[index].description,
+                          keyFeatures: similarProdList[index].keyFeatures,
                           similarProduct: similarProdList,
                           isFavorite: similarProdList[index].favorite,
                           toggleFavorite: () {
@@ -527,6 +639,11 @@ class _ProdDetailsState extends State<ProdDetails> {
                                       oldPrice: similarProdList[index].oldPrice,
                                       brand: similarProdList[index].brand,
                                       category: similarProdList[index].category,
+                                      color: similarProdList[index].color,
+                                      description:
+                                          similarProdList[index].description,
+                                      keyFeatures:
+                                          similarProdList[index].keyFeatures,
                                       selectedColor:
                                           similarProdList[index].colors,
                                       selectedSize:
@@ -597,4 +714,16 @@ class _ProdDetailsState extends State<ProdDetails> {
       ),
     );
   }
+
+  List<Widget> _description() =>
+      widget.productDetailsModel.description.map((item) => Text(item)).toList();
+  List<Widget> _keyFeatures() => widget.productDetailsModel.keyFeatures
+      .map((item) => Text('--$item'))
+      .toList();
+
+  Widget _specs({String text1, String text2}) => RichText(
+          text: TextSpan(style: TextStyle(color: Colors.black), children: [
+        TextSpan(text: "$text1: "),
+        TextSpan(text: text2, style: TextStyle(color: Colors.black54))
+      ]));
 }

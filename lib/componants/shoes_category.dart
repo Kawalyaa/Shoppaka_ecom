@@ -37,6 +37,7 @@ class _ShoesCategoryState extends State<ShoesCategory> {
               heroTag: shoesList[index].name,
               name: shoesList[index].name,
               brand: shoesList[index].brand,
+              color: shoesList[index].color,
               isFavorite: shoesList[index].favorite,
               toggleFavorite: () {
                 setState(() {
@@ -53,6 +54,7 @@ class _ShoesCategoryState extends State<ShoesCategory> {
                           favorite: shoesList[index].favorite,
                           brand: shoesList[index].brand,
                           selectedSize: shoesList[index].sizes,
+                          color: shoesList[index].color,
                           selectedColor: shoesList[index].colors))
                       : favData.removeFavorite(index);
                 });
@@ -65,6 +67,8 @@ class _ShoesCategoryState extends State<ShoesCategory> {
               category: shoesList[index].category,
               similarProduct: CategoryOptions()
                   .getCategory(allProds, shoesList[index].category),
+              description: shoesList[index].description,
+              keyFeatures: shoesList[index].keyFeatures,
             ),
       staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
     );

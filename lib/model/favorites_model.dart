@@ -10,6 +10,9 @@ class FavoritesModel {
   final bool featured;
   final List selectedSize;
   final List selectedColor;
+  final String color;
+  final List description;
+  final List keyFeatures;
   int qty;
 
   FavoritesModel({
@@ -25,6 +28,9 @@ class FavoritesModel {
     this.featured,
     this.selectedSize,
     this.selectedColor,
+    this.color,
+    this.description,
+    this.keyFeatures,
   });
 
   Map toJson() => {
@@ -40,6 +46,9 @@ class FavoritesModel {
         'featured': featured,
         'selectedSize': selectedSize,
         'selectedColor': selectedColor,
+        'color': color,
+        'description': description,
+        'keyFeatures': keyFeatures,
       };
 
   FavoritesModel.fromJson(Map json)
@@ -54,7 +63,10 @@ class FavoritesModel {
         favorite = json['favorite'],
         featured = json['featured'],
         selectedColor = json['selectedColor'],
-        selectedSize = json['selectedSize'];
+        selectedSize = json['selectedSize'],
+        description = json['description'],
+        keyFeatures = json['keyFeatures'],
+        color = json['color'];
 
   Map<String, dynamic> toMap() => {
         'id': id,
@@ -69,5 +81,8 @@ class FavoritesModel {
         'featured': featured,
         'selectedSize': selectedSize,
         'selectedColor': selectedColor,
+        'color': color,
+        'description': description,
+        'keyFeatures': keyFeatures,
       };
 }

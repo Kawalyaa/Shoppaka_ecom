@@ -22,42 +22,47 @@ class _TechCategoryState extends State<TechCategory> {
     var favData = Provider.of<FavoritesProvider>(context);
 
     return GridView.builder(
-        itemCount: techCategoryList.length,
-        gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-        itemBuilder: (context, int index) => SingleProduct(
-              name: techCategoryList[index].name,
-              images: techCategoryList[index].images,
-              price: techCategoryList[index].price,
-              oldPrice: techCategoryList[index].oldPrice,
-              brand: techCategoryList[index].brand,
-              colors: techCategoryList[index].colors,
-              sizes: techCategoryList[index].sizes,
-              isFavorite: techCategoryList[index].favorite,
-              category: techCategoryList[index].category,
-              similarProduct: CategoryOptions()
-                  .getCategory(allProds, techCategoryList[index].category),
-              toggleFavorite: () {
-                setState(() {
-                  //===toggle favorite=====
-                  techCategoryList[index].favorite =
-                      !techCategoryList[index].favorite;
+      itemCount: techCategoryList.length,
+      gridDelegate:
+          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+      itemBuilder: (context, int index) => SingleProduct(
+        name: techCategoryList[index].name,
+        images: techCategoryList[index].images,
+        price: techCategoryList[index].price,
+        color: techCategoryList[index].color,
+        oldPrice: techCategoryList[index].oldPrice,
+        brand: techCategoryList[index].brand,
+        colors: techCategoryList[index].colors,
+        sizes: techCategoryList[index].sizes,
+        isFavorite: techCategoryList[index].favorite,
+        category: techCategoryList[index].category,
+        similarProduct: CategoryOptions()
+            .getCategory(allProds, techCategoryList[index].category),
+        toggleFavorite: () {
+          setState(() {
+            //===toggle favorite=====
+            techCategoryList[index].favorite =
+                !techCategoryList[index].favorite;
 
-                  //===Add or Remove  Favorite======
-                  techCategoryList[index].favorite
-                      ? favData.addToFavorite(FavoritesModel(
-                          name: techCategoryList[index].name,
-                          images: techCategoryList[index].images,
-                          price: techCategoryList[index].price,
-                          oldPrice: techCategoryList[index].oldPrice,
-                          brand: techCategoryList[index].brand,
-                          category: techCategoryList[index].category,
-                          selectedColor: techCategoryList[index].colors,
-                          selectedSize: techCategoryList[index].sizes,
-                          favorite: techCategoryList[index].favorite))
-                      : favData.removeFavorite(index);
-                });
-              },
-            ));
+            //===Add or Remove  Favorite======
+            techCategoryList[index].favorite
+                ? favData.addToFavorite(FavoritesModel(
+                    name: techCategoryList[index].name,
+                    images: techCategoryList[index].images,
+                    price: techCategoryList[index].price,
+                    oldPrice: techCategoryList[index].oldPrice,
+                    brand: techCategoryList[index].brand,
+                    color: techCategoryList[index].color,
+                    category: techCategoryList[index].category,
+                    selectedColor: techCategoryList[index].colors,
+                    selectedSize: techCategoryList[index].sizes,
+                    favorite: techCategoryList[index].favorite))
+                : favData.removeFavorite(index);
+          });
+        },
+        description: techCategoryList[index].description,
+        keyFeatures: techCategoryList[index].keyFeatures,
+      ),
+    );
   }
 }

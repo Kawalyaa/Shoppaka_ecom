@@ -17,6 +17,9 @@ class FavDetail extends StatelessWidget {
   final bool featured;
   final Function removeFavorite;
   final List similarProducts;
+  final String color;
+  final List description;
+  final List keyFeatures;
 
   FavDetail(
       {this.id,
@@ -32,6 +35,9 @@ class FavDetail extends StatelessWidget {
       this.isFavorite,
       this.featured,
       this.removeFavorite,
+      this.color,
+      this.description,
+      this.keyFeatures,
       this.similarProducts});
   @override
   Widget build(BuildContext context) {
@@ -72,16 +78,20 @@ class FavDetail extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => ProdDetails(
                       productDetailsModel: ProductDetailsModel(
-                          heroTag: 'favTag',
-                          productDetailsName: name,
-                          productDetailsOldPrice: oldPrice,
-                          productDetailsPicture: images,
-                          productDetailsPrice: price,
-                          productBrand: brand,
-                          productColors: colors,
-                          productSizes: sizes,
-                          isFavorite: isFavorite,
-                          similarProd: similarProducts),
+                        heroTag: 'favTag',
+                        productDetailsName: name,
+                        productDetailsOldPrice: oldPrice,
+                        productDetailsPicture: images,
+                        productDetailsPrice: price,
+                        productBrand: brand,
+                        productColors: colors,
+                        productSizes: sizes,
+                        isFavorite: isFavorite,
+                        similarProd: similarProducts,
+                        description: description,
+                        keyFeatures: keyFeatures,
+                        color: color,
+                      ),
                     ),
                   ),
                 );

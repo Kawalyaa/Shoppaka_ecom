@@ -36,6 +36,7 @@ class _FeaturedCategoryState extends State<FeaturedCategory> {
               heroTag: featuredList[index].name,
               name: featuredList[index].name,
               brand: featuredList[index].brand,
+              color: featuredList[index].color,
               isFavorite: featuredList[index].favorite,
               toggleFavorite: () {
                 setState(() {
@@ -53,6 +54,7 @@ class _FeaturedCategoryState extends State<FeaturedCategory> {
                           favorite: featuredList[index].favorite,
                           brand: featuredList[index].brand,
                           selectedSize: featuredList[index].sizes,
+                          color: featuredList[index].color,
                           selectedColor: featuredList[index].colors))
                       : favData.removeFavorite(index);
                 });
@@ -65,6 +67,8 @@ class _FeaturedCategoryState extends State<FeaturedCategory> {
               category: featuredList[index].category,
               similarProduct: CategoryOptions()
                   .getCategory(allProds, featuredList[index].category),
+              description: featuredList[index].description,
+              keyFeatures: featuredList[index].keyFeatures,
             ),
       staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
     );

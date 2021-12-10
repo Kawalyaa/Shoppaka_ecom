@@ -41,6 +41,7 @@ class _ProductsState extends State<Products> {
                     heroTag: allProds[index].name,
                     name: allProds[index].name,
                     price: allProds[index].price,
+                    color: allProds[index].color,
                     oldPrice: allProds[index].oldPrice,
                     images: allProds[index].images,
                     sizes: allProds[index].sizes,
@@ -56,6 +57,7 @@ class _ProductsState extends State<Products> {
                               name: allProds[index].name,
                               images: allProds[index].images,
                               price: allProds[index].price,
+                              color: allProds[index].color,
                               category: allProds[index].category,
                               oldPrice: allProds[index].oldPrice,
                               favorite: allProds[index].favorite,
@@ -66,6 +68,8 @@ class _ProductsState extends State<Products> {
                     },
                     similarProduct: CategoryOptions()
                         .getCategory(allProds, allProds[index].category),
+                    description: allProds[index].description,
+                    keyFeatures: allProds[index].keyFeatures,
                   ),
             staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
           );

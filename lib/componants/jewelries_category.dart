@@ -29,6 +29,7 @@ class _JewelriesCategoryState extends State<JewelriesCategory> {
               name: jewelriesCategoryList[index].name,
               images: jewelriesCategoryList[index].images,
               price: jewelriesCategoryList[index].price,
+              color: jewelriesCategoryList[index].color,
               oldPrice: jewelriesCategoryList[index].oldPrice,
               brand: jewelriesCategoryList[index].brand,
               colors: jewelriesCategoryList[index].colors,
@@ -48,6 +49,7 @@ class _JewelriesCategoryState extends State<JewelriesCategory> {
                           name: jewelriesCategoryList[index].name,
                           images: jewelriesCategoryList[index].images,
                           price: jewelriesCategoryList[index].price,
+                          color: jewelriesCategoryList[index].color,
                           oldPrice: jewelriesCategoryList[index].oldPrice,
                           brand: jewelriesCategoryList[index].brand,
                           category: jewelriesCategoryList[index].category,
@@ -57,6 +59,8 @@ class _JewelriesCategoryState extends State<JewelriesCategory> {
                       : favData.removeFavorite(index);
                 });
               },
+              description: jewelriesCategoryList[index].description,
+              keyFeatures: jewelriesCategoryList[index].keyFeatures,
             ));
   }
 }

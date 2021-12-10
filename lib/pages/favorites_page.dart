@@ -107,6 +107,9 @@ class _FavoritesState extends State<Favorites> {
                 oldPrice: favList[index].oldPrice,
                 sizes: favList[index].selectedSize,
                 colors: favList[index].selectedColor,
+                description: favList[index].description,
+                keyFeatures: favList[index].keyFeatures,
+                color: favList[index].color,
                 similarProducts: CategoryOptions()
                     .getCategory(allProds, favList[index].category),
               ),

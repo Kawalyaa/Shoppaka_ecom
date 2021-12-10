@@ -45,7 +45,7 @@ class CartItems extends StatelessWidget {
             ),
 
             Container(
-              width: 100,
+              width: 120,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -59,20 +59,22 @@ class CartItems extends StatelessWidget {
                   ),
 
                   //******Size section******
-                  RichText(
-                    text: TextSpan(
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                      children: [
-                        TextSpan(text: 'Size :'),
-                        TextSpan(
-                          text: '$selectedSize',
-                          style: TextStyle(color: kColorRed),
+                  selectedSize == 'No Size'
+                      ? Container()
+                      : RichText(
+                          text: TextSpan(
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                            children: [
+                              TextSpan(text: 'Size :'),
+                              TextSpan(
+                                text: '$selectedSize',
+                                style: TextStyle(color: kColorRed),
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
-                  ),
 
                   SizedBox(
                     height: 5.0,

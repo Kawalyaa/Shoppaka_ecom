@@ -12,16 +12,23 @@ class ProductDetailsModel {
   final String heroTag;
   final List<ProductsModel> similarProd;
   bool isFavorite;
-  ProductDetailsModel(
-      {this.productDetailsPicture,
-      this.heroTag,
-      this.productDetailsName,
-      this.productDetailsOldPrice,
-      this.productDetailsPrice,
-      this.productBrand,
-      this.productSizes,
-      this.productColors,
-      this.isFavorite,
-      this.category,
-      this.similarProd});
+  final List description;
+  final List keyFeatures;
+  final String color;
+  ProductDetailsModel({
+    this.productDetailsPicture,
+    this.heroTag,
+    this.productDetailsName,
+    this.productDetailsOldPrice,
+    this.productDetailsPrice,
+    this.productBrand,
+    this.productSizes,
+    this.productColors,
+    this.isFavorite,
+    this.category,
+    this.similarProd,
+    this.description,
+    this.keyFeatures,
+    this.color,
+  });
 }

@@ -22,42 +22,47 @@ class _WomenCategoryState extends State<WomenCategory> {
     var favData = Provider.of<FavoritesProvider>(context);
 
     return GridView.builder(
-        itemCount: womenCategoryList.length,
-        gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-        itemBuilder: (context, int index) => SingleProduct(
-              name: womenCategoryList[index].name,
-              images: womenCategoryList[index].images,
-              price: womenCategoryList[index].price,
-              oldPrice: womenCategoryList[index].oldPrice,
-              brand: womenCategoryList[index].brand,
-              colors: womenCategoryList[index].colors,
-              sizes: womenCategoryList[index].sizes,
-              isFavorite: womenCategoryList[index].favorite,
-              category: womenCategoryList[index].category,
-              similarProduct: CategoryOptions()
-                  .getCategory(allProds, womenCategoryList[index].category),
-              toggleFavorite: () {
-                setState(() {
-                  //===toggle favorite=====
-                  womenCategoryList[index].favorite =
-                      !womenCategoryList[index].favorite;
+      itemCount: womenCategoryList.length,
+      gridDelegate:
+          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+      itemBuilder: (context, int index) => SingleProduct(
+        name: womenCategoryList[index].name,
+        color: womenCategoryList[index].color,
+        images: womenCategoryList[index].images,
+        price: womenCategoryList[index].price,
+        oldPrice: womenCategoryList[index].oldPrice,
+        brand: womenCategoryList[index].brand,
+        colors: womenCategoryList[index].colors,
+        sizes: womenCategoryList[index].sizes,
+        isFavorite: womenCategoryList[index].favorite,
+        category: womenCategoryList[index].category,
+        similarProduct: CategoryOptions()
+            .getCategory(allProds, womenCategoryList[index].category),
+        toggleFavorite: () {
+          setState(() {
+            //===toggle favorite=====
+            womenCategoryList[index].favorite =
+                !womenCategoryList[index].favorite;
 
-                  //===Add or Remove  Favorite======
-                  womenCategoryList[index].favorite
-                      ? favData.addToFavorite(FavoritesModel(
-                          name: womenCategoryList[index].name,
-                          images: womenCategoryList[index].images,
-                          price: womenCategoryList[index].price,
-                          oldPrice: womenCategoryList[index].oldPrice,
-                          category: womenCategoryList[index].category,
-                          brand: womenCategoryList[index].brand,
-                          selectedColor: womenCategoryList[index].colors,
-                          selectedSize: womenCategoryList[index].sizes,
-                          favorite: womenCategoryList[index].favorite))
-                      : favData.removeFavorite(index);
-                });
-              },
-            ));
+            //===Add or Remove  Favorite======
+            womenCategoryList[index].favorite
+                ? favData.addToFavorite(FavoritesModel(
+                    name: womenCategoryList[index].name,
+                    images: womenCategoryList[index].images,
+                    price: womenCategoryList[index].price,
+                    color: womenCategoryList[index].color,
+                    oldPrice: womenCategoryList[index].oldPrice,
+                    category: womenCategoryList[index].category,
+                    brand: womenCategoryList[index].brand,
+                    selectedColor: womenCategoryList[index].colors,
+                    selectedSize: womenCategoryList[index].sizes,
+                    favorite: womenCategoryList[index].favorite))
+                : favData.removeFavorite(index);
+          });
+        },
+        description: womenCategoryList[index].description,
+        keyFeatures: womenCategoryList[index].keyFeatures,
+      ),
+    );
   }
 }
