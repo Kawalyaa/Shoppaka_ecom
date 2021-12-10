@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/componants/product_image_slider.dart';
 import 'package:ecommerce_app/componants/single_similar_product.dart';
 import 'package:ecommerce_app/model/cart_model.dart';
 import 'package:ecommerce_app/model/color_model.dart';
@@ -170,22 +171,25 @@ class _ProdDetailsState extends State<ProdDetails> {
         children: <Widget>[
           Hero(
             tag: widget.productDetailsModel.heroTag,
-            child: Container(
-              height: 300.0,
-              width: 200.0,
-              decoration: BoxDecoration(
-                color: Colors.white,
-              ),
-              child: Center(
-                child: FadeInImage.assetNetwork(
-                    image: widget.productDetailsModel.productDetailsPicture[0],
-                    placeholder: 'images/loading_gif/Spin-1s-200px.gif',
-                    fit: BoxFit.cover,
-                    imageErrorBuilder: (context, url, error) => Icon(
-                          Icons.error,
-                        )),
-              ),
+            child: ProductImageSlider(
+              imageList: widget.productDetailsModel.productDetailsPicture,
             ),
+            // Container(
+            //   height: 300.0,
+            //   width: 200.0,
+            //   decoration: BoxDecoration(
+            //     color: Colors.white,
+            //   ),
+            //   child: Center(
+            //     child: FadeInImage.assetNetwork(
+            //         image: widget.productDetailsModel.productDetailsPicture[0],
+            //         placeholder: 'images/loading_gif/Spin-1s-200px.gif',
+            //         fit: BoxFit.cover,
+            //         imageErrorBuilder: (context, url, error) => Icon(
+            //               Icons.error,
+            //             )),
+            //   ),
+            // ),
           ),
 
           Padding(
