@@ -239,8 +239,6 @@ class _ProdDetailsState extends State<ProdDetails> {
                       minWidth: 200.0,
                       height: 42.0,
                       onPressed: () {
-                        Navigator.pushNamed(context, OrderList.id);
-
                         ///>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                         // apiUser.createApiUser();
                         // apiUser.generateApiKey();

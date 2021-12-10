@@ -26,6 +26,8 @@ class _OrderListState extends State<OrderList> {
           style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       bottomNavigationBar: Container(
         color: Colors.white,
@@ -62,14 +64,17 @@ class _OrderListState extends State<OrderList> {
         //.map((snaps) => snaps.docs.map((snap) => OrderModel.fromSnapShot(snap)).toList()),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
-            return Text(
-              'Something went wrong',
-              style: TextStyle(color: kColorRed),
+            return Center(
+              child: Text(
+                'Something went wrong',
+                style: TextStyle(color: kColorRed),
+              ),
             );
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Loading....", style: TextStyle(color: kColorRed));
+            return Center(
+                child: Text("Loading....", style: TextStyle(color: kColorRed)));
           }
           var snapData = snapshot.data.docs
               .map((DocumentSnapshot snap) =>
@@ -77,16 +82,16 @@ class _OrderListState extends State<OrderList> {
               .toList();
           return snapData.isEmpty
               ? Container(
-                  child: Text('Empty'),
+                  child: Center(child: Text('No Order Data')),
                 )
               : ListView.builder(
                   itemBuilder: (context, int index) {
                     return SingleOrder(
-                      ///TODO add order id in createOrder method
                       orderList: snapData[index].ordersList,
                       orderNumber: snapData[index].orderNumber,
                       orderStatus: snapData[index].orderStatus,
                       deliveryDate: snapData[index].deliveryDate,
+                      totalPrice: snapData[index].totalPrice,
                     );
                   },
                   itemCount: snapData.length,
@@ -102,91 +107,109 @@ class SingleOrder extends StatelessWidget {
   final String orderNumber;
   final String orderStatus;
   final String deliveryDate;
+  final double totalPrice;
   SingleOrder(
-      {this.orderList, this.orderNumber, this.orderStatus, this.deliveryDate});
+      {this.orderList,
+      this.orderNumber,
+      this.orderStatus,
+      this.deliveryDate,
+      this.totalPrice});
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.white70,
-      child: Column(
-        children: [
-          Card(
-            child: Column(
-              children: List.generate(
-                orderList.length,
-                (index) => ListTile(
-                  title: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 50.0,
-                            width: 50.0,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: NetworkImage(orderList[index]['image']),
-                                fit: BoxFit.cover,
+    return Padding(
+      padding: EdgeInsets.only(bottom: 8.0),
+      child: Card(
+        //color: Colors.white70,
+        child: Column(
+          children: [
+            Card(
+              elevation: 0,
+              child: Column(
+                children: List.generate(
+                  orderList.length,
+                  (index) => ListTile(
+                    title: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: 50.0,
+                              width: 50.0,
+                              child: FadeInImage.assetNetwork(
+                                alignment: Alignment.center,
+                                image: orderList[index]['image'],
+                                placeholder:
+                                    'images/img_place_holder/placeholder-image.png',
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            width: 14.0,
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(orderList[index]['name']),
-                              Text(
-                                'qty: ${orderList[index]['qty'].toString()}',
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        thickness: 2.0,
-                      )
-                    ],
+                            SizedBox(
+                              width: 14.0,
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(orderList[index]['name']),
+                                Text(
+                                  'qty: ${orderList[index]['qty'].toString()}',
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Divider(
+                          thickness: 1.0,
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.only(left: 4.0, right: 4.0),
-                  decoration: BoxDecoration(
-                      color: orderStatus == 'delivered'
-                          ? Color(0xFF00FF00)
-                          : orderStatus == 'sorting'
-                              ? Colors.deepOrange
-                              : Colors.orangeAccent,
-                      borderRadius: BorderRadius.circular(2)),
-                  child: Center(
-                    child: Text(
-                      orderStatus,
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(left: 4.0, right: 4.0),
+                    decoration: BoxDecoration(
+                        color: orderStatus == 'delivered'
+                            ? Color(0xFF00FF00)
+                            : orderStatus == 'sorting'
+                                ? Colors.deepOrange
+                                : Colors.orangeAccent,
+                        borderRadius: BorderRadius.circular(2)),
+                    child: Center(
+                      child: Text(
+                        orderStatus,
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
-                ),
-                deliveryDate == '' ? Container() : Text('on $deliveryDate'),
-                Text(
-                  '# $orderNumber',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                )
-              ],
-            ),
-          )
-        ],
+                  deliveryDate == '' ? Container() : Text('on $deliveryDate'),
+                  Text('UGX$totalPrice'),
+                  Text(
+                    '# $orderNumber',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 }
+
+// decoration: BoxDecoration(
+// image: DecorationImage(
+// image: FadeInImage.assetNetwork(
+// image: orderList[index]['image']),
+// fit: BoxFit.cover,
+// ),
+// ),child

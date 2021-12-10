@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/pages/order_list_page.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -50,7 +51,9 @@ class PaymentSuccessful extends StatelessWidget {
               height: 45.0,
               minWidth: 200,
               color: Colors.blueGrey,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, OrderList.id);
+              },
               textColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.0),
