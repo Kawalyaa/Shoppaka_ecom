@@ -115,7 +115,7 @@ class SingleProduct extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 2.0,
+              height: 4.0,
             ),
             Text(
               name,
@@ -123,22 +123,25 @@ class SingleProduct extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             SizedBox(
-              height: 5.0,
+              height: 10.0,
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'UGX$oldPrice',
-                  style: TextStyle(decoration: TextDecoration.lineThrough),
+                  'UGX $oldPrice',
+                  style: TextStyle(
+                      decoration: TextDecoration.lineThrough, fontSize: 13.0),
                 ),
                 SizedBox(
-                  height: 10.0,
+                  height: 6.0,
                 ),
                 Text(
-                  'UGX$price',
-                  style:
-                      TextStyle(color: kColorRed, fontWeight: FontWeight.bold),
+                  'UGX $price',
+                  style: TextStyle(
+                      color: kColorRed,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0),
                 ),
               ],
             ),
