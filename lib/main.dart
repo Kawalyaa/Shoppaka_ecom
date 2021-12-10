@@ -24,7 +24,6 @@ import './pages/signup.dart';
 import './pages/checkout_page.dart';
 import 'package:provider/provider.dart';
 
-import 'componants/screen_controller.dart';
 import 'db/databse_services.dart';
 import 'model/products_model.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
@@ -64,9 +63,6 @@ class MyApp extends StatelessWidget {
               StreamProvider<List<ProductsModel>>(
                 create: (_) => DatabaseServices().getAllFireStoreProduct(),
               ),
-              StreamProvider<List<UserModel>>(
-                create: (_) => DatabaseServices().getUserInfo(),
-              ),
               ChangeNotifierProvider<ProductProvider2>(
                 create: (_) => ProductProvider2(),
               ),
@@ -75,90 +71,39 @@ class MyApp extends StatelessWidget {
               ),
             ],
             child: MaterialApp(
-              debugShowCheckedModeBanner: false,
+                debugShowCheckedModeBanner: false,
 //initialRoute: ScreenController.id,
-              routes: {
-                Login.id: (context) => Login(),
-                SignUp.id: (context) => SignUp(),
-                HomePage.id: (context) => HomePage(),
-                ProdDetails.id: (context) => ProdDetails(),
-                ShoppingCart.id: (context) => ShoppingCart(),
-                WelcomeLoginOptions.id: (context) => WelcomeLoginOptions(),
-                Favorites.id: (context) => Favorites(),
-                Checkout.id: (context) => Checkout(),
-                PickupStation.id: (context) => PickupStation(),
-                AddressBook.id: (context) => AddressBook(),
-                AddNewAddress.id: (context) => AddNewAddress(),
-                CategoryProductsList.id: (context) => CategoryProductsList(),
-                ProductSearch.id: (context) => ProductSearch(),
-                AddAddress2.id: (context) => AddAddress2(),
-                MobileMoneyPay.id: (context) => MobileMoneyPay(),
-                LoadingPage.id: (context) => LoadingPage(),
-                PaymentSuccessful.id: (context) => PaymentSuccessful(),
-                OrderList.id: (context) => OrderList()
-              },
-              theme: ThemeData(
-                  inputDecorationTheme: InputDecorationTheme(
-                    labelStyle: TextStyle(color: kColorRed),
-                  ),
-                  primaryColor: kColorRed,
-                  textSelectionTheme: TextSelectionThemeData(
-                      cursorColor: kColorRed,
-                      selectionColor: kColorRed,
-                      selectionHandleColor: kColorRed)),
-              home: initScreen == 0 || initScreen == null
-                  ? WelcomeLoginOptions()
-                  : ScreenController(),
-            ),
+                routes: {
+                  Login.id: (context) => Login(),
+                  SignUp.id: (context) => SignUp(),
+                  HomePage.id: (context) => HomePage(),
+                  ProdDetails.id: (context) => ProdDetails(),
+                  ShoppingCart.id: (context) => ShoppingCart(),
+                  WelcomeLoginOptions.id: (context) => WelcomeLoginOptions(),
+                  Favorites.id: (context) => Favorites(),
+                  Checkout.id: (context) => Checkout(),
+                  PickupStation.id: (context) => PickupStation(),
+                  AddressBook.id: (context) => AddressBook(),
+                  AddNewAddress.id: (context) => AddNewAddress(),
+                  CategoryProductsList.id: (context) => CategoryProductsList(),
+                  ProductSearch.id: (context) => ProductSearch(),
+                  AddAddress2.id: (context) => AddAddress2(),
+                  MobileMoneyPay.id: (context) => MobileMoneyPay(),
+                  LoadingPage.id: (context) => LoadingPage(),
+                  PaymentSuccessful.id: (context) => PaymentSuccessful(),
+                  OrderList.id: (context) => OrderList()
+                },
+                theme: ThemeData(
+                    inputDecorationTheme: InputDecorationTheme(
+                      labelStyle: TextStyle(color: kColorRed),
+                    ),
+                    primaryColor: kColorRed,
+                    textSelectionTheme: TextSelectionThemeData(
+                        cursorColor: kColorRed,
+                        selectionColor: kColorRed,
+                        selectionHandleColor: kColorRed)),
+                home: HomePage()),
           );
         }),
       );
 }
-
-//
-//MultiProvider(
-//providers: [
-//ChangeNotifierProvider<UserProv>(
-//create: (_) => UserProv(),
-//),
-//StreamProvider<List<ProductsModel>>(
-//create: (_) => DatabaseServices().getAllFireStoreProduct(),
-//),
-//StreamProvider<List<UserModel>>(
-//create: (_) => DatabaseServices().getUserInfo(),
-//),
-//ChangeNotifierProvider<ProductProvider2>(
-//create: (_) => ProductProvider2(),
-//),
-//ChangeNotifierProvider<FavoriteList>(
-//create: (_) => FavoriteList(),
-//),
-////
-//],
-//child: MaterialApp(
-//debugShowCheckedModeBanner: false,
-////initialRoute: ScreenController.id,
-//routes: {
-//Login.id: (context) => Login(),
-//SignUp.id: (context) => SignUp(),
-//HomePage.id: (context) => HomePage(),
-//ProdDetails.id: (context) => ProdDetails(),
-//ShoppingCart.id: (context) => ShoppingCart(),
-//WelcomeLoginOptions.id: (context) => WelcomeLoginOptions(),
-//Favorites.id: (context) => Favorites(),
-//Checkout.id: (context) => Checkout(),
-//PickupStation.id: (context) => PickupStation(),
-//AddressBook.id: (context) => AddressBook(),
-//AddNewAddress.id: (context) => AddNewAddress(),
-//CategoryProductsList.id: (context) => CategoryProductsList(),
-//ProductSearch.id: (context) => ProductSearch(),
-//AddAddress2.id: (context) => AddAddress2(),
-//MobileMoneyPay.id: (context) => MobileMoneyPay()
-//},
-//theme: ThemeData(
-//primaryColor: kColorRed, textSelectionHandleColor: kColorRed),
-//home: initScreen == 0 || initScreen == null
-//? WelcomeLoginOptions()
-//    : ScreenController(),
-//),
-//);

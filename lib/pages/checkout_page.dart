@@ -3,12 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/componants/loading.dart';
 import 'package:ecommerce_app/componants/shipment_details.dart';
 import 'package:ecommerce_app/constants.dart';
+import 'package:ecommerce_app/db/databse_services.dart';
 import 'package:ecommerce_app/model/cart_model.dart';
 import 'package:ecommerce_app/model/users.dart';
 import 'package:ecommerce_app/pages/payment_successfull.dart';
 import 'package:ecommerce_app/pages/pickup_station.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
 import 'package:ecommerce_app/services/orders_services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
@@ -63,6 +65,7 @@ class _CheckoutState extends State<Checkout>
   var cartData;
 
   OrdersServices _ordersServices = OrdersServices();
+  DatabaseServices _databaseServices = DatabaseServices();
 
   var _response;
   List _cartListData;
@@ -132,13 +135,16 @@ class _CheckoutState extends State<Checkout>
     ),
   ];
 
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  CollectionReference _users = FirebaseFirestore.instance.collection('users');
+
   @override
   Widget build(BuildContext context) {
     _controller.addListener(handleTabSelection);
     final Checkout args = ModalRoute.of(context).settings.arguments;
 
-    _userInfo = Provider.of<List<UserModel>>(context);
-    addressList = _userInfo[0].address;
+    //_userInfo = Provider.of<List<UserModel>>(context, listen: true);
+    //addressList = _userInfo[0].address;
 
     cartData = Provider.of<ProductProvider2>(context);
     List<CartModel> _cartList = cartData.cartProductList;
@@ -170,19 +176,45 @@ class _CheckoutState extends State<Checkout>
           tabs: _tabs,
         ),
       ),
-      body: TabBarView(
-        controller: _controller,
-        physics: NeverScrollableScrollPhysics(),
-        children: [
-          _deliveryInfoList(
-              subtotal: args.productPrice, addressList: addressList),
-          _paymentInfoList(args.productPrice),
-          _summeryInfoTab(
-              subtotal: args.productPrice,
-              addressList: addressList,
-              cartList: _cartList),
-        ],
-      ),
+      body: StreamBuilder<QuerySnapshot>(
+          stream:
+              _users.where('id', isEqualTo: _auth.currentUser.uid).snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  'Something went wrong',
+                  style: TextStyle(color: kColorRed),
+                ),
+              );
+            }
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                  child:
+                      Text("Loading....", style: TextStyle(color: kColorRed)));
+            }
+            List snapData = snapshot.data.docs
+                .map((DocumentSnapshot snap) =>
+                    UserModel.fromSnapShot(snap.data()))
+                .toList();
+
+            addressList = snapData[0].address;
+
+            return TabBarView(
+              controller: _controller,
+              physics: NeverScrollableScrollPhysics(),
+              children: [
+                _deliveryInfoList(
+                    subtotal: args.productPrice, addressList: addressList),
+                _paymentInfoList(args.productPrice),
+                _summeryInfoTab(
+                    subtotal: args.productPrice,
+                    addressList: addressList,
+                    cartList: _cartList),
+              ],
+            );
+          }),
     );
   }
 
@@ -393,7 +425,7 @@ class _CheckoutState extends State<Checkout>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Starndard Shipping',
+                    'Standard Shipping',
                     style: TextStyle(color: Colors.black, fontSize: 18),
                   ),
                   SizedBox(
