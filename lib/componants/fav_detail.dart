@@ -93,11 +93,13 @@ class FavDetail extends StatelessWidget {
                   width: 100.0,
                   child: Center(
                     child: FadeInImage.assetNetwork(
-                      placeholder:
-                          'images/img_place_holder/placeholder-image.png',
-                      image: images[0],
-                      fit: BoxFit.cover,
-                    ),
+                        placeholder:
+                            'images/img_place_holder/placeholder-image.png',
+                        image: images[0],
+                        fit: BoxFit.cover,
+                        imageErrorBuilder: (context, url, error) => Icon(
+                              Icons.error,
+                            )),
                   ),
                 ),
               ),

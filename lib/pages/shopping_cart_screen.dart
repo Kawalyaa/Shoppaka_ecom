@@ -122,7 +122,6 @@ class _ShoppingCartState extends State<ShoppingCart> {
                             default:
                               return LoadingPage();
                           }
-
                         },
                         minWidth: 200.0,
                         height: 35.0,
@@ -161,5 +160,4 @@ class _ShoppingCartState extends State<ShoppingCart> {
   }
 }
 
-//TODO 1 Change the Radio buttons in checkout page to RadioList
-//TODO 2 Add error handler in FadeInImage provider
+//TODO 1 Add error handler in FadeInImage provider

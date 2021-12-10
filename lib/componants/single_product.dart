@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/constants.dart';
 import 'package:ecommerce_app/model/product_details_model.dart';
 import 'package:ecommerce_app/pages/prod_detail.dart';
 import 'package:flutter/cupertino.dart';
@@ -55,7 +56,7 @@ class SingleProduct extends StatelessWidget {
                     onTap: toggleFavorite,
                     child: Icon(
                       isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: Colors.red,
+                      color: kColorRed,
                     ),
                   )
                 ],
@@ -93,9 +94,13 @@ class SingleProduct extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: FadeInImage.assetNetwork(
-                      fit: BoxFit.cover,
-                      placeholder: 'images/loading_gif/Spin-1s-200px.gif',
-                      image: images[0]),
+                    fit: BoxFit.cover,
+                    placeholder: 'images/loading_gif/Spin-1s-200px.gif',
+                    image: images[0],
+                    imageErrorBuilder: (context, url, error) => Icon(
+                      Icons.error,
+                    ),
+                  ),
                 ),
               ),
             ),
