@@ -99,6 +99,7 @@ class _OrderListState extends State<OrderList> {
                       orderStatus: snapData[index].orderStatus,
                       deliveryDate: snapData[index].deliveryDate,
                       totalPrice: snapData[index].totalPrice,
+                      orderedTime: snapData[index].time,
                     );
                   },
                   itemCount: snapData.length,
