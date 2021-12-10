@@ -9,6 +9,8 @@ import 'package:ecommerce_app/pages/order_list_page.dart';
 import 'package:ecommerce_app/pages/payment_successfull.dart';
 import 'package:ecommerce_app/pages/pickup_station.dart';
 import 'package:ecommerce_app/pages/prod_detail.dart';
+import 'package:ecommerce_app/pages/reset_password_page.dart';
+import 'package:ecommerce_app/pages/reset_password_ready.dart';
 import 'package:ecommerce_app/pages/search_page.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:ecommerce_app/provider/user.dart';
@@ -86,6 +88,8 @@ class MyApp extends StatelessWidget {
                   LoadingPage.id: (context) => LoadingPage(),
                   PaymentSuccessful.id: (context) => PaymentSuccessful(),
                   OrderList.id: (context) => OrderList(),
+                  ResetPassword.id: (context) => ResetPassword(),
+                  ResetPasswordReady.id: (context) => ResetPasswordReady(),
                 },
                 theme: ThemeData(
                     inputDecorationTheme: InputDecorationTheme(

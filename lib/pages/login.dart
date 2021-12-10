@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/componants/loading.dart';
 import 'package:ecommerce_app/pages/home_page.dart';
+import 'package:ecommerce_app/pages/reset_password_page.dart';
 import 'package:ecommerce_app/pages/signup.dart';
 import 'package:ecommerce_app/provider/user.dart';
 import 'package:email_validator/email_validator.dart';
@@ -108,6 +109,22 @@ class _LoginState extends State<Login> {
                       return null;
                     },
                   ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, ResetPassword.id);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: Text(
+                          'Forgot Password?',
+                          textAlign: TextAlign.end,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
@@ -149,6 +166,7 @@ class _LoginState extends State<Login> {
                     'or',
                     textAlign: TextAlign.right,
                     style: TextStyle(
+                        color: Colors.black54,
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.italic,
                         fontSize: 16.0),
@@ -164,9 +182,7 @@ class _LoginState extends State<Login> {
                       'Register',
                       textAlign: TextAlign.right,
                       style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold),
+                          fontSize: 16.0, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
