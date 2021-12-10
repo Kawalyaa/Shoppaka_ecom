@@ -470,7 +470,7 @@ class _CheckoutState extends State<Checkout>
                   ? Padding(
                       padding: const EdgeInsets.fromLTRB(8.0, 22.0, 8.0, 12.0),
                       child: Container(
-                        height: 40.0.h,
+                        height: 312.0,
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.grey),
                           borderRadius: BorderRadius.circular(5.0),
@@ -1314,8 +1314,6 @@ class _CheckoutState extends State<Checkout>
         narration: 'Shopla');
 
     var response = await flutterWave.initializeForUiPayments();
-    print(
-        '/////////\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$ ${response.data.status}');
     _response = response.data.status;
     response.data.status == "successful"
         ? Navigator.pushReplacementNamed(context, PaymentSuccessful.id)

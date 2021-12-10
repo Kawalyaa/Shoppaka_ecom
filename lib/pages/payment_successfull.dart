@@ -52,7 +52,7 @@ class PaymentSuccessful extends StatelessWidget {
               minWidth: 200,
               color: Colors.blueGrey,
               onPressed: () {
-                Navigator.pushNamed(context, OrderList.id);
+                Navigator.pushReplacementNamed(context, OrderList.id);
               },
               textColor: Colors.white,
               shape: RoundedRectangleBorder(

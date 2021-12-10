@@ -46,6 +46,7 @@ class OrdersServices {
         'pickupStation': pickupStation,
         'orderNumber': orderNumber(),
         'orderStatus': 'sorting',
+        'time': DateTime.now(),
         'deliveryDate': ''
       });
       //Navigator.pushReplacementNamed(context, PaymentSuccessful.id);
