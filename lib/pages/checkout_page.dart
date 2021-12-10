@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecommerce_app/componants/alart_dialogue.dart';
 import 'package:ecommerce_app/componants/loading.dart';
 import 'package:ecommerce_app/componants/shipment_details.dart';
 import 'package:ecommerce_app/constants.dart';
@@ -10,17 +9,12 @@ import 'package:ecommerce_app/pages/payment_successfull.dart';
 import 'package:ecommerce_app/pages/pickup_station.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
 import 'package:ecommerce_app/services/orders_services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:flutter/painting.dart';
-import 'package:flutterwave/core/flutterwave.dart';
-import 'package:flutterwave/utils/flutterwave_currency.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:sizer/sizer.dart';
 
 import '../constants.dart';
 import 'adress_book.dart';
@@ -57,7 +51,7 @@ class _CheckoutState extends State<Checkout>
   Pay payMethod = Pay.MobileMoney;
 
   //int initialPrice = 3264;
-  int shippingFee = 7000;
+  int shippingFee = 5000;
   int extraFee = 1000;
   int shippingFee2 = 0;
   double totalPrice;
@@ -66,11 +60,9 @@ class _CheckoutState extends State<Checkout>
   var addressDetails;
   bool isDebug = false;
   List<UserModel> _userInfo;
-  String _ugCurrency = FlutterwaveCurrency.UGX;
   var cartData;
 
   OrdersServices _ordersServices = OrdersServices();
-  CartModel _cartModel = CartModel();
 
   var _response;
   List _cartListData;
@@ -218,7 +210,7 @@ class _CheckoutState extends State<Checkout>
                 style: TextStyle(
                     color: Colors.black54, fontWeight: FontWeight.bold),
               ),
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   _navigateToAddressBook(context);
                 },
@@ -240,7 +232,7 @@ class _CheckoutState extends State<Checkout>
                     child: Container(
                       decoration:
                           BoxDecoration(border: Border.all(color: kColorRed)),
-                      child: FlatButton(
+                      child: TextButton(
                         onPressed: () {
                           Navigator.pushNamed(context, AddressBook.id);
                         },
@@ -955,7 +947,7 @@ class _CheckoutState extends State<Checkout>
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   _navigateToAddressBook(context);
                 },
@@ -985,7 +977,7 @@ class _CheckoutState extends State<Checkout>
                           child: Container(
                             decoration: BoxDecoration(
                                 border: Border.all(color: kColorRed)),
-                            child: FlatButton(
+                            child: TextButton(
                               onPressed: () {
                                 Navigator.pushNamed(context, AddressBook.id);
                               },
@@ -1089,7 +1081,7 @@ class _CheckoutState extends State<Checkout>
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   setState(() {
                     index = 0;
@@ -1185,7 +1177,7 @@ class _CheckoutState extends State<Checkout>
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   setState(() {
                     index = 1;
@@ -1221,12 +1213,9 @@ class _CheckoutState extends State<Checkout>
             height: 45.0,
             minWidth: double.infinity,
             color: kColorRed,
-            //TODO COMPLETE THIS SECTION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            ///Delete item from the cart --->Success page ---> send data to order history
-            ///and data to admin
             onPressed: () {
-              print('******************${orderedItemsList()}');
               if (payMethod == Pay.MobileMoney) {
+                ///Go to mobile money page
                 Navigator.pushNamed(context, MobileMoneyPay.id,
                     arguments: MobileMoneyPay(
                       orderedProducts: orderedItemsList(),
@@ -1295,29 +1284,6 @@ class _CheckoutState extends State<Checkout>
 
   _navigateToAddressBook(BuildContext context) async {
     addressDetails = await Navigator.pushNamed(context, AddressBook.id);
-  }
-
-  _handelPaymentInitialization() async {
-    final flutterWave = Flutterwave.forUIPayment(
-        acceptUSSDPayment: true,
-        fullName: _userInfo[0].name,
-        email: _userInfo[0].email,
-        txRef: DateTime.now().toIso8601String(),
-        phoneNumber: addressList[0]['phone'],
-        isDebugMode: false,
-        currency: _ugCurrency,
-        context: context,
-        amount: "500",
-        acceptUgandaPayment: true,
-        publicKey: 'FLWPUBK-515fba68c059b487d73e3368c46fc35f-X',
-        encryptionKey: '45742576d0de5608b5801d26',
-        narration: 'Shopla');
-
-    var response = await flutterWave.initializeForUiPayments();
-    _response = response.data.status;
-    response.data.status == "successful"
-        ? Navigator.pushReplacementNamed(context, PaymentSuccessful.id)
-        : showAlertDialog(context, 'Msg', response.data.status);
   }
 
   List orderedItemsList() => _cartListData

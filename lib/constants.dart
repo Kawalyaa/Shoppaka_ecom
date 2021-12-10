@@ -45,3 +45,6 @@ const kVoucherInputDecoration = InputDecoration(
     ),
   ),
 );
+
+const kUnderLineBorder =
+    UnderlineInputBorder(borderSide: BorderSide(color: kColorRed, width: 2));

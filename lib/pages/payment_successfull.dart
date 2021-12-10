@@ -1,8 +1,6 @@
 import 'package:ecommerce_app/pages/order_list_page.dart';
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
-
 class PaymentSuccessful extends StatelessWidget {
   static const String id = "paymentSuccessful";
   @override

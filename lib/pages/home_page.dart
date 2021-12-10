@@ -134,10 +134,6 @@ class _HomePageState extends State<HomePage> {
 
                     setState(() {
                       selectedIndex = index;
-
-                      ///When pressed should Navigate with 'categoryOption'
-                      //TODO USE PROVIDER FOR  'categoryOption'
-
                       _selectedOption(optionsList, index);
                     });
                   },

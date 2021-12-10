@@ -28,7 +28,7 @@ class AddressBook extends StatelessWidget {
         elevation: 1,
         backgroundColor: Colors.white,
         title: Text(
-          'Adress book',
+          'Address book',
           style: TextStyle(color: Colors.black),
         ),
         iconTheme: IconThemeData(color: Colors.black),
@@ -67,7 +67,7 @@ class AddressBook extends StatelessWidget {
                         SizedBox(
                           height: 5.0,
                         ),
-                        FlatButton(
+                        TextButton(
                             onPressed: () {
                               Navigator.pushNamed(context, AddNewAddress.id);
                             },
@@ -138,12 +138,12 @@ class AddressBook extends StatelessWidget {
                   SizedBox(
                     height: 5.0,
                   ),
-                  FlatButton(
+                  TextButton(
                       onPressed: () {
                         Navigator.pushNamed(context, AddAddress2.id);
                       },
                       child: Text(
-                        'ADD NEW ADDRESS2',
+                        'ADD SECOND ADDRESS',
                         style: TextStyle(color: kColorRed),
                       ))
                 ],

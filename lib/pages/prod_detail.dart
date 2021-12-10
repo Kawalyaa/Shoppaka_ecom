@@ -4,17 +4,14 @@ import 'package:ecommerce_app/model/color_model.dart';
 import 'package:ecommerce_app/model/product_details_model.dart';
 import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/model/size_model.dart';
-import 'package:ecommerce_app/pages/order_list_page.dart';
 import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
-import 'package:ecommerce_app/services/mtn_api_user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/pages/home_page.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
-import 'package:sizer/sizer.dart';
 import '../constants.dart';
 
 class ProdDetails extends StatefulWidget {
@@ -28,7 +25,6 @@ class ProdDetails extends StatefulWidget {
 }
 
 class _ProdDetailsState extends State<ProdDetails> {
-  //bool isFav = false;
   int currentSelectedSizeIndex;
   int currentSelectedColorIndex;
 
@@ -84,8 +80,6 @@ class _ProdDetailsState extends State<ProdDetails> {
     var providerData = Provider.of<ProductProvider2>(context);
     List<CartModel> cartList = providerData.cartProductList;
     var favData = Provider.of<FavoriteList>(context);
-
-    ApiUser apiUser = ApiUser();
 
     List<ProductsModel> similarProdList =
         widget.productDetailsModel.similarProd;

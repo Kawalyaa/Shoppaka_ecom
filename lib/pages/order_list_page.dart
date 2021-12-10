@@ -12,7 +12,6 @@ class OrderList extends StatefulWidget {
   _OrderListState createState() => _OrderListState();
 }
 
-/// TODO 1 create order model,2 get orders from firestore
 class _OrderListState extends State<OrderList> {
   CollectionReference _reference =
       FirebaseFirestore.instance.collection('allOrders');
@@ -61,8 +60,6 @@ class _OrderListState extends State<OrderList> {
         stream: _reference
             .where('id', isEqualTo: _auth.currentUser.uid)
             .snapshots(),
-        //.orderBy('time', descending: true)
-        //.map((snaps) => snaps.docs.map((snap) => OrderModel.fromSnapShot(snap)).toList()),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return Center(
@@ -183,7 +180,9 @@ class SingleOrder extends StatelessWidget {
                             ? Color(0xFF00FF00)
                             : orderStatus == 'sorting'
                                 ? Colors.deepOrange
-                                : Colors.orangeAccent,
+                                : orderStatus == 'canceled'
+                                    ? kColorRed
+                                    : Colors.orangeAccent,
                         borderRadius: BorderRadius.circular(2)),
                     child: Center(
                       child: Text(
@@ -210,11 +209,3 @@ class SingleOrder extends StatelessWidget {
     );
   }
 }
-
-// decoration: BoxDecoration(
-// image: DecorationImage(
-// image: FadeInImage.assetNetwork(
-// image: orderList[index]['image']),
-// fit: BoxFit.cover,
-// ),
-// ),child
