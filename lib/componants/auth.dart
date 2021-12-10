@@ -8,8 +8,8 @@ SharedPreferences preferences;
 bool loading = false;
 bool isLoggedIn = false;
 
-Future<FirebaseUser> signInWithGoogle() async {
-  FirebaseUser currentUser;
+Future<User> signInWithGoogle() async {
+  User currentUser;
   loading = true;
   try {
     //Google auth
@@ -22,7 +22,7 @@ Future<FirebaseUser> signInWithGoogle() async {
     );
     //Save or Sign in google user to firebase
     var authResult = await _auth.signInWithCredential(credential);
-    final FirebaseUser user = authResult.user;
+    final User user = authResult.user;
     //validate firebase user
     assert(user.email != null);
     assert(user.displayName != null);
@@ -31,7 +31,7 @@ Future<FirebaseUser> signInWithGoogle() async {
     assert(!user.isAnonymous);
     assert(await user.getIdToken() != null);
     //check for current user
-    currentUser = await _auth.currentUser;
+    currentUser = _auth.currentUser;
     assert(user.uid == currentUser.uid);
     print(currentUser);
     print("User Name : ${currentUser.displayName}");

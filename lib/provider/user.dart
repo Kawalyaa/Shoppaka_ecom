@@ -125,7 +125,7 @@ class UserProv with ChangeNotifier {
   }
 
   saveDeviceToken() async {
-    FirebaseMessaging fcm = FirebaseMessaging();
+    FirebaseMessaging fcm = FirebaseMessaging.instance;
     String deviceToken = await fcm.getToken();
     if (deviceToken != null) {
       _userServices.addDeviceToken(deviceToken, user.uid);

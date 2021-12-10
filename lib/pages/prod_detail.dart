@@ -7,6 +7,7 @@ import 'package:ecommerce_app/model/size_model.dart';
 import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
+import 'package:ecommerce_app/services/mtn_api_user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/pages/home_page.dart';
@@ -82,6 +83,8 @@ class _ProdDetailsState extends State<ProdDetails> {
     var providerData = Provider.of<ProductProvider2>(context);
     List<CartModel> cartList = providerData.cartProductList;
     var favData = Provider.of<FavoriteList>(context);
+
+    ApiUser apiUser = ApiUser();
 
     List<ProductsModel> similarProdList =
         widget.productDetailsModel.similarProd;
@@ -235,6 +238,10 @@ class _ProdDetailsState extends State<ProdDetails> {
                       minWidth: 200.0,
                       height: 42.0,
                       onPressed: () {
+                        ///>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                        apiUser.createApiUser();
+                        apiUser.generateApiKey();
+                        apiUser.generateJwtToken2();
                         providerData.addProducts(
                           CartModel(
                             images: widget
@@ -446,8 +453,12 @@ class _ProdDetailsState extends State<ProdDetails> {
           //******SIMILAR PRODUCTS*******
           Divider(),
           Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text('Similar Products'),
+            padding: EdgeInsets.all(10.0),
+            child: Text(
+              'Similar Products',
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            ),
           ),
           Container(
             height: 25.0.h,
