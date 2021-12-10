@@ -6,12 +6,12 @@ class FavoriteList with ChangeNotifier {
   List<ProductsModel> get favoriteList => _favoriteList;
 
   void addToFavorite(ProductsModel products2) {
-    bool isPresent = false;
+    bool isPresent;
 
     if (_favoriteList.length > 0) {
       for (int i = 0; i < _favoriteList.length; i++) {
         if (_favoriteList[i].name == products2.name) {
-          _favoriteList[i] = products2;
+          //_favoriteList[i] = products2;
           isPresent = true;
         } else {
           isPresent = false;

@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:ecommerce_app/componants/auth.dart';
 import 'package:ecommerce_app/model/cart_model.dart';
 import 'package:ecommerce_app/model/products_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,23 +24,25 @@ class ProductProvider2 with ChangeNotifier {
 
   //add items if not present n if present just increase the qty
   addProducts(CartModel cartItem) {
-    bool isPresent = false;
-    if (_cartProductList.length > 0) {
-      for (int i = 0; i < _cartProductList.length; i++) {
-        if (_cartProductList[i].name == cartItem.name) {
-          _cartProductList[i].qty++;
-          isPresent = true;
-        } else {
-          isPresent = false;
-        }
-      }
-      if (!isPresent) {
-        //if item not present or at the block where isPresent is false
-        _cartProductList.add(cartItem);
-      }
-    } else {
+    bool present;
+
+    if (_cartProductList.isEmpty) {
       _cartProductList.add(cartItem);
     }
+
+    for (int i = 0; i < _cartProductList.length; i++) {
+      if (_cartProductList[i].name == cartItem.name) {
+        _cartProductList[i].qty++;
+        present = true;
+      } else {
+        present = false;
+      }
+    }
+
+    if (!present) {
+      _cartProductList.add(cartItem);
+    }
+
     updateSharedPreferences();
 
     notifyListeners();
@@ -111,4 +111,6 @@ class ProductProvider2 with ChangeNotifier {
     updateSharedPreferences();
     notifyListeners();
   }
+
+  bool searchItem(CartModel item) => _cartProductList.contains(item);
 }
