@@ -1251,16 +1251,24 @@ class _CheckoutState extends State<Checkout>
                 // cartData.removeAllCartProducts();
               } else {
                 ///Add orders to the fire
-                _ordersServices.createOrders(
-                    userName: _userInfo[0].name,
-                    email: _userInfo[0].email,
-                    phone: addressList[0]['phone'],
-                    ordersList: orderedItemsList(),
-                    paymentStatus: _response,
-                    totalPrice: totalPrice,
-                    paymentMethod: "CashOnDelivery",
-                    pickupStation: result != null ? pickUpStationList() : null,
-                    context: context);
+                ///TODO use then(), make createOrders a bool
+                _ordersServices
+                    .createOrders(
+                        userName: _userInfo[0].name,
+                        email: _userInfo[0].email,
+                        phone: addressList[0]['phone'],
+                        ordersList: orderedItemsList(),
+                        paymentStatus: _response,
+                        totalPrice: totalPrice,
+                        paymentMethod: "CashOnDelivery",
+                        pickupStation:
+                            result != null ? pickUpStationList() : null,
+                        context: context)
+                    .then((value) => value == true
+                        ? Navigator.pushReplacementNamed(
+                            context, PaymentSuccessful.id)
+                        : showAlertDialog(context, 'Message', 'upload error'));
+
                 cartData.removeAllCartProducts();
 
                 //Navigator.pushReplacementNamed(context, PaymentSuccessful.id);

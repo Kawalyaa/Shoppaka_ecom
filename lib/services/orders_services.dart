@@ -11,7 +11,7 @@ class OrdersServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   String ref = 'orders';
 
-  Future<void> createOrders({
+  Future<bool> createOrders({
     String userName,
     String email,
     String phone,
@@ -34,10 +34,12 @@ class OrdersServices {
         'paymentMethod': paymentMethod,
         'pickupStation': pickupStation
       });
-      Navigator.pushReplacementNamed(context, PaymentSuccessful.id);
+      //Navigator.pushReplacementNamed(context, PaymentSuccessful.id);
       hideProgress();
+      return true;
     } catch (e) {
       showAlertDialog(context, 'Message', e.toString());
+      return false;
     }
   }
 
