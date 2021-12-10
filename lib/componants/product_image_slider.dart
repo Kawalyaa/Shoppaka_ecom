@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -76,7 +77,7 @@ class _ImageCarouselSliderState extends State<ProductImageSlider> {
         width: 20,
         height: 5,
         decoration: BoxDecoration(
-          color: Colors.black,
+          color: kColorRed,
           borderRadius: BorderRadius.circular(5),
         ),
       ));
