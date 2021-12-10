@@ -100,7 +100,7 @@ class _FavoritesState extends State<Favorites> {
                 brand: favList[index].brand,
                 isFavorite: favList[index].favorite,
                 removeFavorite: () {
-                  favData.removeFavorite(favList[index].id);
+                  favData.removeFavorite(index);
                 },
                 images: favList[index].images,
                 price: favList[index].price,

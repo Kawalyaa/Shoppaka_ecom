@@ -60,7 +60,7 @@ class _TechCategoryState extends State<TechCategory> {
                     selectedColor: techCategoryList[index].colors,
                     selectedSize: techCategoryList[index].sizes,
                     favorite: techCategoryList[index].favorite))
-                : favData.removeFavorite(techCategoryList[index].id);
+                : favData.removeFavorite(index);
           });
         },
         description: techCategoryList[index].description,

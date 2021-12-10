@@ -72,6 +72,7 @@ class _OriginalProductSectionState extends State<OriginalProductSection> {
             padding: EdgeInsets.only(left: 2, right: 2),
             width: size.width,
             child: Card(
+              elevation: 0,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
               color: Colors.white,
@@ -116,8 +117,7 @@ class _OriginalProductSectionState extends State<OriginalProductSection> {
                                       brand: phonesList[index].brand,
                                       selectedSize: phonesList[index].sizes,
                                       selectedColor: phonesList[index].colors))
-                                  : favData
-                                      .removeFavorite(phonesList[index].id);
+                                  : favData.removeFavorite(index);
                             });
                           },
                           images: phonesList[index].images,

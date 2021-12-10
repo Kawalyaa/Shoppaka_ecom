@@ -56,7 +56,7 @@ class _ShoesCategoryState extends State<ShoesCategory> {
                           selectedSize: shoesList[index].sizes,
                           color: shoesList[index].color,
                           selectedColor: shoesList[index].colors))
-                      : favData.removeFavorite(shoesList[index].id);
+                      : favData.removeFavorite(index);
                 });
               },
               images: shoesList[index].images,

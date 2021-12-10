@@ -71,6 +71,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
             padding: EdgeInsets.only(left: 2, right: 2),
             width: size.width,
             child: Card(
+              elevation: 0,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
               color: Colors.white,
@@ -117,8 +118,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
                                       selectedSize: featuredList[index].sizes,
                                       selectedColor:
                                           featuredList[index].colors))
-                                  : favData
-                                      .removeFavorite(featuredList[index].id);
+                                  : favData.removeFavorite(index);
                             });
                           },
                           images: featuredList[index].images,

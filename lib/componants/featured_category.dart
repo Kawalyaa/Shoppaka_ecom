@@ -56,7 +56,7 @@ class _FeaturedCategoryState extends State<FeaturedCategory> {
                           selectedSize: featuredList[index].sizes,
                           color: featuredList[index].color,
                           selectedColor: featuredList[index].colors))
-                      : favData.removeFavorite(featuredList[index].id);
+                      : favData.removeFavorite(index);
                 });
               },
               images: featuredList[index].images,

@@ -64,7 +64,7 @@ class _ProductsState extends State<Products> {
                               brand: allProds[index].brand,
                               selectedSize: allProds[index].sizes,
                               selectedColor: allProds[index].colors))
-                          : favData.removeFavorite(allProds[index].id);
+                          : favData.removeFavorite(index);
                     },
                     similarProduct: CategoryOptions()
                         .getCategory(allProds, allProds[index].category),

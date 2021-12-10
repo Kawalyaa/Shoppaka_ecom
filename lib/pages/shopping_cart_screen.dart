@@ -29,7 +29,9 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
     return cartList.length == 0
         ? Scaffold(
+            backgroundColor: Colors.white,
             appBar: AppBar(
+              centerTitle: true,
               title: Text(
                 'My Cart',
                 style: TextStyle(
@@ -38,16 +40,9 @@ class _ShoppingCartState extends State<ShoppingCart> {
                 ),
               ),
               backgroundColor: Colors.white,
-              actions: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () {
-                    // appProvider.myFeatureProduct();
-                  },
-                )
-              ],
+              actions: <Widget>[],
               iconTheme: IconThemeData(color: Colors.black54),
-              elevation: 0.0,
+              elevation: 0.5,
             ),
             body: Column(
               mainAxisAlignment: MainAxisAlignment.center,
