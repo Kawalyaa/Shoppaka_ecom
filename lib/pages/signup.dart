@@ -9,7 +9,11 @@ import 'package:provider/provider.dart';
 import 'package:email_validator/email_validator.dart';
 
 class SignUp extends StatefulWidget {
-  static const String id = 'signup';
+  static const String id = 'sign up';
+
+  final String onePage;
+
+  SignUp({this.onePage});
   @override
   _SignUpState createState() => _SignUpState();
 }
@@ -33,6 +37,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     UserProv authProvider = Provider.of<UserProv>(context);
+    var args = ModalRoute.of(context).settings.arguments;
     //TextEditingController _email2 = TextEditingController();
 
     return Scaffold(
@@ -149,7 +154,11 @@ class _SignUpState extends State<SignUp> {
                     hideProgress();
                     //authProvider.clearController();
                     authProvider.reloadUser();
-                    Navigator.pushReplacementNamed(context, HomePage.id);
+
+                    ///Check if one page is left in a stack to  avoid pop()
+                    args == 'onePage'
+                        ? Navigator.pushReplacementNamed(context, HomePage.id)
+                        : Navigator.pop(context);
                   } //validateForm();
                 })
           ],

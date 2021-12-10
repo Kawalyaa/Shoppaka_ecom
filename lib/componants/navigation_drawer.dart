@@ -46,7 +46,8 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(primary: Colors.white),
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, Login.id);
+                  Navigator.pushReplacementNamed(context, Login.id,
+                      arguments: 'onePage');
                 },
                 child: Text(
                   'Login',
@@ -189,7 +190,8 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                           InkWell(
                             onTap: () {
                               authState.signOut();
-                              Navigator.pushReplacementNamed(context, Login.id);
+                              Navigator.pushReplacementNamed(context, Login.id,
+                                  arguments: 'onePage');
                             },
                             child: ListTile(
                               leading: Icon(Icons.logout),
