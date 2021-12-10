@@ -14,7 +14,6 @@ import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:ecommerce_app/provider/user.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import './pages/login_options_page.dart';
 import './pages/login.dart';
@@ -34,10 +33,6 @@ import 'package:sizer/sizer.dart';
 int initScreen;
 
 Future<void> main() async {
-  //Make app work only vertically
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   SharedPreferences prefs = await SharedPreferences.getInstance();

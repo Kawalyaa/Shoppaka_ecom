@@ -57,7 +57,7 @@ class _WomenCategoryState extends State<WomenCategory> {
                     selectedColor: womenCategoryList[index].colors,
                     selectedSize: womenCategoryList[index].sizes,
                     favorite: womenCategoryList[index].favorite))
-                : favData.removeFavorite(index);
+                : favData.removeFavorite(womenCategoryList[index].id);
           });
         },
         description: womenCategoryList[index].description,

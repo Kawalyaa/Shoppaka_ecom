@@ -111,7 +111,7 @@ class SimilarSingleProduct extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: FadeInImage.assetNetwork(
-                      fit: BoxFit.cover,
+                      fit: BoxFit.contain,
                       placeholder: 'images/loading_gif/Spin-1s-200px.gif',
                       image: images[0],
                       imageErrorBuilder: (context, url, error) => Icon(
