@@ -70,8 +70,8 @@ class MyApp extends StatelessWidget {
               ChangeNotifierProvider<ProductProvider2>(
                 create: (_) => ProductProvider2(),
               ),
-              ChangeNotifierProvider<FavoriteList>(
-                create: (_) => FavoriteList(),
+              ChangeNotifierProvider<FavoritesProvider>(
+                create: (_) => FavoritesProvider(),
               ),
             ],
             child: MaterialApp(

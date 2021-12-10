@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/componants/single_product.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
+import 'package:ecommerce_app/model/favorites_model.dart';
 import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class _JewelriesCategoryState extends State<JewelriesCategory> {
     List<ProductsModel> jewelriesCategoryList =
         CategoryOptions().getCategory(allProds, jewelriesCategory);
 
-    var favData = Provider.of<FavoriteList>(context);
+    var favData = Provider.of<FavoritesProvider>(context);
 
     return GridView.builder(
         itemCount: jewelriesCategoryList.length,
@@ -43,17 +44,17 @@ class _JewelriesCategoryState extends State<JewelriesCategory> {
 
                   //===Add or Remove  Favorite======
                   jewelriesCategoryList[index].favorite
-                      ? favData.addToFavorite(ProductsModel(
+                      ? favData.addToFavorite(FavoritesModel(
                           name: jewelriesCategoryList[index].name,
                           images: jewelriesCategoryList[index].images,
                           price: jewelriesCategoryList[index].price,
                           oldPrice: jewelriesCategoryList[index].oldPrice,
                           brand: jewelriesCategoryList[index].brand,
-                          colors: jewelriesCategoryList[index].colors,
-                          sizes: jewelriesCategoryList[index].sizes,
+                          category: jewelriesCategoryList[index].category,
+                          selectedColor: jewelriesCategoryList[index].colors,
+                          selectedSize: jewelriesCategoryList[index].sizes,
                           favorite: jewelriesCategoryList[index].favorite))
-                      : favData
-                          .removeFavorite(jewelriesCategoryList[index].name);
+                      : favData.removeFavorite(index);
                 });
               },
             ));

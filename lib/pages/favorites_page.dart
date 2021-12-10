@@ -1,4 +1,7 @@
 import 'package:ecommerce_app/componants/fav_detail.dart';
+import 'package:ecommerce_app/model/categary_options.dart';
+import 'package:ecommerce_app/model/favorites_model.dart';
+import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/pages/shopping_cart_screen.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
@@ -21,19 +24,21 @@ class _FavoritesState extends State<Favorites> {
 
     //Favorites provider
 
-    var favData = Provider.of<FavoriteList>(context);
-    List favList = favData.favoriteList;
+    var favData = Provider.of<FavoritesProvider>(context);
+    List<FavoritesModel> favList = favData.favoriteList;
+
+//All products
+    List<ProductsModel> allProds = Provider.of<List<ProductsModel>>(context);
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
           'My Favorites',
           style: TextStyle(
-              color: Colors.black54,
-              fontWeight: FontWeight.w900,
-              fontFamily: 'Poppins',
-              fontSize: 24.0,
-              fontStyle: FontStyle.italic),
+            color: Colors.black54,
+            fontWeight: FontWeight.bold,
+            fontSize: 20.0,
+          ),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -77,22 +82,35 @@ class _FavoritesState extends State<Favorites> {
         iconTheme: IconThemeData(color: Colors.black54),
         elevation: 0.0,
       ),
-      body: ListView.builder(
-        itemCount: favList.length,
-        itemBuilder: (context, int index) => FavDetail(
-          name: favList[index].name,
-          brand: favList[index].brand,
-          isFavorite: favList[index].favorite,
-          removeFavorite: () {
-            favData.removeFavorite(favList[index].name);
-          },
-          images: favList[index].images,
-          price: favList[index].price,
-          oldPrice: favList[index].oldPrice,
-          sizes: favList[index].sizes,
-          colors: favList[index].colors,
-        ),
-      ),
+      body: favList.isEmpty
+          ? Center(
+              child: Container(
+              child: Text(
+                'No Favorites',
+                style: TextStyle(
+                    color: kColorRed,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0),
+              ),
+            ))
+          : ListView.builder(
+              itemCount: favList.length,
+              itemBuilder: (context, int index) => FavDetail(
+                name: favList[index].name,
+                brand: favList[index].brand,
+                isFavorite: favList[index].favorite,
+                removeFavorite: () {
+                  favData.removeFavorite(index);
+                },
+                images: favList[index].images,
+                price: favList[index].price,
+                oldPrice: favList[index].oldPrice,
+                sizes: favList[index].selectedSize,
+                colors: favList[index].selectedColor,
+                similarProducts: CategoryOptions()
+                    .getCategory(allProds, favList[index].category),
+              ),
+            ),
     );
   }
 }

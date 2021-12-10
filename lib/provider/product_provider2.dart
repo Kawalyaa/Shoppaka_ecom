@@ -43,6 +43,10 @@ class ProductProvider2 with ChangeNotifier {
       _cartProductList.add(cartItem);
     }
 
+    //Remove duplicates
+    final uniqueItems = _cartProductList.map((e) => e.name).toSet();
+    _cartProductList.retainWhere((item) => uniqueItems.remove(item.name));
+
     updateSharedPreferences();
 
     notifyListeners();
@@ -111,6 +115,4 @@ class ProductProvider2 with ChangeNotifier {
     updateSharedPreferences();
     notifyListeners();
   }
-
-  bool searchItem(CartModel item) => _cartProductList.contains(item);
 }

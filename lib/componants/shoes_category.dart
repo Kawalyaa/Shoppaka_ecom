@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/componants/single_product.dart';
+import 'package:ecommerce_app/model/favorites_model.dart';
 import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,7 +20,7 @@ class _ShoesCategoryState extends State<ShoesCategory> {
     String shoesCat = 'Shoes';
     List<ProductsModel> shoesList =
         CategoryOptions().getCategory(allProds, shoesCat);
-    var favData = Provider.of<FavoriteList>(context);
+    var favData = Provider.of<FavoritesProvider>(context);
 
     return StaggeredGridView.countBuilder(
       // physics: NeverScrollableScrollPhysics(),
@@ -43,16 +44,17 @@ class _ShoesCategoryState extends State<ShoesCategory> {
 
                   //===Add or Remove  Favorite======
                   shoesList[index].favorite
-                      ? favData.addToFavorite(ProductsModel(
+                      ? favData.addToFavorite(FavoritesModel(
                           name: shoesList[index].name,
                           images: shoesList[index].images,
                           price: shoesList[index].price,
                           oldPrice: shoesList[index].oldPrice,
+                          category: shoesList[index].category,
                           favorite: shoesList[index].favorite,
                           brand: shoesList[index].brand,
-                          sizes: shoesList[index].sizes,
-                          colors: shoesList[index].colors))
-                      : favData.removeFavorite(shoesList[index].name);
+                          selectedSize: shoesList[index].sizes,
+                          selectedColor: shoesList[index].colors))
+                      : favData.removeFavorite(index);
                 });
               },
               images: shoesList[index].images,

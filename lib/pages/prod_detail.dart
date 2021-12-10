@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/componants/single_similar_product.dart';
 import 'package:ecommerce_app/model/cart_model.dart';
 import 'package:ecommerce_app/model/color_model.dart';
+import 'package:ecommerce_app/model/favorites_model.dart';
 import 'package:ecommerce_app/model/product_details_model.dart';
 import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/model/size_model.dart';
@@ -79,7 +80,7 @@ class _ProdDetailsState extends State<ProdDetails> {
   Widget build(BuildContext context) {
     var providerData = Provider.of<ProductProvider2>(context);
     List<CartModel> cartList = providerData.cartProductList;
-    var favData = Provider.of<FavoriteList>(context);
+    var favData = Provider.of<FavoritesProvider>(context);
 
     List<ProductsModel> similarProdList =
         widget.productDetailsModel.similarProd;
@@ -272,7 +273,7 @@ class _ProdDetailsState extends State<ProdDetails> {
                           !widget.productDetailsModel.isFavorite;
 
                       widget.productDetailsModel.isFavorite
-                          ? favData.addToFavorite(ProductsModel(
+                          ? favData.addToFavorite(FavoritesModel(
                               name:
                                   widget.productDetailsModel.productDetailsName,
                               images: widget
@@ -283,9 +284,12 @@ class _ProdDetailsState extends State<ProdDetails> {
                                   .productDetailsModel.productDetailsOldPrice,
                               favorite: widget.productDetailsModel.isFavorite,
                               brand: widget.productDetailsModel.productBrand,
-                              sizes: widget.productDetailsModel.productSizes,
-                              colors: widget.productDetailsModel.productColors))
-                          : favData.removeFavorite(
+                              category: widget.productDetailsModel.category,
+                              selectedSize:
+                                  widget.productDetailsModel.productSizes,
+                              selectedColor:
+                                  widget.productDetailsModel.productColors))
+                          : favData.removeFavName(
                               widget.productDetailsModel.productDetailsName);
                     });
                   },
@@ -458,41 +462,46 @@ class _ProdDetailsState extends State<ProdDetails> {
           Container(
             height: 200,
             padding: EdgeInsets.only(bottom: 20),
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: similarProdList.length,
-                itemBuilder: (context, int index) => SimilarSingleProduct(
-                      name: similarProdList[index].name,
-                      images: similarProdList[index].images,
-                      price: similarProdList[index].price,
-                      oldPrice: similarProdList[index].oldPrice,
-                      brand: similarProdList[index].brand,
-                      colors: similarProdList[index].colors,
-                      sizes: similarProdList[index].sizes,
-                      similarProduct: similarProdList,
-                      isFavorite: similarProdList[index].favorite,
-                      toggleFavorite: () {
-                        setState(() {
-                          //===toggle favorite=====
-                          similarProdList[index].favorite =
-                              !similarProdList[index].favorite;
+            child: similarProdList == null
+                ? Container()
+                : ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: similarProdList.length,
+                    itemBuilder: (context, int index) => SimilarSingleProduct(
+                          name: similarProdList[index].name,
+                          images: similarProdList[index].images,
+                          price: similarProdList[index].price,
+                          oldPrice: similarProdList[index].oldPrice,
+                          brand: similarProdList[index].brand,
+                          colors: similarProdList[index].colors,
+                          sizes: similarProdList[index].sizes,
+                          similarProduct: similarProdList,
+                          isFavorite: similarProdList[index].favorite,
+                          toggleFavorite: () {
+                            setState(() {
+                              //===toggle favorite=====
+                              similarProdList[index].favorite =
+                                  !similarProdList[index].favorite;
 
-                          //===Add or Remove  Favorite======
-                          similarProdList[index].favorite
-                              ? favData.addToFavorite(ProductsModel(
-                                  name: similarProdList[index].name,
-                                  images: similarProdList[index].images,
-                                  price: similarProdList[index].price,
-                                  oldPrice: similarProdList[index].oldPrice,
-                                  brand: similarProdList[index].brand,
-                                  colors: similarProdList[index].colors,
-                                  sizes: similarProdList[index].sizes,
-                                  favorite: similarProdList[index].favorite))
-                              : favData
-                                  .removeFavorite(similarProdList[index].name);
-                        });
-                      },
-                    )),
+                              //===Add or Remove  Favorite======
+                              similarProdList[index].favorite
+                                  ? favData.addToFavorite(FavoritesModel(
+                                      name: similarProdList[index].name,
+                                      images: similarProdList[index].images,
+                                      price: similarProdList[index].price,
+                                      oldPrice: similarProdList[index].oldPrice,
+                                      brand: similarProdList[index].brand,
+                                      category: similarProdList[index].category,
+                                      selectedColor:
+                                          similarProdList[index].colors,
+                                      selectedSize:
+                                          similarProdList[index].sizes,
+                                      favorite:
+                                          similarProdList[index].favorite))
+                                  : favData.removeFavorite(index);
+                            });
+                          },
+                        )),
           ),
         ],
       ),

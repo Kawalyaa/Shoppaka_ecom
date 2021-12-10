@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/componants/single_product.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
+import 'package:ecommerce_app/model/favorites_model.dart';
 import 'package:ecommerce_app/model/products_model.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,7 +18,7 @@ class _ProductsState extends State<Products> {
   @override
   Widget build(BuildContext context) {
     List<ProductsModel> allProds = Provider.of<List<ProductsModel>>(context);
-    var favData = Provider.of<FavoriteList>(context);
+    var favData = Provider.of<FavoritesProvider>(context);
 
     return allProds == null
         ? Center(
@@ -51,16 +52,17 @@ class _ProductsState extends State<Products> {
 
                       //===Add or Remove  Favorite======
                       allProds[index].favorite
-                          ? favData.addToFavorite(ProductsModel(
+                          ? favData.addToFavorite(FavoritesModel(
                               name: allProds[index].name,
                               images: allProds[index].images,
                               price: allProds[index].price,
+                              category: allProds[index].category,
                               oldPrice: allProds[index].oldPrice,
                               favorite: allProds[index].favorite,
                               brand: allProds[index].brand,
-                              sizes: allProds[index].sizes,
-                              colors: allProds[index].colors))
-                          : favData.removeFavorite(allProds[index].name);
+                              selectedSize: allProds[index].sizes,
+                              selectedColor: allProds[index].colors))
+                          : favData.removeFavorite(index);
                     },
                     similarProduct: CategoryOptions()
                         .getCategory(allProds, allProds[index].category),
