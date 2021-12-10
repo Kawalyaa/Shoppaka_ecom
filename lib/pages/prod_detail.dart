@@ -102,7 +102,7 @@ class _ProdDetailsState extends State<ProdDetails> {
                   height: 50,
                   width: 40,
                   child: Image.asset(
-                    'images/logos/shoplaLogo.png',
+                    'images/logos/shopla6.png',
                     fit: BoxFit.cover,
                   )),
               Text(
