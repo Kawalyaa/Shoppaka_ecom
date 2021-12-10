@@ -30,10 +30,12 @@ class OrdersServices {
     String paymentMethod,
     String paymentStatus,
     List addressList,
+    String deliveryMethod,
     BuildContext context,
   }) async {
     try {
       showProgress(context, 'Submitting order...', true);
+
       await _firestore.collection('allOrders').add({
         'id': _auth.currentUser.uid,
         'userName': userName,
@@ -48,7 +50,8 @@ class OrdersServices {
         'address': addressList,
         'orderStatus': 'sorting',
         'time': DateTime.now(),
-        'deliveryDate': ''
+        'deliveryDate': '',
+        'deliveryMethod': deliveryMethod,
       });
       //Navigator.pushReplacementNamed(context, PaymentSuccessful.id);
       hideProgress();

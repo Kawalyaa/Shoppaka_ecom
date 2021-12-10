@@ -60,7 +60,10 @@ class SingleOrder extends StatelessWidget {
                                   'qty: ${orderList[index]['qty'].toString()}',
                                 ),
                                 Text(
-                                    'on: ${DateFormat.yMd().format(orderedTime.toDate())}'),
+                                  'color: ${orderList[index]['selectedColor']}',
+                                ),
+                                Text(
+                                    'on: ${DateFormat('yyyy-MM-dd hh:mm').format(orderedTime.toDate())}'),
                               ],
                             ),
                           ],
@@ -79,31 +82,35 @@ class SingleOrder extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    padding: EdgeInsets.only(left: 4.0, right: 4.0),
-                    decoration: BoxDecoration(
-                        color: orderStatus == 'delivered'
-                            ? Color(0xFF00FF00)
-                            : orderStatus == 'sorting'
-                                ? Colors.deepOrange
-                                : orderStatus == 'canceled'
-                                    ? kColorRed
-                                    : Colors.orangeAccent,
-                        borderRadius: BorderRadius.circular(2)),
-                    child: Center(
-                      child: Text(
-                        orderStatus,
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
+                  Card(
+                    child: Container(
+                      padding: EdgeInsets.only(left: 4.0, right: 4.0),
+                      decoration: BoxDecoration(
+                          color: orderStatus == 'delivered'
+                              ? Colors.green[900]
+                              : orderStatus == 'sorting'
+                                  ? Colors.brown[900]
+                                  : orderStatus == 'dispatched'
+                                      ? Colors.amber[900]
+                                      : orderStatus == 'arrived'
+                                          ? Colors.green[600]
+                                          : kColorRed,
+                          borderRadius: BorderRadius.circular(4)),
+                      child: Center(
+                        child: Text(
+                          orderStatus,
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                   ),
                   deliveryDate == ''
                       ? Container()
                       : Text(
-                          'on: ${DateFormat.yMd().format(deliveryDate.toDate())}'),
+                          '${DateFormat.yMd().format(deliveryDate.toDate())}'),
                   Text('UGX$totalPrice'),
                   Text(
                     '# $orderNumber',
