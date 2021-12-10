@@ -17,28 +17,30 @@ class _ImageCarouselSliderState extends State<ProductImageSlider> {
       width: MediaQuery.of(context).size.width,
       child: Column(
         children: [
-          CarouselSlider(
-            options: CarouselOptions(
-                height: 276.0,
-                autoPlay: true,
-                reverse: false,
-                initialPage: _currentIndex,
-                autoPlayInterval: Duration(seconds: 10),
-                enableInfiniteScroll: true,
-                autoPlayCurve: Curves.fastLinearToSlowEaseIn,
-                viewportFraction: 1.0,
-                autoPlayAnimationDuration: Duration(seconds: 2),
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    _currentIndex = index;
-                  });
-                },
-                scrollDirection: Axis.horizontal),
-            items: widget.imageList
-                .map(
-                  (image) => _singleCard(image: image),
-                )
-                .toList(),
+          Flexible(
+            child: CarouselSlider(
+              options: CarouselOptions(
+                  height: 276.0,
+                  autoPlay: true,
+                  reverse: false,
+                  initialPage: _currentIndex,
+                  autoPlayInterval: Duration(seconds: 10),
+                  enableInfiniteScroll: true,
+                  autoPlayCurve: Curves.fastLinearToSlowEaseIn,
+                  viewportFraction: 0.8,
+                  autoPlayAnimationDuration: Duration(seconds: 2),
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                  scrollDirection: Axis.horizontal),
+              items: widget.imageList
+                  .map(
+                    (image) => _singleCard(image: image),
+                  )
+                  .toList(),
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

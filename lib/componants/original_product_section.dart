@@ -19,9 +19,9 @@ class _OriginalProductSectionState extends State<OriginalProductSection> {
   @override
   Widget build(BuildContext context) {
     List<ProductsModel> allProds = Provider.of<List<ProductsModel>>(context);
-    String shoesCat = 'phones';
+    String phoneCategory = 'phones';
     List<ProductsModel> phonesList =
-        CategoryOptions().getCategory(allProds, shoesCat);
+        CategoryOptions().getCategory(allProds, phoneCategory);
     var favData = Provider.of<FavoritesProvider>(context);
     phonesList.sort((a, b) => a.name.compareTo(b.name));
 
