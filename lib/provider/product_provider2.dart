@@ -75,8 +75,8 @@ class ProductProvider2 with ChangeNotifier {
     notifyListeners();
   }
 
-  double getTotalPrice() {
-    double totalPrice = 0;
+  int getTotalPrice() {
+    int totalPrice = 0;
     _cartProductList.forEach((item) {
       totalPrice += item.price * item.qty;
     });

@@ -13,7 +13,7 @@ import '../constants.dart';
 enum ServiceProvider { AIRTEL, MTN }
 
 class MobileMoneyPay extends StatefulWidget {
-  final double totalAmount;
+  final int totalAmount;
   final List orderedProducts;
   final pickupStation;
   final List userInfo;

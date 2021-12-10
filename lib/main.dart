@@ -9,7 +9,6 @@ import 'package:ecommerce_app/pages/order_list_page.dart';
 import 'package:ecommerce_app/pages/payment_successfull.dart';
 import 'package:ecommerce_app/pages/pickup_station.dart';
 import 'package:ecommerce_app/pages/prod_detail.dart';
-import 'package:ecommerce_app/pages/product_description.dart';
 import 'package:ecommerce_app/pages/search_page.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:ecommerce_app/provider/user.dart';
@@ -29,7 +28,6 @@ import 'db/databse_services.dart';
 import 'model/products_model.dart';
 import 'package:ecommerce_app/provider/product_provider2.dart';
 
-import 'model/users.dart';
 import 'pages/add_new_address.dart';
 import 'package:sizer/sizer.dart';
 
@@ -93,7 +91,6 @@ class MyApp extends StatelessWidget {
                   LoadingPage.id: (context) => LoadingPage(),
                   PaymentSuccessful.id: (context) => PaymentSuccessful(),
                   OrderList.id: (context) => OrderList(),
-                  Description.id: (context) => Description(),
                 },
                 theme: ThemeData(
                     inputDecorationTheme: InputDecorationTheme(

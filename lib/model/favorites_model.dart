@@ -4,8 +4,8 @@ class FavoritesModel {
   final String brand;
   final String category;
   final List images;
-  final double price;
-  final double oldPrice;
+  final int price;
+  final int oldPrice;
   final bool favorite;
   final bool featured;
   final List selectedSize;

@@ -10,8 +10,8 @@ class SingleProduct extends StatelessWidget {
   final String brand;
   final String category;
   final List images;
-  final double price;
-  final double oldPrice;
+  final int price;
+  final int oldPrice;
   final int quantity;
   final List colors;
   final String color;
