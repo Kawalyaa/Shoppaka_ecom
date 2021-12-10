@@ -53,6 +53,7 @@ class _CheckoutState extends State<Checkout>
 
   //int initialPrice = 3264;
   int shippingFee = 5000;
+  int shippingFeeSt = 3000;
   int extraFee = 1000;
   int shippingFee2 = 0;
   double totalPrice;
@@ -437,7 +438,7 @@ class _CheckoutState extends State<Checkout>
                           children: [
                         TextSpan(text: 'Shipping Fee'),
                         TextSpan(
-                            text: ' UGX $shippingFee',
+                            text: ' UGX $shippingFeeSt',
                             style: TextStyle(
                                 color: kColorRed, fontWeight: FontWeight.bold)),
                       ])),
