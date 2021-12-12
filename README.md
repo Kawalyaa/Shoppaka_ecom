@@ -18,37 +18,24 @@ Get the  **[Download Link](https://drive.google.com/file/d/1AbYXV5HPaWZalNhW7Quk
 
 
 :-----------------------------:|:-------------------------:
-  <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Phone Screenshot1.jpg"  width="280" height="580">|    <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Phone Screenshot2.jpg" width="280" height="580">
+  <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/develop/images/screen_shot/Phone%20Screenshot%201.jpg"  width="280" height="580">|    <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/develop/images/screen_shot/Phone%20Screenshot%202.jpg" width="280" height="580">
 
 
 :-----------------------:|:-------------------------:
-<img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot3.jpg " width="280" height="580">|    <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot4.jpg " width="280" height="580">
+<img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/develop/images/screen_shot/Phone%20Screenshot%203.jpg" width="280" height="580">|    <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/develop/images/screen_shot/Phone%20Screenshot%204.jpg" width="280" height="580">
 
 
 
 :-------------------------:|:-------------------------:
-<img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot5.jpg " width="280" height="580">|    <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot6.jpg " width="280" height="580">
+<img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/develop/images/screen_shot/Phone%20Screenshot%205.jpg" width="280" height="580">|    <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/develop/images/screen_shot/Phone%20Screenshot%206.jpg" width="280" height="580">
 
 
 
 :-------------------------:|:-------------------------:
-<img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot7.jpg " width="280" height="580">|    <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot8.jpg " width="280" height="580">
+<img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/develop/images/screen_shot/Phone%20Screenshot%207.jpg" width="280" height="580">|    <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/develop/images/screen_shot/Phone%20Screenshot%208.jpg" width="280" height="580">
 
 
 :-------------------------:|:-------------------------:
-<img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot9.jpg " width="280" height="580">|    <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot10.jpg " width="280" height="580">
-
-
-
-:-------------------------:|:-------------------------:
-<img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot11.jpg " width="280" height="580">|     <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot12.jpg " width="280" height="580">
-
-
-
-:-------------------------:|
-<img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/feature2015/images/screen_shot/Screenshot13.jpg " width="280" height="580">
-   
-
-
+<img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/develop/images/screen_shot/Phone%20Screenshot%209.jpg " width="280" height="580">|    <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/develop/images/screen_shot/Phone%20Screenshot%2010.jpg" width="280" height="580">
 
 
