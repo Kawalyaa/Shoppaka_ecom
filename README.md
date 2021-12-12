@@ -18,11 +18,11 @@ Get the  **[Download Link](https://drive.google.com/file/d/1AbYXV5HPaWZalNhW7Quk
 
 
 :-----------------------------:|:-------------------------:
-  <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/develop/images/screen_shot/Phone%20Screenshot%201.jpg"  width="280" height="580">|    <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/develop/images/screen_shot/Phone%20Screenshot%202.jpg" width="280" height="580">
+  <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/develop/images/screen_shot/Phone%20Screenshot%201.jpg"  width="280" height="580"> |   <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/develop/images/screen_shot/Phone%20Screenshot%202.jpg" width="280" height="580">
 
 
 :-----------------------:|:-------------------------:
-<img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/develop/images/screen_shot/Phone%20Screenshot%203.jpg" width="280" height="580">|    <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/develop/images/screen_shot/Phone%20Screenshot%204.jpg" width="280" height="580">
+<img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/develop/images/screen_shot/Phone%20Screenshot%203.jpg" width="280" height="580">  |    <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/develop/images/screen_shot/Phone%20Screenshot%204.jpg" width="280" height="580">
 
 
 
