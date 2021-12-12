@@ -8,7 +8,7 @@
 
 A new e-Commerce Flutter application that tracks your order progress in time.
 
-The app is 90% complete
+The app is 100% complete
 
 ## Download APK
 
@@ -16,7 +16,11 @@ Get the  **[Download Link](https://drive.google.com/file/d/1AbYXV5HPaWZalNhW7Quk
 
 ## Screen shots
 
-
+<p float="left">
+<img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/develop/images/screen_shot/Phone%20Screenshot%201.jpg"  width="280" height="580">
+  <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/develop/images/screen_shot/Phone%20Screenshot%202.jpg" width="280" height="580">
+  <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/develop/images/screen_shot/Phone%20Screenshot%203.jpg" width="280" height="580"> 
+</p>
 :-----------------------------:|:-------------------------:
   <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/develop/images/screen_shot/Phone%20Screenshot%201.jpg"  width="280" height="580"> |   <img src="https://github.com/Kawalyaa/Shoppaka_ecom/blob/develop/images/screen_shot/Phone%20Screenshot%202.jpg" width="280" height="580">
 
