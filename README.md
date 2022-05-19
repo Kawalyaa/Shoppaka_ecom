@@ -2,14 +2,12 @@
 
 
   - #          Shopla
+  
 
 
+This e-Commerce Flutter application tracks your order progress in time thus bringing confidence to customers, this comes to life with the integration of Firebase.
 
-
-A new e-Commerce Flutter application that tracks your order progress in time thus 
-bringing confidence to customers.
-This app enables customers to pay either on delivery or use mobile money payment system 
-commonly used in Uganda.
+This app enables customers to pay either on delivery or use the Mobile Money payment system commonly used in Uganda.
 
 The app is 100% complete
 
