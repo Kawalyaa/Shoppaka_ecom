@@ -14,6 +14,13 @@ The app is 100% complete
 
 Get the  **[Download Link](https://drive.google.com/file/d/1AbYXV5HPaWZalNhW7QukAheD9Nv54Is_/view?usp=sharing)**    to the app  apk in the release stage
 
+
+
+<p align=center><a href=#><img src="https://github.com/Kawalyaa/pk-challenge/blob/clean_code/AppGif/Pavlock.gif"/></a></p>
+
+<br/>
+
+
 ## Screen shots
 
 <p float="left">

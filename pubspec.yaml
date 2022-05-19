@@ -38,6 +38,8 @@ dependencies:
   http: ^0.13.3
   cached_network_image: ^3.2.1
   flutter_launcher_icons: ^0.9.1
+  device_preview: ^1.0.0
+
 
 
 

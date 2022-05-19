@@ -16,6 +16,7 @@ import 'package:ecommerce_app/pages/second_login.dart';
 import 'package:ecommerce_app/provider/favorite_provider.dart';
 import 'package:ecommerce_app/provider/user.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import './pages/login_options_page.dart';
@@ -32,6 +33,7 @@ import 'package:ecommerce_app/provider/product_provider2.dart';
 
 import 'pages/add_new_address.dart';
 import 'package:sizer/sizer.dart';
+import 'package:device_preview/device_preview.dart';
 
 int initScreen;
 
@@ -42,7 +44,8 @@ Future<void> main() async {
   initScreen = prefs.getInt('initScreen');
   await prefs.setInt('initScreen', 1);
 
-  return runApp(MyApp());
+  return runApp(
+      DevicePreview(enabled: !kReleaseMode, builder: (context) => MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -70,7 +73,10 @@ class MyApp extends StatelessWidget {
         ],
         child: Sizer(builder: (context, orientation, deviceType) {
           return MaterialApp(
+              useInheritedMediaQuery: true,
+              locale: DevicePreview.locale(context),
               debugShowCheckedModeBanner: false,
+              builder: DevicePreview.appBuilder,
 //initialRoute: ScreenController.id,
               routes: {
                 Login.id: (context) => Login(),
