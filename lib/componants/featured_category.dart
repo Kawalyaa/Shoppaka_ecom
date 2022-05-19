@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerce_app/model/categary_options.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class FeaturedCategory extends StatefulWidget {
   @override
@@ -22,9 +23,11 @@ class _FeaturedCategoryState extends State<FeaturedCategory> {
         CategoryOptions().getFeaturedProd(allProds, featured);
     var favData = Provider.of<FavoritesProvider>(context);
 
-    return StaggeredGridView.countBuilder(
+    return MasonryGridView.count(
+      crossAxisSpacing: 10,
+      mainAxisSpacing: 10,
       crossAxisCount: 2,
-      padding: EdgeInsets.all(10),
+      // padding: EdgeInsets.all(10),
       itemCount: featuredList.length,
       itemBuilder: (context, int index) => featuredList.isEmpty
           ? Container(
@@ -70,7 +73,7 @@ class _FeaturedCategoryState extends State<FeaturedCategory> {
               description: featuredList[index].description,
               keyFeatures: featuredList[index].keyFeatures,
             ),
-      staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+      // staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
     );
   }
 }

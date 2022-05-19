@@ -22,11 +22,10 @@ class _TechCategoryState extends State<TechCategory> {
 
     var favData = Provider.of<FavoritesProvider>(context);
 
-    return StaggeredGridView.countBuilder(
+    return MasonryGridView.count(
       crossAxisCount: 2,
       padding: EdgeInsets.all(10),
       itemCount: techCategoryList.length,
-      staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
       itemBuilder: (context, int index) => SingleProduct(
         heroTag: techCategoryList[index].id,
         name: techCategoryList[index].name,

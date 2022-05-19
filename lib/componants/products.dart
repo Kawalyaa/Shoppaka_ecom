@@ -26,7 +26,7 @@ class _ProductsState extends State<Products> {
               backgroundColor: Colors.red,
             ),
           )
-        : StaggeredGridView.countBuilder(
+        : MasonryGridView.count(
             crossAxisCount: 2,
             padding: EdgeInsets.all(10),
             itemCount: allProds.length,
@@ -71,7 +71,6 @@ class _ProductsState extends State<Products> {
                     description: allProds[index].description,
                     keyFeatures: allProds[index].keyFeatures,
                   ),
-            staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
           );
   }
 }

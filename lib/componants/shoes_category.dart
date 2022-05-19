@@ -22,7 +22,7 @@ class _ShoesCategoryState extends State<ShoesCategory> {
         CategoryOptions().getCategory(allProds, shoesCat);
     var favData = Provider.of<FavoritesProvider>(context);
 
-    return StaggeredGridView.countBuilder(
+    return MasonryGridView.count(
       // physics: NeverScrollableScrollPhysics(),
       crossAxisCount: 2,
       padding: EdgeInsets.all(10),
@@ -70,7 +70,6 @@ class _ShoesCategoryState extends State<ShoesCategory> {
               description: shoesList[index].description,
               keyFeatures: shoesList[index].keyFeatures,
             ),
-      staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
     );
   }
 }

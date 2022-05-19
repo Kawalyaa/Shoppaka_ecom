@@ -47,63 +47,66 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => LayoutBuilder(
-        builder: (context, constraints) =>
-            OrientationBuilder(builder: (context, orientation) {
-          //initialize SizerUtil()
-          SizerUtil().init(constraints, orientation);
-          return MultiProvider(
-            providers: [
-              ChangeNotifierProvider<UserProv>(
-                create: (_) => UserProv(),
-              ),
-              StreamProvider<List<ProductsModel>>(
-                create: (_) => DatabaseServices().getAllFireStoreProduct(),
-              ),
-              ChangeNotifierProvider<ProductProvider2>(
-                create: (_) => ProductProvider2(),
-              ),
-              ChangeNotifierProvider<FavoritesProvider>(
-                create: (_) => FavoritesProvider(),
-              ),
-            ],
-            child: MaterialApp(
-                debugShowCheckedModeBanner: false,
+  Widget build(BuildContext context) =>
+      //=> LayoutBuilder(
+      // builder: (context, constraints) =>
+      //     OrientationBuilder(builder: (context, orientation) {
+      //   //initialize SizerUtil()
+      //   SizerUtil().init(constraints, orientation);
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<UserProv>(
+            create: (_) => UserProv(),
+          ),
+          StreamProvider<List<ProductsModel>>(
+            create: (_) => DatabaseServices().getAllFireStoreProduct(),
+          ),
+          ChangeNotifierProvider<ProductProvider2>(
+            create: (_) => ProductProvider2(),
+          ),
+          ChangeNotifierProvider<FavoritesProvider>(
+            create: (_) => FavoritesProvider(),
+          ),
+        ],
+        child: Sizer(builder: (context, orientation, deviceType) {
+          return MaterialApp(
+              debugShowCheckedModeBanner: false,
 //initialRoute: ScreenController.id,
-                routes: {
-                  Login.id: (context) => Login(),
-                  SignUp.id: (context) => SignUp(),
-                  HomePage.id: (context) => HomePage(),
-                  ProdDetails.id: (context) => ProdDetails(),
-                  ShoppingCart.id: (context) => ShoppingCart(),
-                  WelcomeLoginOptions.id: (context) => WelcomeLoginOptions(),
-                  Favorites.id: (context) => Favorites(),
-                  Checkout.id: (context) => Checkout(),
-                  PickupStation.id: (context) => PickupStation(),
-                  AddressBook.id: (context) => AddressBook(),
-                  AddNewAddress.id: (context) => AddNewAddress(),
-                  CategoryProductsList.id: (context) => CategoryProductsList(),
-                  ProductSearch.id: (context) => ProductSearch(),
-                  AddAddress2.id: (context) => AddAddress2(),
-                  MobileMoneyPay.id: (context) => MobileMoneyPay(),
-                  LoadingPage.id: (context) => LoadingPage(),
-                  PaymentSuccessful.id: (context) => PaymentSuccessful(),
-                  OrderList.id: (context) => OrderList(),
-                  ResetPassword.id: (context) => ResetPassword(),
-                  ResetPasswordReady.id: (context) => ResetPasswordReady(),
-                  SecondLogin.id: (context) => SecondLogin(),
-                },
-                theme: ThemeData(
-                    inputDecorationTheme: InputDecorationTheme(
-                      labelStyle: TextStyle(color: kColorRed),
-                    ),
-                    primaryColor: kColorRed,
-                    textSelectionTheme: TextSelectionThemeData(
-                        cursorColor: kColorRed,
-                        selectionColor: kColorRed,
-                        selectionHandleColor: kColorRed)),
-                home: HomePage()),
-          );
+              routes: {
+                Login.id: (context) => Login(),
+                SignUp.id: (context) => SignUp(),
+                HomePage.id: (context) => HomePage(),
+                ProdDetails.id: (context) => ProdDetails(),
+                ShoppingCart.id: (context) => ShoppingCart(),
+                WelcomeLoginOptions.id: (context) => WelcomeLoginOptions(),
+                Favorites.id: (context) => Favorites(),
+                Checkout.id: (context) => Checkout(),
+                PickupStation.id: (context) => PickupStation(),
+                AddressBook.id: (context) => AddressBook(),
+                AddNewAddress.id: (context) => AddNewAddress(),
+                CategoryProductsList.id: (context) => CategoryProductsList(),
+                ProductSearch.id: (context) => ProductSearch(),
+                AddAddress2.id: (context) => AddAddress2(),
+                MobileMoneyPay.id: (context) => MobileMoneyPay(),
+                LoadingPage.id: (context) => LoadingPage(),
+                PaymentSuccessful.id: (context) => PaymentSuccessful(),
+                OrderList.id: (context) => OrderList(),
+                ResetPassword.id: (context) => ResetPassword(),
+                ResetPasswordReady.id: (context) => ResetPasswordReady(),
+                SecondLogin.id: (context) => SecondLogin(),
+              },
+              theme: ThemeData(
+                  inputDecorationTheme: InputDecorationTheme(
+                    labelStyle: TextStyle(color: kColorRed),
+                  ),
+                  primaryColor: kColorRed,
+                  textSelectionTheme: TextSelectionThemeData(
+                      cursorColor: kColorRed,
+                      selectionColor: kColorRed,
+                      selectionHandleColor: kColorRed)),
+              home: HomePage());
         }),
       );
+  // }),
+
 }

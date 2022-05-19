@@ -75,7 +75,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
               color: Colors.white,
-              child: StaggeredGridView.countBuilder(
+              child: MasonryGridView.count(
                 crossAxisCount: 2,
                 padding: EdgeInsets.all(10),
                 itemCount: 4,
@@ -133,7 +133,6 @@ class _FeaturedSectionState extends State<FeaturedSection> {
                           keyFeatures: featuredList[index].keyFeatures,
                         );
                 },
-                staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
               ),
             ),
           ),

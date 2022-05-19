@@ -95,8 +95,14 @@ class _WelcomeLoginOptionsState extends State<WelcomeLoginOptions> {
     );
   }
 
-  Widget _signInButton() => OutlineButton(
-        splashColor: Colors.grey,
+  Widget _signInButton() => OutlinedButton(
+        style: OutlinedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+          side: BorderSide(color: Colors.grey),
+        ),
+        // splashColor: Colors.grey,
         onPressed: () async {
           User user = await auth.googleSignIn();
           User currentUser = _auth.currentUser;
@@ -110,11 +116,11 @@ class _WelcomeLoginOptionsState extends State<WelcomeLoginOptions> {
           }
           Navigator.pushReplacementNamed(context, HomePage.id);
         },
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        highlightElevation: 0,
-        borderSide: BorderSide(color: Colors.grey),
+        // shape: RoundedRectangleBorder(
+        //   borderRadius: BorderRadius.circular(30.0),
+        // ),
+        // highlightElevation: 0,
+        // borderSide: BorderSide(color: Colors.grey),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
           child: Container(
